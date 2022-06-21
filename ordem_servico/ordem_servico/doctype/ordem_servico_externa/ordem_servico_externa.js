@@ -46,5 +46,18 @@ frappe.ui.form.on('Ordem Servico Externa', {
 		})
 		frm.reload_doc()
 		show_alert('Visita agendada.')
+	},
+	equipment(frm){
+		if (!frm.doc.equipment) return;
+		frappe.model.get_value("Equipamentos do Cliente", 
+		frm.doc.equipment, ["serie_number", "equipment_model", "tag", "description"], 
+		function(res){
+		[["serie_number","serie_number"], 
+		["equipment_model", "equipment_model"], 
+		["tag", "equipment_tag"], 
+		["description", "equipment_description"]].forEach(kv => {
+		frm.set_value(kv[1], res[kv[0]]);
+	  })
+	  })
 	}
 })

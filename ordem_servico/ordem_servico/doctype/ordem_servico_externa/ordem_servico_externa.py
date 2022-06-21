@@ -8,17 +8,14 @@ from frappe.model.document import Document
 
 
 class OrdemServicoExterna(Document):
-	def on_update(self):
+	def validate(self):
 		if self.equipment:
 			self.update_equipamento()
 	def update_equipamento(self):
-		equipamento = frappe.get_doc("Equipamentos do Cliente",self.equipment)
-		equipamento.update({
-			"serie_number": self.serie_number,
-    		"equipment_model": self.equipment_model,
-			"tag": self.equipment_tag,
-			"description": self.equipment_description
-		})
-		equipamento.save()
+		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "serie_number", self.get('serie_number'))
+		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "equipment_model", self.get('equipment_model'))
+		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "tag", self.get('equipment_tag'))
+		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "description", self.get('equipment_description'))
+		frappe.db.commit()
 
 

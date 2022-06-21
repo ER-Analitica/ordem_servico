@@ -164,5 +164,19 @@ frappe.ui.form.on('Ordem Servico Interna', {
   _validateAccessories(values) {
     const isValid = Object.values(values).every(val => val)
     if (!isValid) frappe.throw('É necessário devolver todos os acessórios!')
-  }
+  },
+  equipment(frm){
+    if (!frm.doc.equipment) return;
+    frappe.model.get_value("Equipamentos do Cliente", 
+    frm.doc.equipment, ["serie_number", "equipment_model", "tag", "description"], 
+    function(res){
+    [["serie_number","serie_number"], 
+    ["equipment_model", "equipment_model"], 
+    ["tag", "equipment_tag"], 
+    ["description", "equipment_description"]].forEach(kv => {
+    frm.set_value(kv[1], res[kv[0]]);
+  })
+  })
+}
 })
+
