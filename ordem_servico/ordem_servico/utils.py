@@ -70,6 +70,7 @@ def make_quotation(os_docname):
     quot_doc.numero_serie = os_doc.serie_number
     quot_doc.descricao_equipamento = os_doc.equipment_description
     quot_doc.tag = os_doc.equipment_tag
+    quot_doc.observacao = os_doc.created_by_observation
     quot_doc.email = frappe.db.get_value(
         "Contacts", {"customer": os_doc.customer}, ["email_id"]
     )
