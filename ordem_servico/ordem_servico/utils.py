@@ -95,17 +95,6 @@ def make_quotation(os_docname):
     quot_doc.price_list_currency = "BRL"
     return quot_doc
 
-# Puxando campo de detalhe dos termos de condições do doctype clientes no pedido de venda
-
-@frappe.whitelist()
-def make_quotation(customer_docname):
-    customer_doc = frappe.get_doc("Customer", customer_docname)
-    sales_order_doc = frappe.new_doc("Sales Order")
-    sales_order_doc.detalhes_dos_termos_e_condições = customer_doc.detalhes_dos_termos_e_condições
-
-    return customer_doc
-
-#
 
 def get_items(os_doc, quot_doc):
     items = os_doc.os_items
