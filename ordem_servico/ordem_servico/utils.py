@@ -87,9 +87,13 @@ def make_quotation(os_docname):
     quot_doc.grand_total = 0
     quot_doc.rouding_adjustment = 0
     quot_doc.tc_name = "Boleto 15 dias"
-    quot_doc.terms = frappe.db.get_value(
-        "Terms and Conditions", {"name": "Boleto 15 dias"}, ["terms"]
-    )
+    #quot_doc.terms = frappe.db.get_value(
+    #    "Terms and Conditions", {"name": "Boleto 15 dias"}, ["terms"]
+    #)
+    #Teste chamando detalhes de condições de pagamento cliente
+    quot_doc.detalhes_dos_termos_e_condicoes = frappe.db.get_value("Customer", os_doc.customer, "detalhes_dos_termos_e_condicoes")
+
+
     quot_doc.conversion_rate = 1
     quot_doc.plc_conversion_rate = 1
     quot_doc.price_list_currency = "BRL"
