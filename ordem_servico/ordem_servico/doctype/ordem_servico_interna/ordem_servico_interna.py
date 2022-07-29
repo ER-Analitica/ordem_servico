@@ -5,10 +5,14 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from frappe.contacts.doctype.address.address import get_address_display
+
 
 
 class OrdemServicoInterna(Document):
 	def validate(self):
+		#address = frappe.get_doc("Address", self.address_os)
+		#self.address_display = get_address_display(address)
 		if self.equipment:
 			self.update_equipamento()
 	def update_equipamento(self):

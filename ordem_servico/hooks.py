@@ -42,35 +42,35 @@ doctype_js = {
 fixtures = [
     {"dt": "Custom Field",
      "filters": [[
-         "name", "in", (
-             'Delivery Note-local_manutencao',
-             'Delivery Note-os_interna_link',
-             'Event-tempo_orcamento_conserto',
-             'Item-ncm',
-             'Payment Entry-local_manutencao',
-             'Payment Entry-os_interna_link',
-             'Quotation Item-ncm',
-             'Quotation-cb_1',
-             'Quotation-cb_2',
-             'Quotation-clausula',
-             'Quotation-defeito_constatado',
-             'Quotation-descricao_equipamento',
-             'Quotation-descricao_equipamento_orçado',
-             'Quotation-descricao_servicos',
-             'Quotation-descricao_servico',
-             'Quotation-email',
-             'Quotation-frete',
-             'Quotation-local_manutencao',
-             'Quotation-numero_serie',
-             'Quotation-observacao_comercial',
-             'Quotation-observacao_tecnica',
-             'Quotation-os_interna_link',
-             'Quotation-tag',
-             'Quotation-tipo_orcamento',
-             'Sales Invoice-local_manutencao',
-             'Sales Invoice-os_interna_link',
-             'Sales Order-local_manutencao',
-             'Sales Order-os_interna_link'
+         "dt", "in", (
+             'Delivery Note',
+             'Event',
+             'Item',
+             'Payment Entry',
+             'Quotation Item',
+             'Quotation',
+             'Sales Invoice',
+             'Sales Order',
+             'Address',
+             'Purchase Order Item'
+             
+         )
+     ]]
+     },
+     {"dt": "Property Setter",
+     "filters": [[
+         "doc_type", "in", (
+             'Delivery Note',
+             'Event',
+             'Item',
+             'Payment Entry',
+             'Quotation Item',
+             'Quotation',
+             'Sales Invoice',
+             'Sales Order',
+             'Address',
+             'Purchase Order Item'
+             
          )
      ]]
      },

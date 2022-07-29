@@ -4,6 +4,14 @@
 {% include 'ordem_servico/public/js/ordem_servico.js' %}
 
 frappe.ui.form.on('Ordem Servico Interna', {
+  /*validate(frm){
+    frm.set_value("problem_description", frm.doc.problem_description.replace("img src=", 'img width="300px" src='))
+  },*/
+
+  address_os: function() {
+    erpnext.utils.get_address_display(this.frm, "address_os", "address_display");
+  },
+  
   before_save(frm) {
     if (frm.doc.status_order_service === 'Encerrada')
       frm.events.finish_maintenance(frm)
@@ -177,6 +185,7 @@ frappe.ui.form.on('Ordem Servico Interna', {
     frm.set_value(kv[1], res[kv[0]]);
   })
   })
-}
+},
+
 })
 
