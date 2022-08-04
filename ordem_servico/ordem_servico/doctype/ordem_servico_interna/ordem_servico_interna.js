@@ -4,13 +4,22 @@
 {% include 'ordem_servico/public/js/ordem_servico.js' %}
 
 frappe.ui.form.on('Ordem Servico Interna', {
-  /*validate(frm){
-    frm.set_value("problem_description", frm.doc.problem_description.replace("img src=", 'img width="300px" src='))
-  },*/
-
-  address_os: function() {
-    erpnext.utils.get_address_display(this.frm, "address_os", "address_display");
+  validate(frm){
+    if (frm.doc.problem_description && frm.doc.problem_description.length){
+      frm.set_value("problem_description", frm.doc.problem_description.replace("img src=", 'img width="300px" src='));
+    }
   },
+
+  customer(frm) {
+		/*var me = this;*/
+		erpnext.utils.get_party_details(frm, null, null, function() {
+			/*me.*/apply_price_list();
+		});
+	},
+
+  /*address_os: function(frm) {
+    erpnext.utils.get_address_display(frm, "address_os", "address_display");
+  },*/
   
   before_save(frm) {
     if (frm.doc.status_order_service === 'Encerrada')
