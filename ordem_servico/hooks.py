@@ -52,7 +52,8 @@ fixtures = [
              'Sales Invoice',
              'Sales Order',
              'Address',
-             'Purchase Order Item'
+             'Purchase Order Item',
+             'Customer'
              
          )
      ]]
@@ -69,7 +70,8 @@ fixtures = [
              'Sales Invoice',
              'Sales Order',
              'Address',
-             'Purchase Order Item'
+             'Purchase Order Item',
+             'Customer'
              
          )
      ]]
