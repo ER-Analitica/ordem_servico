@@ -11,9 +11,9 @@ frappe.ui.form.on('Ordem Servico Interna', {
   },
 
   customer(frm) {
-		/*var me = this;*/
+		var me = this;
 		erpnext.utils.get_party_details(frm, null, null, function() {
-			/*me.*/apply_price_list();
+			me.apply_price_list();
 		});
 	},
 
