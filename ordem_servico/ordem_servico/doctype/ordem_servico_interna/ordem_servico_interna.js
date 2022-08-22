@@ -6,7 +6,7 @@
 frappe.ui.form.on('Ordem Servico Interna', {
   validate(frm){
     if (frm.doc.problem_description && frm.doc.problem_description.length){
-      frm.set_value("problem_description", frm.doc.problem_description.replace("img src=", 'img width="300px" src='));
+      frm.set_value("problem_description", frm.doc.problem_description.replace("img src=", 'img style="max-width:300px; max-height:300px; width: auto; height: auto;" src='));
     }
   },
 
