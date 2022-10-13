@@ -53,7 +53,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 		cur_frm.fields_dict.repaired_by.get_query = () => {
 			return {
 				filters: {
-					'department': ['in', ['Diretoria - ER', 'Vendas - ER', 'Comercial - ER']],
+					'department': ['in', ['Diretoria - ER', 'Assistência Técnica - ER']],
 					'status': 'Active'
 				}
 			}
