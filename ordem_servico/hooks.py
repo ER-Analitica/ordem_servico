@@ -28,6 +28,7 @@ app_license = "MIT"
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
 doctype_js = {
+    "Customer" : "public/js/jquery.mask.min.js",
     "Ordem Servico Interna": "public/js/os_items.js",
     "Ordem Servico Externa": "public/js/os_items.js",
     "Quotation": "public/js/quotation.js",
