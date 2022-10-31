@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from wsgiref import validate
 from . import __version__ as app_version
 
 app_name = "ordem_servico"
@@ -78,6 +79,16 @@ fixtures = [
      ]]
      },
 ]
+doc_events = {
+    "Customer": {
+        "validate": "ordem_servico.doc_events.customer.validate",
+        
+    },  
+    
+}
+
+
+
 # Home Pages
 # ----------
 
