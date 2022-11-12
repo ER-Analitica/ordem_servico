@@ -4,14 +4,16 @@
 from __future__ import unicode_literals
 
 # Custom imports
-import datetime
+from datetime import datetime
 import time
-
+from frappe.model.document import Document
 import frappe
+from frappe.utils.data import time_diff, today
 from pytz import timezone
 
 
 @frappe.whitelist()
+
 def get_repair_and_quotation_times(equipment):
     equipment_family = frappe.db.get_value(
         "Modelo Equipamento", {"model": equipment}, ["family_ref"]
@@ -37,9 +39,13 @@ def make_event(doctype, docname, start_date, start_time, work_time, trigger):
     os = frappe.get_doc(doctype, docname)
     if trigger == "quotation":
         os.quotation_event_link = event.name
+        os.initial_scheduled_by_name = frappe.get_user().doc.full_name 
     elif trigger == "repair":
         os.repair_event_link = event.name
+        os.final_scheduled_by_name = frappe.get_user().doc.full_name
         os.status_order_service = "Em Conserto"
+  
+    
     os.save()
 
 
@@ -48,13 +54,30 @@ def get_time_now(doctype, docname, trigger):
     os = frappe.get_doc(doctype, docname)
     if trigger == "start_quotation":
         os.start_quotation_time = time_now()
+        os.tecnico_iniciou = frappe.get_user().doc.full_name
     elif trigger == "end_quotation":
         os.end_quotation_time = time_now()
+        os.tecnico_finalizou = frappe.get_user().doc.full_name
+        t1 = os.start_quotation_time
+        t2 = os.end_quotation_time
+        format = "%d-%m-%Y %H:%M:%S"
+        time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
+        os.tempo_orcamento = "{}".format(time_diff)
     elif trigger == "start_repair":
         os.start_repair_time = time_now()
+        os.repaired_by_name = frappe.get_user().doc.full_name
     elif trigger == "end_repair":
         os.end_repair_time = time_now()
+        os.repaired_by_name2 = frappe.get_user().doc.full_name
+        t1 = os.start_repair_time
+        t2 = os.end_repair_time
+        format = "%d-%m-%Y %H:%M:%S"
+        time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
+        os.tempo_conserto = "{}".format(time_diff)
         os.status_order_service = "Encerrada"
+        if os.valor and os.peso != "":
+            os.valorsaida = os.valor
+            os.peso_saida = os.peso
     os.save()
 
 
@@ -139,12 +162,13 @@ def get_total(os_doc):
 
 
 def time_now():
-    now = datetime.datetime.now(timezone("America/Sao_Paulo")).strftime(
+    now = datetime.now(timezone("America/Sao_Paulo")).strftime(
         "%d-%m-%Y %H:%M:%S"
     )
     return now
 
 
+  
 def sum_time(t1, t2):
     t1 = time.strptime(str(t1), "%H:%M:%S")
     t2 = time.strptime(str(t2), "%H:%M:%S")
@@ -218,4 +242,17 @@ def make_os(doctype, customer, docname):
     doc = frappe.new_doc(doctype)
     doc.customer = customer
     doc.equipment = docname
+    return doc
+
+@frappe.whitelist()
+def make_nfs(doctype, customer, docname, address_display, descricao_servico, contact_person,contact_email,customer_address,base_total):
+    doc = frappe.new_doc(doctype)
+    doc.customer = customer
+    doc.equipment = docname
+    doc.address_display = address_display
+    doc.descricao_servico = descricao_servico
+    doc.contact_person = contact_person
+    doc.contact_email = contact_email
+    doc.customer_address = customer_address
+    doc.base_total = base_total
     return doc
