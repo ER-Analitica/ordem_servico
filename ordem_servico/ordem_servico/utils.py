@@ -76,7 +76,7 @@ def get_time_now(doctype, docname, trigger):
         os.tempo_conserto = "{}".format(time_diff)
         os.status_order_service = "Encerrada"
         if os.valor and os.peso != "":
-            os.valorsaida = os.valor
+            os.valor_saida = os.valor
             os.peso_saida = os.peso
     os.save()
 
@@ -124,6 +124,20 @@ def make_quotation(os_docname):
     quot_doc.price_list_currency = "BRL"
     return quot_doc
 
+@frappe.whitelist()
+def make_quotation(os_docname):
+    si_doc = frappe.get_doc("Sales Invoice", os_docname)
+    nfs_doc = frappe.new_doc("NFS")
+    nfs_doc.customer = si_doc.customer
+    nfs_doc.equipment = si_doc.equipment
+    nfs_doc.address_display = si_doc.address_display
+    nfs_doc.descricao_servico = si_doc.descricao_servico
+    nfs_doc.contact_person = si_doc.contact_person
+    nfs_doc.customer_address = si_doc.customer_address
+    nfs_doc.base_total = si_doc.base_total
+    nfs_doc = get_items(si_doc, nfs_doc)
+
+    return nfs_doc
 
 def get_items(os_doc, quot_doc):
     items = os_doc.os_items
@@ -243,7 +257,7 @@ def make_os(doctype, customer, docname):
     doc.customer = customer
     doc.equipment = docname
     return doc
-
+'''
 @frappe.whitelist()
 def make_nfs(doctype, customer, docname, address_display, descricao_servico, contact_person,contact_email,customer_address,base_total):
     doc = frappe.new_doc(doctype)
@@ -255,4 +269,6 @@ def make_nfs(doctype, customer, docname, address_display, descricao_servico, con
     doc.contact_email = contact_email
     doc.customer_address = customer_address
     doc.base_total = base_total
+    #doc.items = items
     return doc
+'''
