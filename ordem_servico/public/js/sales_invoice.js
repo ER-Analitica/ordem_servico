@@ -3,11 +3,12 @@ const DocTypes = {
 }
 frappe.ui.form.on('Sales Invoice', {
   refresh(frm) {
+    /*
     frm.add_custom_button(
       'NFS',
       () => frm.events.make_nfs(frm, DocTypes.NFS),
       'Make'
-    )
+    )*/
   },
   after_save(frm) {
     //Set Sales Invoice on OS History section
