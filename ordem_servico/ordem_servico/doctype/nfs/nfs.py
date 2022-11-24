@@ -68,7 +68,7 @@ class NFS(Document):
 
 			#criar nota
 			
-			global id
+			#global id
 			url = "https://sandbox.asaas.com/api/v3/invoices"
 
 			payload = json.dumps({
@@ -129,7 +129,7 @@ class NFS(Document):
 
 			#criar nota
 		
-			global id
+			#global id
 			url = "https://sandbox.asaas.com/api/v3/invoices"
 
 			payload = json.dumps({
