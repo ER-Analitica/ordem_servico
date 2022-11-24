@@ -76,7 +76,7 @@ def get_time_now(doctype, docname, trigger):
         os.tempo_conserto = "{}".format(time_diff)
         os.status_order_service = "Encerrada"
         if os.valor and os.peso != "":
-            os.valor_saida = os.valor
+            os.valorsaida = os.valor
             os.peso_saida = os.peso
     os.save()
 
