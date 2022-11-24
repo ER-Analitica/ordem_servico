@@ -54,7 +54,7 @@ def get_time_now(doctype, docname, trigger):
     os = frappe.get_doc(doctype, docname)
     if trigger == "start_quotation":
         os.start_quotation_time = time_now()
-        os.tecnico_iniciou = frappe.get_user().doc.full_name
+        os.technical_person_name = frappe.get_user().doc.full_name
     elif trigger == "end_quotation":
         os.end_quotation_time = time_now()
         os.tecnico_finalizou = frappe.get_user().doc.full_name
@@ -123,9 +123,9 @@ def make_quotation(os_docname):
     quot_doc.plc_conversion_rate = 1
     quot_doc.price_list_currency = "BRL"
     return quot_doc
-
+'''
 @frappe.whitelist()
-def make_quotation(os_docname):
+def make_nfs(os_docname):
     si_doc = frappe.get_doc("Sales Invoice", os_docname)
     nfs_doc = frappe.new_doc("NFS")
     nfs_doc.customer = si_doc.customer
@@ -138,7 +138,7 @@ def make_quotation(os_docname):
     nfs_doc = get_items(si_doc, nfs_doc)
 
     return nfs_doc
-
+'''
 def get_items(os_doc, quot_doc):
     items = os_doc.os_items
     for item in items:
