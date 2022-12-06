@@ -40,6 +40,9 @@ def make_event(doctype, docname, start_date, start_time, work_time, trigger):
     if trigger == "quotation":
         os.quotation_event_link = event.name
         os.initial_scheduled_by_name = frappe.get_user().doc.full_name 
+        if os.valor and os.peso != "":
+            os.valorsaida = os.valor
+            os.peso_saida = os.peso
     elif trigger == "repair":
         os.repair_event_link = event.name
         os.final_scheduled_by_name = frappe.get_user().doc.full_name
@@ -55,6 +58,7 @@ def get_time_now(doctype, docname, trigger):
     if trigger == "start_quotation":
         os.start_quotation_time = time_now()
         os.technical_person_name = frappe.get_user().doc.full_name
+    #elif trigger == "schedule_quotation_event":
     elif trigger == "end_quotation":
         os.end_quotation_time = time_now()
         os.tecnico_finalizou = frappe.get_user().doc.full_name
@@ -74,10 +78,7 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
-        os.status_order_service = "Encerrada"
-        if os.valor and os.peso != "":
-            os.valorsaida = os.valor
-            os.peso_saida = os.peso
+        os.status_order_service = "Encerrada"  
     os.save()
 
 
@@ -257,9 +258,9 @@ def make_os(doctype, customer, docname):
     doc.customer = customer
     doc.equipment = docname
     return doc
-'''
+
 @frappe.whitelist()
-def make_nfs(doctype, customer, docname, address_display, descricao_servico, contact_person,contact_email,customer_address,base_total):
+def make_nfs(doctype, customer, docname, address_display, descricao_servico, contact_person,contact_email,customer_address,base_total,payment_terms_template):
     doc = frappe.new_doc(doctype)
     doc.customer = customer
     doc.equipment = docname
@@ -269,6 +270,20 @@ def make_nfs(doctype, customer, docname, address_display, descricao_servico, con
     doc.contact_email = contact_email
     doc.customer_address = customer_address
     doc.base_total = base_total
+    doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
-'''
+    
+@frappe.whitelist()
+def make_gerar_boleto(doctype, customer, base_total, id_nfs, id_client, equipment, payment_terms_template):
+    doc = frappe.new_doc(doctype)
+    doc.equipment = equipment
+    doc.customer = customer
+    doc.base_total = base_total
+    doc.id_nfs = id_nfs
+    doc.id_client = id_client
+    doc.payment_terms_template = payment_terms_template
+    #doc.items = items
+    return doc
+
+
