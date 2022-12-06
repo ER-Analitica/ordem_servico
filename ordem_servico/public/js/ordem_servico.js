@@ -95,13 +95,15 @@ frappe.ui.form.on(cur_frm.doctype, {
 		frm.reload_doc()
 		show_alert('Conserto iniciado.')
 	},
-	end_repair(frm) {
+	/*end_repair(frm) {
 		const { __unsaved, quotation_status } = cur_frm.doc
 		if (__unsaved) {
 			frappe.throw('Favor salvar documento!')
-		} else if (!quotation_status) {
+		}  
+		else if (!quotation_status) {
 			frappe.throw('Favor colocar Status do Orçamento!')
-		} else {
+		}
+		else {
 			const { doctype, name } = frm.doc
 			frappe.call({
 				method: 'ordem_servico.ordem_servico.utils.get_time_now',
@@ -114,5 +116,5 @@ frappe.ui.form.on(cur_frm.doctype, {
 		}
 		frm.reload_doc()
 		show_alert('Conserto finalizado.')
-	}
+	}*/
 })
