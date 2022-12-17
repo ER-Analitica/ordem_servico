@@ -80,6 +80,12 @@ fixtures = [
          )
      ]]
      },
+     {
+        "dt": "Print Format",
+        "filters": {
+            "module": "Ordem Servico"
+        }
+     },
 ]
 doc_events = {
     "Customer": {
