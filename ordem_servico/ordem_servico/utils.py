@@ -273,6 +273,7 @@ def make_nfs(doctype, customer, docname, address_display, descricao_servico, con
     doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
+
     
 @frappe.whitelist()
 def make_gerar_boleto(doctype, customer, base_total, id_nfs, id_client, equipment, payment_terms_template):
