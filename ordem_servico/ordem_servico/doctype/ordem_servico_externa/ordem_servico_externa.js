@@ -16,10 +16,13 @@ frappe.ui.form.on('Ordem Servico Externa', {
 				doctype: doctype,
 				docname: name,
 				local: 'Externo'
-			}
+			},
+			callback(res){
+				show_alert('Orçamento gerado.')
+				frm.reload_doc()
+			  }
+			
 		})
-		frm.reload_doc()
-		show_alert('Orçamento gerado.')
 	},
 	schedule_repair_event(frm) {
 		const { __unsaved } = cur_frm.doc
@@ -42,10 +45,32 @@ frappe.ui.form.on('Ordem Servico Externa', {
 				start_time: repair_schedule_time,
 				work_time: repair_time,
 				trigger: 'repair'
-			}
+			},
+			callback(res){
+				show_alert('Visita agendada')
+				frm.reload_doc()
+			  }
+			
 		})
-		frm.reload_doc()
-		show_alert('Visita agendada.')
+	},
+	start_repair(frm) {
+		const { __unsaved } = cur_frm.doc
+		if (__unsaved) {
+			frappe.throw('Favor salvar documento!')
+		}
+		frappe.call({
+			method: 'ordem_servico.ordem_servico.utils.get_time_now',
+			args: {
+				doctype: frm.doc.doctype,
+				docname: frm.doc.name,
+				trigger: 'start_repair'
+			},
+			callback(res){
+				show_alert('Conserto iniciado.')
+				frm.reload_doc()
+			  }
+		})
+
 	},
 	end_repair(frm) {
 		const { __unsaved, quotation_status } = cur_frm.doc
@@ -63,11 +88,13 @@ frappe.ui.form.on('Ordem Servico Externa', {
 					doctype: doctype,
 					docname: name,
 					trigger: 'end_repair'
-				}
+				},
+				callback(res){
+					show_alert('Conserto finalizado')
+					frm.reload_doc()
+				  }
 			})
 		}
-		frm.reload_doc()
-		show_alert('Conserto finalizado.')
 	},
 	equipment(frm){
 		if (!frm.doc.equipment) return;
@@ -83,3 +110,4 @@ frappe.ui.form.on('Ordem Servico Externa', {
 	  })
 	}
 })
+

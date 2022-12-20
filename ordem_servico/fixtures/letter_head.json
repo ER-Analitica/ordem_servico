@@ -1,0 +1,23 @@
+[
+ {
+  "align": "Left",
+  "content": "{% if doc.doctype == \"Ordem Servico Interna\" %}\n<img src=\"/files/cabecalho_laudo.png\">\t\n{% endif %}",
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Letter Head",
+  "footer": "{% if doc.doctype == \"Ordem Servico Interna\" %}\n<img src=\"/files/rodape_atpng.png\">\n{% endif %}",
+  "footer_align": null,
+  "footer_image": null,
+  "footer_image_height": 0.0,
+  "footer_image_width": 0.0,
+  "footer_source": "HTML",
+  "image": null,
+  "image_height": 0.0,
+  "image_width": 0.0,
+  "is_default": 1,
+  "letter_head_name": "Orcamento",
+  "modified": "2022-12-17 13:40:42.596188",
+  "name": "Orcamento",
+  "source": "HTML"
+ }
+]
