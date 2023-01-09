@@ -86,8 +86,21 @@ doc_events = {
         "validate": "ordem_servico.doc_events.customer.validate",
         
     },  
+    "Sales Invoice": {
+        "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
+        
+   },
+    
+    #"Contact": {
+     #   "before_save": "ordem_servico.doc_events.update_contact.before_save",
+        
+    #},
+    
+
+
     
 }
+
 
 
 

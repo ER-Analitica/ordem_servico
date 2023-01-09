@@ -45,10 +45,13 @@ frappe.ui.form.on('Ordem Servico Interna', {
         start_time: quotation_schedule_time,
         work_time: quotation_time,
         trigger: 'quotation'
+      },
+      callback(res){
+        show_alert('Orçamento agendado.')
+        frm.reload_doc()
       }
+      
     })
-    frm.reload_doc()
-    show_alert('Orçamento agendado.')
   },
   start_quotation(frm) {
     const { __unsaved } = cur_frm.doc
@@ -62,10 +65,13 @@ frappe.ui.form.on('Ordem Servico Interna', {
         doctype: doctype,
         docname: name,
         trigger: 'start_quotation'
+      },
+      callback(res){
+        show_alert('Orçamento iniciado.')
+        frm.reload_doc()
       }
     })
-    show_alert('Orçamento iniciado.')
-    frm.reload_doc()
+    
   },
   end_quotation(frm) {
     const { __unsaved } = cur_frm.doc
@@ -79,10 +85,12 @@ frappe.ui.form.on('Ordem Servico Interna', {
         doctype: doctype,
         docname: name,
         trigger: 'end_quotation'
+      },
+      callback(res){
+        show_alert('Orçamento finalizado.')
+        frm.reload_doc()
       }
     })
-    show_alert('Orçamento finalizado.')
-    frm.reload_doc()
   },
   create_quotation(frm) {
     const { __unsaved } = frm.doc
@@ -122,10 +130,12 @@ frappe.ui.form.on('Ordem Servico Interna', {
         start_time: repair_schedule_time,
         work_time: repair_time,
         trigger: 'repair'
+      },
+      callback(res){
+        show_alert('Conserto agendado.')
+        frm.reload_doc()
       }
     })
-    frm.reload_doc()
-    show_alert('Conserto agendado.')
   },
   start_repair(frm) {
     const { __unsaved } = cur_frm.doc
@@ -139,10 +149,12 @@ frappe.ui.form.on('Ordem Servico Interna', {
         doctype: doctype,
         docname: name,
         trigger: 'start_repair'
+      },
+      callback(res){
+        show_alert('Conserto iniciado.')
+        frm.reload_doc()
       }
     })
-    frm.reload_doc()
-    show_alert('Conserto iniciado.')
   },
   end_repair(frm) {
     const { __unsaved, quotation_status } = cur_frm.doc
@@ -160,11 +172,13 @@ frappe.ui.form.on('Ordem Servico Interna', {
         doctype: doctype,
         docname: name,
         trigger: 'end_repair'
+      },
+      callback(res){
+        show_alert('Conserto finalizado.')
+        frm.reload_doc()
       }
     })
   }
-    frm.reload_doc()
-    show_alert('Conserto finalizado.')
   },
   finish_maintenance(frm) {
     const fields = frm.doc.accessories.map(item => ({
