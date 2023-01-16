@@ -34,7 +34,7 @@ frappe.ui.form.on('Sales Invoice', {
   doc.customer_address = customer_address
   doc.base_total = base_total*/
   make_nfs(frm, doctype) {
-    const { customer, name, address_display, descricao_servico, contact_person, contact_email, customer_address, base_total, payment_terms_template} = frm.doc
+    const { customer, name, address_display, /*descricao_servico,*/ contact_person, contact_email, customer_address, base_total, payment_terms_template} = frm.doc
     frappe.call({
       method: 'ordem_servico.ordem_servico.utils.make_nfs',
       args: {
@@ -42,7 +42,7 @@ frappe.ui.form.on('Sales Invoice', {
         customer: customer,
         docname: name,
         address_display: address_display,
-        descricao_servico: descricao_servico,
+        /*descricao_servico: descricao_servico,*/
         contact_person: contact_person,
         contact_email: contact_email,
         customer_address: customer_address,

@@ -79,7 +79,7 @@ class NFS(Document):
 
 				#criar nota
 				
-				global id
+
 
 				url = "https://sandbox.asaas.com/api/v3/invoices"
 
@@ -116,9 +116,7 @@ class NFS(Document):
 				print(response.text)
 				datajson = json.loads(response.text)
 				self.id_nfs = datajson.get("id")
-				id = self.id_nfs
-				self.name = id
-				
+				self.name = self.id_nfs
 				totalcofins = self.base_total * float(self.cofins) / 100
 				self.totalcofins = totalcofins 
 				totalirrf = self.base_total * float(self.irrf) / 100
@@ -155,7 +153,7 @@ class NFS(Document):
 
 				#criar nota
 			
-				global id
+				
 				url = "https://sandbox.asaas.com/api/v3/invoices"
 
 				payload = json.dumps({
@@ -191,8 +189,7 @@ class NFS(Document):
 				print(response.text)
 				datajson = json.loads(response.text)
 				self.id_nfs = datajson.get("id")
-				id = self.id_nfs
-				self.name = id
+				self.name = self.id_nfs
 				totalcofins = self.base_total * float(self.cofins) / 100
 				self.totalcofins = totalcofins 
 				totalirrf = self.base_total * float(self.irrf) / 100
