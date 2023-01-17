@@ -80,28 +80,30 @@ fixtures = [
          )
      ]]
      },
-     {
-        "dt": "Print Format",
-        "filters": {
-            "module": "Ordem Servico"
-        }
-     },
-     {
-        "dt":"Client Script"
-
-     },
-     {
-        "dt":"Letter Head"
-
-     }
 ]
 doc_events = {
     "Customer": {
         "validate": "ordem_servico.doc_events.customer.validate",
         
     },  
+    "Sales Invoice": {
+        "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
+        
+    },
+    "Item Price":{
+        "on_update": "ordem_servico.doc_events.update_item.on_update",
+    }
+    
+    #"Contact": {
+     #   "before_save": "ordem_servico.doc_events.update_contact.before_save",
+        
+    #},
+    
+
+
     
 }
+
 
 
 
@@ -193,3 +195,4 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "ordem_servico.event.get_events"
 # }
+

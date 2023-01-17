@@ -1,4 +1,4 @@
 ordem_servico.patches.upload_cnpj_customer
 execute:frappe.delete_doc("DocType", "Cod Servico")
 execute:frappe.delete_doc("DocType", "Produtos Quotation")
-execute:frappe.db.sql("ALTER TABLE `tabAccess Log` MODIFY name VARCHAR(120)")
+ordem_servico.patches.atualizar_itens
