@@ -89,7 +89,10 @@ doc_events = {
     "Sales Invoice": {
         "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
         
-   },
+    },
+    "Item Price":{
+        "on_update": "ordem_servico.doc_events.update_item.on_update",
+    }
     
     #"Contact": {
      #   "before_save": "ordem_servico.doc_events.update_contact.before_save",
