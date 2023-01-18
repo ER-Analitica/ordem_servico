@@ -195,4 +195,3 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "ordem_servico.event.get_events"
 # }
-

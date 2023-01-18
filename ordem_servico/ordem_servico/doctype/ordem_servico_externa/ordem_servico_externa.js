@@ -110,4 +110,3 @@ frappe.ui.form.on('Ordem Servico Externa', {
 	  })
 	}
 })
-

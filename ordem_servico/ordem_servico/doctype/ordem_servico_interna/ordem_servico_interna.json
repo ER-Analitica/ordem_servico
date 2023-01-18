@@ -9,7 +9,11 @@
   "company",
   "status_section",
   "status_order_service",
+  "status_faturamento",
   "equipment_location",
+  "column_break_4",
+  "aguardando_peca",
+  "em_terceiro",
   "identification_section",
   "modalidade_entrada",
   "nome_transportadora_entrada",
@@ -139,19 +143,41 @@
   },
   {
    "bold": 1,
-   "default": "Em Or\u00e7amento",
+   "default": "Aguardando Or\u00e7amento",
    "fieldname": "status_order_service",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status Ordem de Servi\u00e7o",
-   "options": "\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nEmbalar\nFaturar\nEnviado Ao Terceiro",
+   "options": "Aguardando Or\u00e7amento\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nAprovado\nAguardando Conserto\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nEmbalar\nSem Conserto",
    "reqd": 1
+  },
+  {
+   "fieldname": "status_faturamento",
+   "fieldtype": "Select",
+   "label": "Status de Faturamento",
+   "options": "\nFaturar\nFaturado"
   },
   {
    "fieldname": "equipment_location",
    "fieldtype": "Data",
    "label": "Localiza\u00e7\u00e3o Equipamento",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "aguardando_peca",
+   "fieldtype": "Check",
+   "label": "Aguardando Pe\u00e7a"
+  },
+  {
+   "default": "0",
+   "fieldname": "em_terceiro",
+   "fieldtype": "Check",
+   "label": "Em Terceiro"
   },
   {
    "fieldname": "identification_section",
@@ -254,10 +280,10 @@
    "read_only": 1
   },
   {
-   "fetch_from": "customer.mobile_no",
    "fieldname": "contact_mobile",
    "fieldtype": "Data",
    "label": "Celular",
+   "options": "contact_person_mobile_no",
    "read_only": 1
   },
   {
@@ -882,7 +908,7 @@
   }
  ],
  "links": [],
- "modified": "2022-12-17 14:34:46.344161",
+ "modified": "2023-01-16 14:27:45.764743",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

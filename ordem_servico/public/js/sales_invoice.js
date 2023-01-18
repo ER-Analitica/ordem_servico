@@ -1,14 +1,15 @@
 const DocTypes = {
-  NFS: 'NFS'
+  NFS: 'NFS',
 }
 frappe.ui.form.on('Sales Invoice', {
   refresh(frm) {
-    /*
+    
     frm.add_custom_button(
-      'NFS',
+      '<i class="fa fa-file-text" aria-hidden="true"></i>  NFS ',
       () => frm.events.make_nfs(frm, DocTypes.NFS),
       'Make'
-    )*/
+    )
+
   },
   after_save(frm) {
     //Set Sales Invoice on OS History section
@@ -33,7 +34,7 @@ frappe.ui.form.on('Sales Invoice', {
   doc.customer_address = customer_address
   doc.base_total = base_total*/
   make_nfs(frm, doctype) {
-    const { customer, name, address_display, descricao_servico, contact_person, contact_email, customer_address, base_total } = frm.doc
+    const { customer, name, address_display, /*descricao_servico,*/ contact_person, contact_email, customer_address, base_total, payment_terms_template} = frm.doc
     frappe.call({
       method: 'ordem_servico.ordem_servico.utils.make_nfs',
       args: {
@@ -41,13 +42,16 @@ frappe.ui.form.on('Sales Invoice', {
         customer: customer,
         docname: name,
         address_display: address_display,
-        descricao_servico: descricao_servico,
+        /*descricao_servico: descricao_servico,*/
         contact_person: contact_person,
         contact_email: contact_email,
         customer_address: customer_address,
-        base_total: base_total
+        base_total: base_total,
+        payment_terms_template: payment_terms_template
         /*items: items*/
       },
+
+  
       callback(r) {
         frappe.model.sync(r.message)
         const { doctype, name } = r.message

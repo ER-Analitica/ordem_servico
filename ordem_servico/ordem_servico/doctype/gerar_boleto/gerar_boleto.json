@@ -1,0 +1,251 @@
+{
+ "actions": [],
+ "creation": "2022-11-28 07:57:27.575115",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "retorno_do_boleto_section",
+  "id_parcela",
+  "link_cobranca",
+  "status_cobranca",
+  "boleto1",
+  "section_break_5",
+  "payment_terms_template",
+  "equipment",
+  "informa\u00e7\u00f5es_do_asaas_section",
+  "id_nfs",
+  "id_client",
+  "id_boleto",
+  "gerar_boleto_section",
+  "customer",
+  "totalliquidoboleto",
+  "forma_de_pagamento",
+  "data_vencimento_cobranca",
+  "cobranca_description",
+  "parcelas",
+  "column_break_6",
+  "desconto",
+  "percentual_desconto",
+  "valor_fixo_desconto",
+  "dias_antes_vencimento",
+  "juros_mes",
+  "multa_atraso",
+  "percentual_multa",
+  "fixo_multa",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "retorno_do_boleto_section",
+   "fieldtype": "Section Break",
+   "label": "RETORNO DO BOLETO"
+  },
+  {
+   "fieldname": "id_parcela",
+   "fieldtype": "Data",
+   "label": "ID ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "link_cobranca",
+   "fieldtype": "Data",
+   "label": "Link da Cobran\u00e7a",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status_cobranca",
+   "fieldtype": "Data",
+   "label": "Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boleto1",
+   "fieldtype": "Data",
+   "label": "ID BOLETO 1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payment_terms_template",
+   "fieldtype": "Link",
+   "label": "Forma de Pagamento",
+   "options": "Payment Terms Template",
+   "read_only": 1
+  },
+  {
+   "fieldname": "equipment",
+   "fieldtype": "Link",
+   "label": "Fatura de Venda Refer\u00eancia",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "informa\u00e7\u00f5es_do_asaas_section",
+   "fieldtype": "Section Break",
+   "label": "INFORMA\u00c7\u00d5ES DO ASAAS"
+  },
+  {
+   "fieldname": "id_nfs",
+   "fieldtype": "Link",
+   "label": "ID NFS",
+   "options": "NFS",
+   "read_only": 1
+  },
+  {
+   "fieldname": "id_client",
+   "fieldtype": "Data",
+   "label": "ID CLIENTE NFS",
+   "read_only": 1
+  },
+  {
+   "fieldname": "id_boleto",
+   "fieldtype": "Data",
+   "label": "ID BOLETO",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gerar_boleto_section",
+   "fieldtype": "Section Break",
+   "label": "GERAR BOLETO"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Cliente",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "totalliquidoboleto",
+   "fieldtype": "Currency",
+   "label": "Valor do Servi\u00e7o",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "forma_de_pagamento",
+   "fieldtype": "Select",
+   "label": "Forma de Pagamento",
+   "options": "Boleto Banc\u00e1rio\nCart\u00e3o de Cr\u00e9dito\nPix\nPerguntar ao Cliente"
+  },
+  {
+   "fieldname": "data_vencimento_cobranca",
+   "fieldtype": "Date",
+   "label": "Data de Vencimento"
+  },
+  {
+   "fieldname": "cobranca_description",
+   "fieldtype": "Small Text",
+   "label": "Descri\u00e7\u00e3o da Cobran\u00e7a"
+  },
+  {
+   "fieldname": "parcelas",
+   "fieldtype": "Select",
+   "label": "Parcelas",
+   "options": "1x\n2x\n3x\n4x\n5x\n6x\n7x\n8x\n9x\n10x\n11x\n12x"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "desconto",
+   "fieldtype": "Select",
+   "label": "Desconto",
+   "options": "Valor percentual\nValor fixo"
+  },
+  {
+   "depends_on": "eval: doc.desconto == 'Valor percentual'",
+   "fieldname": "percentual_desconto",
+   "fieldtype": "Percent",
+   "label": "Valor Percentual do Desconto"
+  },
+  {
+   "depends_on": "eval: doc.desconto == 'Valor fixo'",
+   "fieldname": "valor_fixo_desconto",
+   "fieldtype": "Currency",
+   "label": "Valor Fixo do Desconto",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "dias_antes_vencimento",
+   "fieldtype": "Data",
+   "label": "At\u00e9 Quantos Dias Antes do Vencimento se Aplica Ao Desconto"
+  },
+  {
+   "fieldname": "juros_mes",
+   "fieldtype": "Percent",
+   "label": "Percentual de Juros ao M\u00eas"
+  },
+  {
+   "fieldname": "multa_atraso",
+   "fieldtype": "Select",
+   "label": "Multa Por Atraso",
+   "options": "Valor percentual\nValor fixo"
+  },
+  {
+   "depends_on": "eval: doc.multa_atraso == 'Valor percentual'",
+   "fieldname": "percentual_multa",
+   "fieldtype": "Percent",
+   "label": "Valor Percentual da Multa "
+  },
+  {
+   "depends_on": "eval: doc.multa_atraso == 'Valor fixo'",
+   "fieldname": "fixo_multa",
+   "fieldtype": "Currency",
+   "label": "Valor Fixo da Multa",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Gerar Boleto",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-01-13 09:25:47.418292",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Gerar Boleto",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

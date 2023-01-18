@@ -260,12 +260,12 @@ def make_os(doctype, customer, docname):
     return doc
 
 @frappe.whitelist()
-def make_nfs(doctype, customer, docname, address_display, descricao_servico, contact_person,contact_email,customer_address,base_total,payment_terms_template):
+def make_nfs(doctype, customer, docname, address_display, contact_person,contact_email,customer_address,base_total,payment_terms_template):
     doc = frappe.new_doc(doctype)
     doc.customer = customer
     doc.equipment = docname
     doc.address_display = address_display
-    doc.descricao_servico = descricao_servico
+    #doc.descricao_servico = descricao_servico
     doc.contact_person = contact_person
     doc.contact_email = contact_email
     doc.customer_address = customer_address
@@ -273,18 +273,22 @@ def make_nfs(doctype, customer, docname, address_display, descricao_servico, con
     doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
-
+    
     
 @frappe.whitelist()
-def make_gerar_boleto(doctype, customer, base_total, id_nfs, id_client, equipment, payment_terms_template):
+def make_gerar_boleto(doctype, customer, totalliquidoboleto, id_nfs, id_client, equipment, payment_terms_template):
     doc = frappe.new_doc(doctype)
     doc.equipment = equipment
     doc.customer = customer
-    doc.base_total = base_total
+    doc.totalliquidoboleto = totalliquidoboleto
     doc.id_nfs = id_nfs
     doc.id_client = id_client
     doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
+
+
+
+
 
 
