@@ -17,7 +17,7 @@
  "name": "Or\u00e7amento Antigo", 
  "owner": "Administrator", 
  "print_format_builder": 1, 
- "print_format_type": "Js", 
+ "print_format_type": "JS", 
  "show_section_headings": 1, 
  "standard": "Yes"
 }
