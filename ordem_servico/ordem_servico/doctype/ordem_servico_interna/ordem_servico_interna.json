@@ -340,6 +340,7 @@
   {
    "fieldname": "equipment",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Equipamento do Cliente",
    "options": "Equipamentos do Cliente"
   },
@@ -908,7 +909,7 @@
   }
  ],
  "links": [],
- "modified": "2023-01-16 14:27:45.764743",
+ "modified": "2023-01-18 15:38:50.470642",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

@@ -151,9 +151,9 @@
   {
    "fieldname": "equipment",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Equipamento",
-   "options": "Equipamentos do Cliente",
-   "reqd": 1
+   "options": "Equipamentos do Cliente"
   },
   {
    "fieldname": "serie_number",
@@ -434,7 +434,7 @@
   }
  ],
  "links": [],
- "modified": "2023-01-16 14:29:09.756192",
+ "modified": "2023-01-18 15:38:23.503239",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
