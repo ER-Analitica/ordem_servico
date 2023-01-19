@@ -60,6 +60,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 			}
 		}*/
 	},
+	/*
 	serie_number(frm) {
 		const { serie_number } = frm.doc
 		if (serie_number) {
@@ -78,7 +79,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 				}
 			})
 		}
-	},
+	},*/
 	start_repair(frm) {
 		const { __unsaved } = cur_frm.doc
 		if (__unsaved) {

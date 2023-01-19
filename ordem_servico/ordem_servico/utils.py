@@ -11,7 +11,7 @@ import frappe
 from frappe.utils.data import time_diff, today
 from pytz import timezone
 
-
+'''
 @frappe.whitelist()
 
 def get_repair_and_quotation_times(equipment):
@@ -25,7 +25,7 @@ def get_repair_and_quotation_times(equipment):
         as_dict=True,
     )
     return data
-
+'''
 
 @frappe.whitelist()
 def make_event(doctype, docname, start_date, start_time, work_time, trigger):
