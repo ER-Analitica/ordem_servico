@@ -57,7 +57,8 @@ fixtures = [
              'Sales Order',
              'Address',
              'Purchase Order Item',
-             'Customer'
+             'Customer',
+             'Client Script'
              
          )
      ]]
@@ -75,7 +76,8 @@ fixtures = [
              'Sales Order',
              'Address',
              'Purchase Order Item',
-             'Customer'
+             'Customer',
+             'Client Script'
              
          )
      ]]
