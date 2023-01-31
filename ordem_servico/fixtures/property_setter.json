@@ -439,13 +439,13 @@
   "doctype_or_field": "DocType",
   "field_name": null,
   "is_system_generated": 0,
-  "modified": "2022-03-23 16:49:02.711346",
+  "modified": "2023-01-31 14:36:28.625600",
   "module": null,
   "name": "Sales Order-default_print_format",
   "property": "default_print_format",
   "property_type": "Data",
   "row_name": null,
-  "value": "Confirma\u00e7\u00e3o de pedido"
+  "value": "Confirmacao de pedido"
  },
  {
   "default_value": null,
@@ -2782,5 +2782,21 @@
   "property_type": "Data",
   "row_name": null,
   "value": "Nome do Servi\u00e7o"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Order",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "sec_warehouse",
+  "is_system_generated": 0,
+  "modified": "2023-01-31 14:28:16.659334",
+  "module": null,
+  "name": "Sales Order-sec_warehouse-label",
+  "property": "label",
+  "property_type": "Data",
+  "row_name": null,
+  "value": "Detalhamento do Servi\u00e7o"
  }
 ]
