@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "creation": "2023-01-27 14:59:59.605145",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "descricao_servico"
+ ],
+ "fields": [
+  {
+   "fieldname": "descricao_servico",
+   "fieldtype": "Data",
+   "label": "Descri\u00e7\u00e3o do Servi\u00e7o",
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-01-27 15:44:41.429533",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Descricao do Servico",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "descricao_servico",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "descricao_servico",
+ "track_changes": 1
+}
