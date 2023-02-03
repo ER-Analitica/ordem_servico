@@ -1,7 +1,7 @@
 {
  "absolute_value": 0,
  "align_labels_right": 0,
- "creation": "2023-01-19 15:31:05.095022",
+ "creation": "2023-01-26 14:11:50.738973",
  "css": ".print-heading h2{\n\ttext-align:center;\n\tcolor:#045a88;\n}\n.print-heading small{\n\ttext-align:center;\n\tcolor:#045a88;\n}\n\n",
  "custom_format": 1,
  "default_print_language": "pt-BR",
@@ -18,7 +18,7 @@
  "margin_left": 0.0,
  "margin_right": 0.0,
  "margin_top": 0.0,
- "modified": "2023-01-26 09:18:05.511598",
+ "modified": "2023-02-03 09:07:34.080347",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "laudo teste",
