@@ -30,6 +30,8 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+
+
 doctype_js = {
     #"Customer" : "public/js/jquery.mask.min.js",
     "Ordem Servico Interna": "public/js/os_items.js",
@@ -58,7 +60,8 @@ fixtures = [
              'Address',
              'Purchase Order Item',
              'Customer',
-             'Client Script'
+             'Client Script',
+             'Opportunity'
              
          )
      ]]
@@ -77,11 +80,16 @@ fixtures = [
              'Address',
              'Purchase Order Item',
              'Customer',
-             'Client Script'
+             'Client Script',
+             'Opportunity'
              
          )
      ]]
      },
+     {
+         "dt":"Client Script"
+     }
+    
 ]
 doc_events = {
     "Customer": {
@@ -94,6 +102,9 @@ doc_events = {
     },
     "Item Price":{
         "on_update": "ordem_servico.doc_events.update_item.on_update",
+    },
+    "ToDo":{
+        "on_update": "ordem_servico.doc_events.update_data_vencimento.update_data_vencimento",
     }
     
     #"Contact": {
