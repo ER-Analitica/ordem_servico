@@ -12,18 +12,20 @@
   {
    "fieldname": "data_vencimento",
    "fieldtype": "Date",
+   "ignore_user_permissions": 1,
    "label": "Data de Vencimento"
   },
   {
    "fieldname": "reference_task",
    "fieldtype": "Data",
+   "ignore_user_permissions": 1,
    "label": "Tarefa Refer\u00eancia"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2023-02-06 10:50:49.051032",
+ "modified": "2023-02-13 17:20:44.941799",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Data de Vencimento Taks",
