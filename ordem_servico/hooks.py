@@ -61,9 +61,7 @@ fixtures = [
              'Purchase Order Item',
              'Customer',
              'Client Script',
-             'Opportunity',
-             'Opportunity-uf',
-             'Opportunity-segmento'
+             'Opportunity'
              
          )
      ]]
@@ -83,9 +81,7 @@ fixtures = [
              'Purchase Order Item',
              'Customer',
              'Client Script',
-             'Opportunity',
-             'Opportunity-uf',
-             'Opportunity-segmento'
+             'Opportunity'
              
          )
      ]]
