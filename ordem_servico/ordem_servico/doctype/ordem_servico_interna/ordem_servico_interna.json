@@ -7,13 +7,22 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
-  "status_section",
+  "tab_status",
   "status_order_service",
+  "column_break_5",
   "status_faturamento",
-  "equipment_location",
-  "column_break_4",
+  "column_break_6",
   "aguardando_peca",
   "em_terceiro",
+  "customer_section",
+  "customer",
+  "contact_link",
+  "column_break_14",
+  "contact_phone",
+  "contact_mobile",
+  "contact_email",
+  "address_os",
+  "address_display",
   "identification_section",
   "modalidade_entrada",
   "nome_transportadora_entrada",
@@ -24,30 +33,34 @@
   "entry_sales_invoice",
   "valor",
   "peso",
-  "info_documento",
-  "select_print_heading",
-  "customer_section",
-  "customer",
-  "contact_section",
-  "contact_link",
-  "contact_phone",
-  "contact_mobile",
-  "contact_email",
-  "address_os",
-  "address_display",
-  "naming_series",
-  "cb_0",
+  "s\u00e1ida_section",
+  "modalidade_saida",
+  "cod_rastreio",
+  "nome_transportadora",
+  "outro_saida",
+  "data_saida",
+  "column_break_107",
+  "nota_saida",
+  "valorsaida",
+  "peso_saida",
+  "equipamento_tab",
   "equipment_details_section",
-  "situacao_equipamento",
-  "warranty",
+  "equipment_location",
   "equipment",
   "serie_number",
   "equipment_model",
   "equipment_tag",
   "equipment_description",
-  "created_by_observation",
-  "accessories_section",
+  "column_break_29",
   "accessories",
+  "situacao_equipamento",
+  "warranty",
+  "section_break_30",
+  "created_by_observation",
+  "agendamentolaudo_inicial_tab",
+  "info_documento",
+  "select_print_heading",
+  "naming_series",
   "initial_schedule_section",
   "initial_scheduled_to",
   "initial_scheduled_to_name",
@@ -79,6 +92,7 @@
   "os_items",
   "create_quotation",
   "quotation_status",
+  "agendamentolaudo_final_tab",
   "final_schedule_section",
   "final_scheduled_to",
   "final_scheduled_to_name",
@@ -112,16 +126,7 @@
   "qualificacao_temperatura",
   "repair_observation",
   "repair_status",
-  "s\u00e1ida_section",
-  "modalidade_saida",
-  "cod_rastreio",
-  "nome_transportadora",
-  "outro_saida",
-  "data_saida",
-  "column_break_107",
-  "nota_saida",
-  "valorsaida",
-  "peso_saida",
+  "hist\u00f3rico_tab",
   "history_section",
   "quotation_name",
   "sales_order_name",
@@ -136,11 +141,6 @@
   "payment_entry_date"
  ],
  "fields": [
-  {
-   "fieldname": "status_section",
-   "fieldtype": "Section Break",
-   "label": "Status"
-  },
   {
    "bold": 1,
    "default": "Aguardando Or\u00e7amento",
@@ -162,10 +162,6 @@
    "fieldtype": "Data",
    "label": "Localiza\u00e7\u00e3o Equipamento",
    "reqd": 1
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -237,13 +233,17 @@
   {
    "fieldname": "info_documento",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Informa\u00e7\u00f5es do documento "
   },
   {
+   "default": "Laudo T\u00e9cnico",
    "fieldname": "select_print_heading",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "T\u00edtulo do Documento",
-   "options": "Print Heading"
+   "options": "Print Heading",
+   "read_only": 1
   },
   {
    "fieldname": "customer_section",
@@ -257,13 +257,6 @@
    "label": "Cliente",
    "options": "Customer",
    "reqd": 1
-  },
-  {
-   "collapsible": 1,
-   "default": "0",
-   "fieldname": "contact_section",
-   "fieldtype": "Section Break",
-   "label": "Contato"
   },
   {
    "fieldname": "contact_link",
@@ -303,6 +296,7 @@
   {
    "fieldname": "address_display",
    "fieldtype": "Small Text",
+   "hidden": 1,
    "label": "Endere\u00e7o",
    "read_only": 1
   },
@@ -315,10 +309,6 @@
    "label": "Series",
    "options": "OS-",
    "reqd": 1
-  },
-  {
-   "fieldname": "cb_0",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "equipment_details_section",
@@ -372,13 +362,9 @@
    "label": "Observa\u00e7\u00e3o do Respons\u00e1vel"
   },
   {
-   "fieldname": "accessories_section",
-   "fieldtype": "Section Break",
-   "label": "Acess\u00f3rios"
-  },
-  {
    "fieldname": "accessories",
    "fieldtype": "Table",
+   "label": "Acess\u00f3rios",
    "options": "Ordem Servico Acessorios"
   },
   {
@@ -777,7 +763,7 @@
    "depends_on": "eval: doc.quotation_event_link",
    "fieldname": "s\u00e1ida_section",
    "fieldtype": "Section Break",
-   "label": "S\u00c1IDA"
+   "label": "Sa\u00edda"
   },
   {
    "fieldname": "modalidade_saida",
@@ -831,7 +817,6 @@
    "read_only": 1
   },
   {
-   "collapsible": 1,
    "default": "0",
    "fieldname": "history_section",
    "fieldtype": "Section Break",
@@ -904,12 +889,58 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tab_status",
+   "fieldtype": "Tab Break",
+   "label": "Detalhes"
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_30",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "agendamentolaudo_inicial_tab",
+   "fieldtype": "Tab Break",
+   "label": "Agendamento/Laudo inicial"
+  },
+  {
+   "fieldname": "agendamentolaudo_final_tab",
+   "fieldtype": "Tab Break",
+   "label": "Agendamento/Laudo Final"
+  },
+  {
+   "fieldname": "hist\u00f3rico_tab",
+   "fieldtype": "Tab Break",
+   "label": "Hist\u00f3rico"
+  },
+  {
+   "fieldname": "equipamento_tab",
+   "fieldtype": "Tab Break",
+   "label": "Equipamento"
   }
  ],
  "links": [],
- "modified": "2023-01-18 15:38:50.470642",
+ "modified": "2023-02-16 17:16:01.106085",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
