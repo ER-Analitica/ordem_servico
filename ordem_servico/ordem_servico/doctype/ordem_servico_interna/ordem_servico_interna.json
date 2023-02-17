@@ -760,7 +760,7 @@
    "options": "\nLiberado\nLiberado com Restri\u00e7\u00e3o\nN\u00e3o Liberado"
   },
   {
-   "depends_on": "eval: doc.quotation_event_link",
+   "depends_on": "eval: doc.status_order_service",
    "fieldname": "s\u00e1ida_section",
    "fieldtype": "Section Break",
    "label": "Sa\u00edda"
@@ -940,7 +940,7 @@
   }
  ],
  "links": [],
- "modified": "2023-02-16 17:16:01.106085",
+ "modified": "2023-02-17 08:48:24.463229",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
