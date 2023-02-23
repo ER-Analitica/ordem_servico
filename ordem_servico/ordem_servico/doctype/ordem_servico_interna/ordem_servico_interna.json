@@ -12,6 +12,8 @@
   "column_break_5",
   "status_faturamento",
   "column_break_6",
+  "equipment_location",
+  "column_break_8",
   "aguardando_peca",
   "em_terceiro",
   "customer_section",
@@ -45,7 +47,6 @@
   "peso_saida",
   "equipamento_tab",
   "equipment_details_section",
-  "equipment_location",
   "equipment",
   "serie_number",
   "equipment_model",
@@ -937,10 +938,14 @@
    "fieldname": "equipamento_tab",
    "fieldtype": "Tab Break",
    "label": "Equipamento"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2023-02-17 08:48:24.463229",
+ "modified": "2023-02-22 08:23:30.047164",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
