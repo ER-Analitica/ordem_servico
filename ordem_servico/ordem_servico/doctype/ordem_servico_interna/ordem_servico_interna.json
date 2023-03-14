@@ -7,6 +7,15 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
+  "informa\u00e7\u00f5es_nota_fiscal_section",
+  "desc_item_nf",
+  "nat_operacao",
+  "column_break_4",
+  "qtd_nf",
+  "column_break_7",
+  "ncm",
+  "column_break_15",
+  "cfop",
   "tab_status",
   "status_order_service",
   "column_break_5",
@@ -51,7 +60,10 @@
   "serie_number",
   "equipment_model",
   "equipment_tag",
+  "tipo_servico",
   "equipment_description",
+  "nome_equip",
+  "descricao_item",
   "column_break_29",
   "accessories",
   "situacao_equipamento",
@@ -129,6 +141,10 @@
   "repair_status",
   "hist\u00f3rico_tab",
   "history_section",
+  "tempo_inicio_recebimento",
+  "tempo_final_recebimento",
+  "tempo_em_recebimento",
+  "column_break_139",
   "quotation_name",
   "sales_order_name",
   "delivery_note_name",
@@ -144,12 +160,11 @@
  "fields": [
   {
    "bold": 1,
-   "default": "Aguardando Or\u00e7amento",
    "fieldname": "status_order_service",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status Ordem de Servi\u00e7o",
-   "options": "Aguardando Or\u00e7amento\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nAprovado\nAguardando Conserto\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nEmbalar\nSem Conserto",
+   "options": "Em Recebimento\nAguardando Or\u00e7amento\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nSem Conserto\nEmbalar",
    "reqd": 1
   },
   {
@@ -267,13 +282,16 @@
    "reqd": 1
   },
   {
-   "fetch_from": "contact_person.phone",
+   "depends_on": "eval: doc.contact_link",
+   "fetch_from": "contact_link.phone",
    "fieldname": "contact_phone",
    "fieldtype": "Data",
    "label": "Telefone",
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.contact_link",
+   "fetch_from": "contact_link.mobile_no",
    "fieldname": "contact_mobile",
    "fieldtype": "Data",
    "label": "Celular",
@@ -281,7 +299,8 @@
    "read_only": 1
   },
   {
-   "fetch_from": "contact_person.email_id",
+   "depends_on": "eval: doc.contact_link",
+   "fetch_from": "contact_link.email_id",
    "fieldname": "contact_email",
    "fieldtype": "Data",
    "label": "Email",
@@ -297,7 +316,6 @@
   {
    "fieldname": "address_display",
    "fieldtype": "Small Text",
-   "hidden": 1,
    "label": "Endere\u00e7o",
    "read_only": 1
   },
@@ -354,8 +372,9 @@
   },
   {
    "fieldname": "equipment_description",
-   "fieldtype": "Data",
-   "label": "Descri\u00e7\u00e3o do Equipamento"
+   "fieldtype": "Link",
+   "label": "Equipamento",
+   "options": "Item"
   },
   {
    "fieldname": "created_by_observation",
@@ -378,8 +397,7 @@
    "fieldname": "initial_scheduled_to",
    "fieldtype": "Link",
    "label": "Agendado Para",
-   "options": "Employee",
-   "reqd": 1
+   "options": "Employee"
   },
   {
    "fetch_from": "initial_scheduled_to.employee_name",
@@ -400,22 +418,19 @@
   {
    "fieldname": "quotation_schedule_date",
    "fieldtype": "Date",
-   "label": "Data de Agendamento - Or\u00e7amento",
-   "reqd": 1
+   "label": "Data de Agendamento - Or\u00e7amento"
   },
   {
    "collapsible": 1,
    "default": "00:00:00",
    "fieldname": "quotation_schedule_time",
    "fieldtype": "Time",
-   "label": "Hora de Agendamento - Or\u00e7amento",
-   "reqd": 1
+   "label": "Hora de Agendamento - Or\u00e7amento"
   },
   {
    "fieldname": "quotation_time",
    "fieldtype": "Time",
-   "label": "Tempo de Or\u00e7amento",
-   "reqd": 1
+   "label": "Tempo de Or\u00e7amento"
   },
   {
    "depends_on": "eval: !(doc.quotation_event_link)",
@@ -556,7 +571,7 @@
    "options": "\nEm teste\nAguardando pe\u00e7a\nEnviado para Terceiros\nAguardando informa\u00e7\u00f5es do Fabricante\nConclu\u00eddo"
   },
   {
-   "depends_on": "eval: doc.quotation_name || doc.tempo_orcamento",
+   "depends_on": "eval: doc.quotation_name || doc.tempo_orcamento || doc.have_quotation",
    "fieldname": "final_schedule_section",
    "fieldtype": "Section Break",
    "label": "Agendamento Final"
@@ -904,7 +919,7 @@
   },
   {
    "fieldname": "tab_status",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Detalhes"
   },
   {
@@ -920,6 +935,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval: doc.customer && doc.contact_link && doc.cfop && doc.ncm && doc.serie_number && doc.equipment_model && doc.equipment_tag && doc.equipment_description && doc.tipo_servico",
    "fieldname": "agendamentolaudo_inicial_tab",
    "fieldtype": "Tab Break",
    "label": "Agendamento/Laudo inicial"
@@ -942,10 +958,95 @@
   {
    "fieldname": "column_break_8",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tempo_inicio_recebimento",
+   "fieldtype": "Data",
+   "label": "Tempo In\u00edcio Recebimento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tempo_final_recebimento",
+   "fieldtype": "Data",
+   "label": "Tempo Final de Recebimento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tempo_em_recebimento",
+   "fieldtype": "Data",
+   "label": "Tempo em Recebimento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tipo_servico",
+   "fieldtype": "Select",
+   "label": "Tipo de Servi\u00e7o",
+   "options": "Calibra\u00e7\u00e3o\nManuten\u00e7\u00e3o"
+  },
+  {
+   "fetch_from": "equipment_description.description",
+   "fieldname": "descricao_item",
+   "fieldtype": "Small Text",
+   "label": "Escopo",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "equipment_description.item_name",
+   "fieldname": "nome_equip",
+   "fieldtype": "Data",
+   "label": "Servi\u00e7o"
+  },
+  {
+   "fieldname": "informa\u00e7\u00f5es_nota_fiscal_section",
+   "fieldtype": "Section Break",
+   "label": "Informa\u00e7\u00f5es Nota Fiscal"
+  },
+  {
+   "fieldname": "nat_operacao",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Natureza da Opera\u00e7\u00e3o",
+   "options": "teste"
+  },
+  {
+   "fieldname": "ncm",
+   "fieldtype": "Data",
+   "label": "NCM"
+  },
+  {
+   "fieldname": "cfop",
+   "fieldtype": "Data",
+   "label": "CFOP"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "desc_item_nf",
+   "fieldtype": "Data",
+   "label": "Descri\u00e7\u00e3o do Item Nota Fiscal"
+  },
+  {
+   "fieldname": "qtd_nf",
+   "fieldtype": "Data",
+   "label": "Quantidade Nota Fiscal"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_139",
+   "fieldtype": "Column Break"
   }
  ],
  "links": [],
- "modified": "2023-02-22 08:23:30.047164",
+ "modified": "2023-03-13 16:39:33.680777",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

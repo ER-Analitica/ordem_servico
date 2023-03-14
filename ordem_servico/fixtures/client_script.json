@@ -97,5 +97,71 @@
   "name": "Valida\u00e7\u00e3o cep e numero",
   "script": "frappe.ui.form.on('Quotation', {\n    validate: function(frm) {\n        console.log(\"validate\")\n        // Obter o link do endere\u00e7o selecionado na cota\u00e7\u00e3o\n        var customer_address = frm.doc.customer_address;\n\n        if (!customer_address) {\n            return;\n        }\n\n        // Buscar o endere\u00e7o correspondente\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Address\",\n                name: customer_address\n            },\n            callback: function(r) {\n                var endereco = r.message;\n\n                if (endereco && (!endereco.cep || !endereco.numero)) {\n                    frappe.msgprint({\n                        title: __('Endere\u00e7o incompleto'),\n                        message: __('Por favor, preencha o CEP e o n\u00famero do endere\u00e7o antes de salvar.'),\n                        indicator: 'orange'\n                    });\n                    frappe.validated = false;\n                } else {\n                    frappe.validated = true;\n                }\n            }\n        });\n    }\n});\n\n// Adicionar um gatilho para verificar os campos novamente ao alterar o endere\u00e7o\nfrappe.ui.form.on('Quotation', 'customer_address', function(frm) {\n    frm.trigger('validate');\n});\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 1,
+  "modified": "2023-03-08 16:38:33.478777",
+  "module": null,
+  "name": "Data Ordem Interna",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    onload: function(frm) {\n        if (!frm.doc.tempo_inicio_recebimento) {\n            const now = frappe.datetime.now_datetime();\n            const formatted_date = frappe.datetime.str_to_user(now).replace(\" \",\" \");\n            frm.set_value(\"tempo_inicio_recebimento\", formatted_date);\n            frm.set_df_property(\"tempo_inicio_recebimento\", \"read_only\", 1);\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 1,
+  "modified": "2023-03-13 16:33:20.251859",
+  "module": null,
+  "name": "Definir obriga\u00e7\u00e3o nos campos de agendamento",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    refresh: function(frm) {\n    if (frm.doc.customer && frm.doc.contact_link && frm.doc.desc_item_nf && frm.doc.qtd_nf && frm.doc.cfop && frm.doc.ncm && frm.doc.serie_number && frm.doc.equipment_model && frm.doc.equipment_tag && frm.doc.equipment_description && frm.doc.tipo_servico != \"\")\n    frm.set_df_property('initial_scheduled_to', 'reqd', 1);\n    /*frm.set_df_property('quotation_schedule_date', 'reqd', 1);\n    frm.set_df_property('quotation_time', 'reqd', 1);*/\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 1,
+  "modified": "2023-03-13 16:33:44.311274",
+  "module": null,
+  "name": "Incluir obriga\u00e7\u00e3o de Data de agendamento Ordem Servi\u00e7o",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    refresh: function(frm) {\n    if (frm.doc.customer && frm.doc.contact_link && frm.doc.desc_item_nf && frm.doc.qtd_nf && frm.doc.cfop && frm.doc.ncm && frm.doc.serie_number && frm.doc.equipment_model && frm.doc.equipment_tag && frm.doc.equipment_description && frm.doc.tipo_servico != \"\")\n    /*frm.set_df_property('initial_scheduled_to', 'reqd', 1);*/\n    frm.set_df_property('quotation_schedule_date', 'reqd', 1);\n    /*frm.set_df_property('quotation_time', 'reqd', 1);*/\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 0,
+  "modified": "2023-03-10 13:39:09.825025",
+  "module": null,
+  "name": "Incluir Obriga\u00e7\u00e3o de tempo de agendamento no Doctype Ordem de Servi\u00e7o Interna",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    refresh: function(frm) {\n    if (frm.doc.customer && frm.doc.contact_link && frm.doc.nat_operacao && frm.doc.cfop && frm.doc.ncm && frm.doc.serie_number && frm.doc.equipment_model && frm.doc.equipment_tag && frm.doc.equipment_description && frm.doc.tipo_servico != \"\"){\n    frm.set_df_property('quotation_time', 'reqd', 1);\n    }\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 0,
+  "modified": "2023-03-14 07:58:16.280366",
+  "module": null,
+  "name": "Status Ordem Servi\u00e7o - Somente Leitura",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    refresh: function(frm) {\n    if (frm.doc.customer || frm.doc.contact_link || frm.doc.desc_item_nf || frm.doc.qtd_nf || frm.doc.cfop || frm.doc.ncm || frm.doc.serie_number || frm.doc.equipment_model || frm.doc.equipment_tag || frm.doc.equipment_description || frm.doc.tipo_servico == \"\"){\n    /*frm.set_df_property('initial_scheduled_to', 'reqd', 1);*/\n    frm.doc.status_order_service = \"Em Recebimento\"\n    frm.set_df_property('status_order_service', 'read_only', 1);\n    /*frm.set_df_property('quotation_time', 'reqd', 1);*/\n    }\n   \n}});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 0,
+  "modified": "2023-03-14 07:53:00.843282",
+  "module": null,
+  "name": "Remover somente leitura status == \"Aguardando Or\u00e7amento\" Ordem Servico Interna",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n\trefresh(frm) {\n\tif(frm.doc.status_order_service == \"Aguardando Or\u00e7amento\"){\n    frm.set_df_property('status_order_service', 'read_only', 0);\n    \n    }\n\t}\n})",
+  "view": "Form"
  }
 ]
