@@ -28,7 +28,7 @@ class OrdemServicoInterna(Document):
 
 			
 		#verificar campos preenchidos na os para passar de status	
-		if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" and self.status_order_service == "Em Recebimento" :
+		if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" :
 			
 			self.tempo_final_recebimento = data_now()
 			#time_diff = datetime.strptime(self.tempo_final_recebimento, format) - datetime.strptime(self.tempo_inicio_recebimento, format)
