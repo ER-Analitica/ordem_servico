@@ -63,7 +63,8 @@ fixtures = [
              'Client Script',
              'Opportunity',
              'Payment Schedule',
-             'Payment Term'
+             'Payment Term',
+             'Purchase Order'
              
          )
      ]]
@@ -85,7 +86,8 @@ fixtures = [
              'Client Script',
              'Opportunity',
              'Payment Schedule',
-             'Payment Term'
+             'Payment Term',
+             'Purchase Order'
              
          )
      ]]
