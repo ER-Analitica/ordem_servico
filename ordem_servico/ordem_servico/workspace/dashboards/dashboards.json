@@ -1,0 +1,58 @@
+{
+ "charts": [
+  {
+   "chart_name": "Fatura de Vendas",
+   "label": "fatura"
+  }
+ ],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 18px;\\\">Dashboards</span>\",\"col\":12}},{\"type\":\"chart\",\"data\":{\"chart_name\":\"fatura\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Crm\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Quantidade de funcion\u00e1rios\",\"col\":4}}]",
+ "creation": "2023-05-16 14:51:42.918470",
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "crm",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "dashboards",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Quantidade de funcion\u00e1rios",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Quantidade",
+   "link_count": 0,
+   "link_to": "Employee",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2023-05-16 14:56:48.604330",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "dashboards",
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 39.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Crm",
+   "link_to": "CRM",
+   "type": "Dashboard"
+  }
+ ],
+ "title": "dashboards"
+}
