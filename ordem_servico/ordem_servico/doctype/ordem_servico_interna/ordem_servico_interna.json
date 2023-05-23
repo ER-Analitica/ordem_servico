@@ -372,9 +372,8 @@
   },
   {
    "fieldname": "equipment_description",
-   "fieldtype": "Link",
-   "label": "Equipamento",
-   "options": "Item"
+   "fieldtype": "Data",
+   "label": "Equipamento"
   },
   {
    "fieldname": "created_by_observation",
@@ -905,7 +904,6 @@
   {
    "fieldname": "company",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Company",
    "options": "Company"
   },
@@ -935,7 +933,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval: doc.customer && doc.contact_link && doc.cfop && doc.ncm && doc.serie_number && doc.equipment_model && doc.equipment_tag && doc.equipment_description && doc.tipo_servico",
    "fieldname": "agendamentolaudo_inicial_tab",
    "fieldtype": "Tab Break",
    "label": "Agendamento/Laudo inicial"
@@ -980,6 +977,7 @@
   {
    "fieldname": "tipo_servico",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Tipo de Servi\u00e7o",
    "options": "Calibra\u00e7\u00e3o\nManuten\u00e7\u00e3o"
   },
@@ -994,6 +992,7 @@
    "fetch_from": "equipment_description.item_name",
    "fieldname": "nome_equip",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Servi\u00e7o"
   },
   {
@@ -1046,7 +1045,7 @@
   }
  ],
  "links": [],
- "modified": "2023-03-13 16:39:33.680777",
+ "modified": "2023-05-23 14:33:14.091134",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
