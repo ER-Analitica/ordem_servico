@@ -78,7 +78,7 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
-        os.status_order_service = "Encerrada"  
+        os.status_order_service = "Embalar"  
     os.save()
 
 
