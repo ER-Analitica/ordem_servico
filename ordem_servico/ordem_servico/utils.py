@@ -78,10 +78,10 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
-    if os.doctype == "Ordem Servico Interna":
-        os.status_order_service = "Embalar"
-    elif os.doctype == "Ordem Servico Externa":
-        os.status_order_service = "Encerrada"  
+        if os.doctype == "Ordem Servico Interna":
+             os.status_order_service = "Embalar"
+        elif os.doctype == "Ordem Servico Externa":
+             os.status_order_service = "Encerrada"  
     os.save()
 
 
