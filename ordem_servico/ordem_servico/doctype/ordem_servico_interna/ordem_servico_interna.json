@@ -7,15 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
-  "informa\u00e7\u00f5es_nota_fiscal_section",
-  "desc_item_nf",
-  "nat_operacao",
-  "column_break_4",
-  "qtd_nf",
-  "column_break_7",
-  "ncm",
-  "column_break_15",
-  "cfop",
   "tab_status",
   "status_order_service",
   "column_break_5",
@@ -34,6 +25,15 @@
   "contact_email",
   "address_os",
   "address_display",
+  "informa\u00e7\u00f5es_nota_fiscal_section",
+  "desc_item_nf",
+  "nat_operacao",
+  "column_break_4",
+  "qtd_nf",
+  "column_break_7",
+  "ncm",
+  "column_break_15",
+  "cfop",
   "identification_section",
   "modalidade_entrada",
   "nome_transportadora_entrada",
@@ -998,7 +998,7 @@
   {
    "fieldname": "informa\u00e7\u00f5es_nota_fiscal_section",
    "fieldtype": "Section Break",
-   "label": "Informa\u00e7\u00f5es Nota Fiscal"
+   "label": "Informa\u00e7\u00f5es da Nota Fiscal de Entrada"
   },
   {
    "fieldname": "nat_operacao",
@@ -1045,7 +1045,7 @@
   }
  ],
  "links": [],
- "modified": "2023-05-23 14:33:14.091134",
+ "modified": "2023-06-05 09:00:38.017569",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
