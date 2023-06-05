@@ -27,8 +27,10 @@ class OrdemServicoInterna(Document):
 			self.update_equipamento()
 
 			
-		#verificar campos preenchidos na os para passar de status	
-		#if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" :
+		#verificar campos preenchidos na os para passar de status
+		'''	
+		if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" :
+
 			
 			#self.tempo_final_recebimento = data_now()
 			#time_diff = datetime.strptime(self.tempo_final_recebimento, format) - datetime.strptime(self.tempo_inicio_recebimento, format)
@@ -42,11 +44,12 @@ class OrdemServicoInterna(Document):
 			#self.status_order_service = "Em Recebimento"
 
 
-	#	if self.status_order_service == "Em Recebimento":
-            #frappe.msgprint('Alguns campos precisam ser preenchidos antes de passarmos para o próximo status!');
+		if self.status_order_service == "Em Recebimento":
+			frappe.msgprint('Alguns campos precisam ser preenchidos antes de passarmos para o próximo status!');
+		'''
 
-
-		
+		#agendamento inicial
+		#eval: doc.customer && doc.contact_link && doc.cfop && doc.ncm && doc.serie_number && doc.equipment_model && doc.equipment_tag && doc.equipment_description && doc.tipo_servico
 		
 		
 
