@@ -28,22 +28,22 @@ class OrdemServicoInterna(Document):
 
 			
 		#verificar campos preenchidos na os para passar de status	
-		if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" :
+		#if self.customer and self.contact_link and self.cfop and self.ncm and self.serie_number and self.equipment_model and self.equipment_tag and self.equipment_description and self.tipo_servico != "" :
 			
-			self.tempo_final_recebimento = data_now()
+			#self.tempo_final_recebimento = data_now()
 			#time_diff = datetime.strptime(self.tempo_final_recebimento, format) - datetime.strptime(self.tempo_inicio_recebimento, format)
-			t1 = self.tempo_final_recebimento
-			t2 = self.tempo_inicio_recebimento
+			#t1 = self.tempo_final_recebimento
+			#t2 = self.tempo_inicio_recebimento
 			format = "%d/%m/%Y %H:%M:%S"
-			time_diff = datetime.strptime(t1, format) - datetime.strptime(t2, format)
-			self.tempo_em_recebimento = "{}".format(time_diff)
-			self.status_order_service = "Aguardando Orçamento"
-		else:
-			self.status_order_service = "Em Recebimento"
+			#time_diff = datetime.strptime(t1, format) - datetime.strptime(t2, format)
+			#self.tempo_em_recebimento = "{}".format(time_diff)
+			#self.status_order_service = "Aguardando Orçamento"
+		#else:
+			#self.status_order_service = "Em Recebimento"
 
 
-		if self.status_order_service == "Em Recebimento":
-			frappe.msgprint('Alguns campos precisam ser preenchidos antes de passarmos para o próximo status!');
+	#	if self.status_order_service == "Em Recebimento":
+            #frappe.msgprint('Alguns campos precisam ser preenchidos antes de passarmos para o próximo status!');
 
 
 		
