@@ -78,7 +78,11 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
-        os.status_order_service = "Encerrada"  
+        if os.doctype == "Ordem Servico Interna":
+             os.status_order_service = "Embalar"
+        elif os.doctype == "Ordem Servico Externa":
+             os.status_order_service = "Encerrada"
+        
     os.save()
 
 
@@ -260,16 +264,16 @@ def make_os(doctype, customer, docname):
     return doc
 
 @frappe.whitelist()
-def make_nfs(doctype, customer, docname, address_display, contact_person,contact_email,customer_address,base_total,payment_terms_template):
+def make_nfs(doctype, customer, docname, address_display, contact_person,contact_email,customer_address,net_total,payment_terms_template, descricao_do_servico):
     doc = frappe.new_doc(doctype)
     doc.customer = customer
     doc.equipment = docname
     doc.address_display = address_display
-    #doc.descricao_servico = descricao_servico
+    doc.descricao_do_servico = descricao_do_servico
     doc.contact_person = contact_person
     doc.contact_email = contact_email
     doc.customer_address = customer_address
-    doc.base_total = base_total
+    doc.net_total = net_total
     doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
