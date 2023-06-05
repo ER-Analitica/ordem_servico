@@ -27,7 +27,7 @@ class NFS(Document):
 				
 			else:
 				retencao_imposto = True
-				totaliss = self.base_total * frappe.db.get_value("Codigo de Servico", self.cod_do_servico, "aliquota") / 100
+				totaliss = self.net_total * frappe.db.get_value("Codigo de Servico", self.cod_do_servico, "aliquota") / 100
 				self.totalliquido = totaliss
 		
 			#listar cliente
@@ -86,9 +86,9 @@ class NFS(Document):
 				payload = json.dumps({
 						"customer": self.id_client,
 						"installment": None,
-						"serviceDescription": self.descricao_servico,
+						"serviceDescription": self.descricao_do_servico,
 						"observations": self.observacoes_adicionais,
-						"value": self.base_total,
+						"value": self.net_total,
 						"deductions": self.deducoes,
 						"effectiveDate": self.data_emissao,
 						"externalReference": None,
@@ -117,19 +117,19 @@ class NFS(Document):
 				datajson = json.loads(response.text)
 				self.id_nfs = datajson.get("id")
 				self.name = self.id_nfs
-				totalcofins = self.base_total * float(self.cofins) / 100
+				totalcofins = self.net_total * float(self.cofins) / 100
 				self.totalcofins = totalcofins 
-				totalirrf = self.base_total * float(self.irrf) / 100
+				totalirrf = self.net_total * float(self.irrf) / 100
 				self.totalirrf = totalirrf
-				totalpis = self.base_total * float(self.pis) / 100
+				totalpis = self.net_total * float(self.pis) / 100
 				self.totalpis = totalpis
-				totalcsll = self.base_total * float(self.csll) / 100
+				totalcsll = self.net_total * float(self.csll) / 100
 				self.totalcsll = totalcsll
-				totalinss = self.base_total * float(self.inss) / 100
+				totalinss = self.net_total * float(self.inss) / 100
 				self.totalinss = totalinss
 				#totaldeducoes = self.base_total - float(self.deducoes)
 				#self.totaldeducoes = totaldeducoes
-				self.totalliquidoboleto = self.base_total - (totalcofins + totalirrf + totalpis + totalcsll + totalinss) 
+				self.totalliquidoboleto = self.net_total - (totalcofins + totalirrf + totalpis + totalcsll + totalinss) 
 				self.totalliquidoboleto = self.totalliquidoboleto - float(self.deducoes)
 
 			else:
@@ -159,9 +159,9 @@ class NFS(Document):
 				payload = json.dumps({
 						"customer": self.id_client,
 						"installment": None,
-						"serviceDescription": self.descricao_servico,
+						"serviceDescription": self.descricao_do_servico,
 						"observations": self.observacoes_adicionais,
-						"value": self.base_total,
+						"value": self.net_total,
 						"deductions": self.deducoes,
 						"effectiveDate": self.data_emissao,
 						"externalReference": None,
@@ -190,19 +190,19 @@ class NFS(Document):
 				datajson = json.loads(response.text)
 				self.id_nfs = datajson.get("id")
 				self.name = self.id_nfs
-				totalcofins = self.base_total * float(self.cofins) / 100
+				totalcofins = self.net_total * float(self.cofins) / 100
 				self.totalcofins = totalcofins 
-				totalirrf = self.base_total * float(self.irrf) / 100
+				totalirrf = self.net_total * float(self.irrf) / 100
 				self.totalirrf = totalirrf
-				totalpis = self.base_total * float(self.pis) / 100
+				totalpis = self.net_total * float(self.pis) / 100
 				self.totalpis = totalpis
-				totalcsll = self.base_total * float(self.csll) / 100
+				totalcsll = self.net_total * float(self.csll) / 100
 				self.totalcsll = totalcsll
-				totalinss = self.base_total * float(self.inss) / 100
+				totalinss = self.net_total * float(self.inss) / 100
 				self.totalinss = totalinss
 				#totaldeducoes = self.base_total - float(self.deducoes)
 				#self.totaldeducoes = totaldeducoes
-				self.totalliquidoboleto = self.base_total - (totalcofins + totalirrf + totalpis + totalcsll + totalinss) 
+				self.totalliquidoboleto = self.net_total - (totalcofins + totalirrf + totalpis + totalcsll + totalinss) 
 				self.totalliquidoboleto = self.totalliquidoboleto - float(self.deducoes)
 
 		elif self.situacao_nota == "Cancelada":
@@ -239,6 +239,7 @@ class NFS(Document):
 			'Cookie': 'AWSALB=p2L20Wh0ST77WVsEInwqzthi8HXxg2UjnZk/8krfbbg37WHbr/4aMTrkaS6urZvFoTezL5L2XF4gms3Nv2zJs5Y0cfuHylz2hZ20Mp3sTpZOAlmIc6vGEMa+q57F; AWSALBCORS=p2L20Wh0ST77WVsEInwqzthi8HXxg2UjnZk/8krfbbg37WHbr/4aMTrkaS6urZvFoTezL5L2XF4gms3Nv2zJs5Y0cfuHylz2hZ20Mp3sTpZOAlmIc6vGEMa+q57F; AWSALBTG=+oSgKZ8vwWtJ2bXQG7BKeI4SxmEObBDoyT3cURMndwJvJVhcn7cYP5y9LvE0PnT9U2YbfmAwj4CODqRk33poY9VkzIWlTMegXBujNXN8P93pX+Qur4HJu/RNuc2nK9uxXoPJJAz34m2CczWWFE+Hw+yUm+Vx3vlJm8xhZV9U7Pn9; AWSALBTGCORS=+oSgKZ8vwWtJ2bXQG7BKeI4SxmEObBDoyT3cURMndwJvJVhcn7cYP5y9LvE0PnT9U2YbfmAwj4CODqRk33poY9VkzIWlTMegXBujNXN8P93pX+Qur4HJu/RNuc2nK9uxXoPJJAz34m2CczWWFE+Hw+yUm+Vx3vlJm8xhZV9U7Pn9'
 			}
 			response2 = requests.request("POST", url2, headers=headers)
+			#self.pdf_nota = "link da nfs-cidades"
 			
 
 

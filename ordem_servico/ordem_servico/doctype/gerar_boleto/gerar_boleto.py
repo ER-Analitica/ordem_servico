@@ -42,7 +42,7 @@ class GerarBoleto(Document):
 				campo_multa = self.fixo_multa
 
 
-			url3 = "https://sandbox.asaas.com/api/v3/payments"
+			url3 = "https://asaas.com/api/v3/payments"
 			payload = json.dumps({
 			"customer": self.id_client,
 			"billingType": tipo_pagamento,
@@ -65,7 +65,7 @@ class GerarBoleto(Document):
 			})
 			headers = {
 			'Content-Type': 'application/json',
-			'access_token': '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAwNDExNDQ6OiRhYWNoX2QzYWZiZmI3LWYwZTAtNGU4Yi05MGQ5LTBiZTM4ODBhNzA4MA==',
+			'access_token': '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAyNjA5NzM6OiRhYWNoXzQ0YWMzZDRmLTE4NDEtNDY3Ny04NGFkLTQ0NzVjMDEwYTk4Mg==',
 			'Cookie': 'AWSALB=F6M2jKnZcC1dnXNvg2Bc+fm0i/5HEYpuJnyrR9Gn2sPURTgwIj11tdZ3KIwF2PoOdVY4z8YuYbTFpGrxO+7yh+jI2TeSR+fFiP8AXD3PaW+RFfypxKtf1c0Os51T; AWSALBCORS=F6M2jKnZcC1dnXNvg2Bc+fm0i/5HEYpuJnyrR9Gn2sPURTgwIj11tdZ3KIwF2PoOdVY4z8YuYbTFpGrxO+7yh+jI2TeSR+fFiP8AXD3PaW+RFfypxKtf1c0Os51T; AWSALBTG=CxiaQYlOObhdnPMx1VghlMEvse6OmCAzOW5D2ZTaJ9grnTPmK6+IJg89tygPl4HX5KBCyeiNoapwGuq2SFGinVRqrAQqt/xg44b3vaDZ2QhgsKSZspFWRzZmlD3YdI+GX680M4WVIhA8MW05OILDfLvd96mwrmsBRGjSTTrij+tv; AWSALBTGCORS=CxiaQYlOObhdnPMx1VghlMEvse6OmCAzOW5D2ZTaJ9grnTPmK6+IJg89tygPl4HX5KBCyeiNoapwGuq2SFGinVRqrAQqt/xg44b3vaDZ2QhgsKSZspFWRzZmlD3YdI+GX680M4WVIhA8MW05OILDfLvd96mwrmsBRGjSTTrij+tv'
 			}
 
