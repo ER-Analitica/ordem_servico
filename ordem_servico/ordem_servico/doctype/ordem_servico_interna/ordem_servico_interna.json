@@ -99,6 +99,7 @@
   "tecnico_finalizou",
   "tempo_orcamento",
   "problem_observation",
+  "sem_conserto",
   "technical_person",
   "created_by",
   "section_break_66",
@@ -558,7 +559,7 @@
   },
   {
    "bold": 1,
-   "depends_on": "eval: !doc.quotation_name && !doc.have_quotation",
+   "depends_on": "eval: !doc.quotation_name && !doc.have_quotation && doc.sem_conserto == 0",
    "fieldname": "create_quotation",
    "fieldtype": "Button",
    "label": "Gerar Or\u00e7amento"
@@ -566,7 +567,7 @@
   {
    "fieldname": "quotation_status",
    "fieldtype": "Select",
-   "label": "Status do Or\u00e7amento",
+   "label": "Status do Or\u00e7amento / Ordem Servi\u00e7o",
    "options": "\nEm teste\nAguardando pe\u00e7a\nEnviado para Terceiros\nAguardando informa\u00e7\u00f5es do Fabricante\nConclu\u00eddo"
   },
   {
@@ -938,6 +939,7 @@
    "label": "Agendamento/Laudo inicial"
   },
   {
+   "depends_on": "eval: doc.sem_conserto == 0",
    "fieldname": "agendamentolaudo_final_tab",
    "fieldtype": "Tab Break",
    "label": "Agendamento/Laudo Final"
@@ -1042,10 +1044,16 @@
   {
    "fieldname": "column_break_139",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "sem_conserto",
+   "fieldtype": "Check",
+   "label": "Sem Conserto/Cobran\u00e7a"
   }
  ],
  "links": [],
- "modified": "2023-06-05 09:00:38.017569",
+ "modified": "2023-06-07 16:50:05.926079",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

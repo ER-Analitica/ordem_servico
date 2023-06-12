@@ -59,5 +59,10 @@ class OrdemServicoInterna(Document):
 		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "tag", self.get('equipment_tag'))
 		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "description", self.get('equipment_description'))
 		frappe.db.commit()
+
+	def validate(self):
+		if self.sem_conserto == 1:
+			self.quotation_status = "Concluído"
+			self.status_order_service = "Embalar"
 	
 
