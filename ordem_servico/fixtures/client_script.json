@@ -163,5 +163,16 @@
   "name": "Remover somente leitura status == \"Aguardando Or\u00e7amento\" Ordem Servico Interna",
   "script": "frappe.ui.form.on('Ordem Servico Interna', {\n\trefresh(frm) {\n\tif(frm.doc.status_order_service == \"Aguardando Or\u00e7amento\"){\n    frm.set_df_property('status_order_service', 'read_only', 0);\n    \n    }\n\t}\n})",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2023-06-26 14:18:55.233679",
+  "module": null,
+  "name": "Valida\u00e7\u00e3o incluir cep em Endere\u00e7o em Cliente",
+  "script": "frappe.ui.form.on('Customer', {\n    validate: function(frm) {\n        console.log(\"validate\")\n        // Obter o link do endere\u00e7o principal do cliente selecionado na cota\u00e7\u00e3o\n        var customer_primary_address = frm.doc.customer_primary_address;\n\n        if (!customer_primary_address) {\n            return;\n        }\n\n        // Buscar o endere\u00e7o correspondente\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Address\",\n                name: customer_primary_address\n            },\n            callback: function(r) {\n                var endereco = r.message;\n\n                if (endereco && (!endereco.cep || !endereco.numero)) {\n                    frappe.msgprint({\n                        title: __('Endere\u00e7o incompleto'),\n                        message: __('Por favor, preencha o CEP e o n\u00famero no campo de \"Endere\u00e7o Principal do Cliente\" antes de salvar.'),\n                        indicator: 'orange'\n                    });\n                    frappe.validated = false;\n                } else {\n                    frappe.validated = true;\n                }\n            }\n        });\n    }\n});\n\n// Adicionar um gatilho para verificar os campos novamente ao alterar o endere\u00e7o\nfrappe.ui.form.on('Customer', 'customer_primary_address', function(frm) {\n    frm.trigger('validate');\n});\n",
+  "view": "Form"
  }
 ]
