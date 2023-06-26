@@ -3790,5 +3790,21 @@
   "property_type": "Check",
   "row_name": null,
   "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Customer",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "customer_primary_address",
+  "is_system_generated": 0,
+  "modified": "2023-06-26 13:59:37.083022",
+  "module": null,
+  "name": "Customer-customer_primary_address-required",
+  "property": "reqd",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]
