@@ -2237,7 +2237,6 @@
   "description": null,
   "docstatus": 0,
   "doctype": "Custom Field",
->>>>>>> 9191c9de82844bf32717af3b625e72871ad768fd
   "dt": "Quotation",
   "fetch_from": null,
   "fetch_if_empty": 0,
