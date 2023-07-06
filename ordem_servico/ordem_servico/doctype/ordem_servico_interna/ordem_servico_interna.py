@@ -65,5 +65,13 @@ class OrdemServicoInterna(Document):
 		if self.sem_conserto == 1:
 			self.quotation_status = "Concluído"
 			self.status_order_service = "Embalar"
+		if self.have_quotation == 1:
+			self.quotation_status = "Concluído"
+
+	
+
+
+	
+
 	
 
