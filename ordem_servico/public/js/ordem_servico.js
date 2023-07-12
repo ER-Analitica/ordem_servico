@@ -26,6 +26,17 @@ frappe.ui.form.on(cur_frm.doctype, {
 				}
 			}
 		}
+		cur_frm.fields_dict.os_items.grid.get_field("item_code").get_query = function(doc, cdt, cdn) {
+			var child = locals[cdt][cdn];
+			return {
+				query: "erpnext.controllers.queries.item_query"
+			};
+		};
+		
+
+		
+		
+		
 		/*cur_frm.fields_dict.initial_scheduled_by.get_query = () => {
 			return {
 				filters: {
