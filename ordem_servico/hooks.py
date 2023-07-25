@@ -64,7 +64,9 @@ fixtures = [
              'Opportunity',
              'Payment Schedule',
              'Payment Term',
-             'Purchase Order'
+             'Purchase Order',
+             'Employee',
+             'Employee Education'
              
          )
      ]]
@@ -87,7 +89,9 @@ fixtures = [
              'Opportunity',
              'Payment Schedule',
              'Payment Term',
-             'Purchase Order'
+             'Purchase Order',
+             'Employee',
+             'Employee Education'
              
          )
      ]]
