@@ -296,4 +296,3 @@ def make_gerar_boleto(doctype, customer, totalliquidoboleto, id_nfs, id_client, 
 
 
 
-
