@@ -104,6 +104,7 @@
   "created_by",
   "section_break_66",
   "os_items",
+  "pontos_cal_criterios_aceitacao",
   "create_quotation",
   "quotation_status",
   "agendamentolaudo_final_tab",
@@ -552,7 +553,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval: !doc.has_quotation_link && !doc.have_quotation",
    "fieldname": "os_items",
    "fieldtype": "Table",
    "label": "Itens para Or\u00e7amento",
@@ -1051,10 +1051,15 @@
    "fieldname": "sem_conserto",
    "fieldtype": "Check",
    "label": "Sem Conserto/Cobran\u00e7a"
+  },
+  {
+   "fieldname": "pontos_cal_criterios_aceitacao",
+   "fieldtype": "Text Editor",
+   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios de Aceita\u00e7\u00e3o"
   }
  ],
  "links": [],
- "modified": "2023-06-13 16:28:59.643881",
+ "modified": "2023-08-03 09:41:52.158741",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

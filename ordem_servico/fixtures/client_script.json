@@ -218,5 +218,27 @@
   "name": "Ocultando e Desocultando valor de sal\u00e1rio em colaborador",
   "script": "frappe.ui.form.on('Employee', {\n  onload: function(frm) {\n    const ctcInput = frm.get_field(\"ctc\").$input;\n    // Definir o valor do campo como '---'\n    ctcInput.val('---');\n  },\n  'visualizar': function(frm) {\n    const ctcInput = frm.get_field(\"ctc\").$input;\n    if (ctcInput.attr(\"type\") === \"text\") {\n      // Mostrar o valor original\n      ctcInput.val(frm.doc.ctc);\n      ctcInput.attr(\"type\", \"currency\");\n    } else {\n      // Ocultar o valor com '---'\n      ctcInput.val('---');\n      ctcInput.attr(\"type\", \"text\");\n    }\n  }\n});\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 1,
+  "modified": "2023-08-03 14:05:11.659705",
+  "module": null,
+  "name": "Adicionando itens na tabela com base no link de or\u00e7amento",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n  has_quotation_link: function(frm) {\n    // Obter o valor do campo \"has_quotation_link\"\n    const quotation = frm.doc.has_quotation_link;\n\n    // Limpar a tabela se o campo \"has_quotation_link\" estiver vazio\n    if (!quotation) {\n      frm.clear_table('os_items');\n      frm.refresh_field('os_items');\n      return;\n    }\n\n    // Consultar a tabela de or\u00e7amento usando o valor do campo \"has_quotation_link\"\n    frappe.call({\n      method: 'frappe.client.get',\n      args: {\n        doctype: 'Quotation',\n        name: quotation,\n      },\n      callback: function(response) {\n        const quotation_doc = response.message;\n\n        // Limpar a tabela antes de adicionar novos itens\n        frm.clear_table('os_items');\n\n        // Iterar sobre os itens do or\u00e7amento e adicionar \u00e0 tabela em Ordem Servico Interna\n        if (quotation_doc && quotation_doc.items) {\n          for (const item of quotation_doc.items) {\n            const row = frm.add_child('os_items');\n            row.item_code = item.item_code;\n            row.item_name = item.item_name;\n            row.item_qty = item.qty;\n            // Adicione outros campos necess\u00e1rios aqui\n          }\n          frm.refresh_field('os_items');\n        }\n      },\n    });\n  },\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 1,
+  "modified": "2023-08-03 14:15:26.191917",
+  "module": null,
+  "name": "Manter edit\u00e1vel campo de pontos de calibra\u00e7\u00e3o em Ordem Servico Interna",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    onload: function(frm) {\n        // Defina a a\u00e7\u00e3o a ser executada quando o formul\u00e1rio \u00e9 carregado\n        frm.add_fetch('has_quotation_link', 'pontos_de_calibracao', 'pontos_cal_criterios_aceitacao');\n\n        // Defina o campo como edit\u00e1vel no carregamento\n        frm.set_df_property('pontos_cal_criterios_aceitacao', 'read_only', 0);\n    },\n    refresh: function(frm) {\n        // Defina a a\u00e7\u00e3o a ser executada quando o formul\u00e1rio \u00e9 atualizado ou carregado\n        frm.set_df_property('pontos_cal_criterios_aceitacao', 'read_only', 0);\n    }\n});\n",
+  "view": "Form"
  }
 ]
