@@ -115,6 +115,9 @@ doc_events = {
     },
     "ToDo":{
         "on_update": "ordem_servico.doc_events.update_data_vencimento.update_data_vencimento",
+    },
+    "Quotation":{
+        "validate": "ordem_servico.doc_events.limpar_hash.validate",
     }
     
     #"Contact": {

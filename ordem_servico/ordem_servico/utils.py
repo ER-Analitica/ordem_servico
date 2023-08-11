@@ -118,6 +118,8 @@ def make_quotation(os_docname):
     quot_doc.grand_total = 0
     quot_doc.rouding_adjustment = 0
     quot_doc.tc_name = "Boleto 15 dias"
+    quot_doc.hash_orc = "1"
+    
     #quot_doc.terms = frappe.db.get_value(
     #    "Terms and Conditions", {"name": "Boleto 15 dias"}, ["terms"]
     #)
@@ -128,6 +130,7 @@ def make_quotation(os_docname):
     quot_doc.conversion_rate = 1
     quot_doc.plc_conversion_rate = 1
     quot_doc.price_list_currency = "BRL"
+    quot_doc.hash_gerar_orc = "1"
     return quot_doc
 '''
 @frappe.whitelist()
