@@ -120,6 +120,7 @@ doc_events = {
         "validate": "ordem_servico.doc_events.limpar_hash.validate",
     }
     
+    
     #"Contact": {
      #   "before_save": "ordem_servico.doc_events.update_contact.before_save",
         
