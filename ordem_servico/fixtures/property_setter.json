@@ -1607,7 +1607,7 @@
   "doctype_or_field": "DocField",
   "field_name": "update_stock",
   "is_system_generated": 0,
-  "modified": "2023-09-04 11:18:29.768203",
+  "modified": "2023-09-04 13:20:59.115786",
   "module": null,
   "name": "Sales Invoice-update_stock-read_only",
   "property": "read_only",
