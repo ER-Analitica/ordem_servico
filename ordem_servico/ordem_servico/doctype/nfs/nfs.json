@@ -265,7 +265,7 @@
    "fieldname": "irrf",
    "fieldtype": "Select",
    "label": "IRRF",
-   "options": "0\n1\n1.5"
+   "options": "0\n1\n1.5\n4.8"
   },
   {
    "fieldname": "pis",
@@ -423,7 +423,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2023-02-28 14:08:04.306098",
+ "modified": "2023-09-04 13:51:28.023786",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "NFS",
