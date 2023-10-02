@@ -398,10 +398,10 @@
    "fieldname": "initial_scheduled_to",
    "fieldtype": "Link",
    "label": "Agendado Para",
-   "options": "Employee"
+   "options": "User"
   },
   {
-   "fetch_from": "initial_scheduled_to.employee_name",
+   "fetch_from": "initial_scheduled_to.full_name",
    "fieldname": "initial_scheduled_to_name",
    "fieldtype": "Data",
    "label": "Nome",
@@ -581,11 +581,11 @@
    "fieldname": "final_scheduled_to",
    "fieldtype": "Link",
    "label": "Agendado Para",
-   "options": "Employee"
+   "options": "User"
   },
   {
    "bold": 1,
-   "fetch_from": "final_scheduled_to.employee_name",
+   "fetch_from": "final_scheduled_to.full_name",
    "fieldname": "final_scheduled_to_name",
    "fieldtype": "Data",
    "label": "Nome ",
@@ -1059,7 +1059,7 @@
   }
  ],
  "links": [],
- "modified": "2023-08-03 09:41:52.158741",
+ "modified": "2023-10-02 10:27:19.410221",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
