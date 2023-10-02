@@ -13,16 +13,16 @@ frappe.ui.form.on(cur_frm.doctype, {
 		cur_frm.fields_dict.initial_scheduled_to.get_query = () => {
 			return {
 				filters: {
-					'department': ['in', ['Diretoria - ER', 'Assistência Técnica - ER']],
-					'status': 'Active'
+					'role_profile_name': ['in', ['Diretor Executivo', 'Supervisor Técnico', 'Assistente Técnico em Eletrônica', 'Estágiário Técnico', 'Gerente Técnico', 'Coordenador Técnico', 'Técnico em Eletrônica Senior', 'Técnico em Eletrônica Pleno', 'Técnico em Eletrônica Junior', 'Diretor Técnico']],
+					'enabled': '1'
 				}
 			}
 		}
 		cur_frm.fields_dict.final_scheduled_to.get_query = () => {
 			return {
 				filters: {
-					'department': ['in', ['Diretoria - ER', 'Assistência Técnica - ER']],
-					'status': 'Active'
+					'role_profile_name': ['in', ['Diretor Executivo', 'Supervisor Técnico', 'Assistente Técnico em Eletrônica', 'Estágiário Técnico', 'Gerente Técnico', 'Coordenador Técnico', 'Técnico em Eletrônica Senior', 'Técnico em Eletrônica Pleno', 'Técnico em Eletrônica Junior', 'Diretor Técnico']],
+					'enabled': '1'
 				}
 			}
 		}
