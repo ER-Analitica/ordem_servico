@@ -4558,5 +4558,21 @@
   "property_type": "Check",
   "row_name": null,
   "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "order_lost_reason",
+  "is_system_generated": 0,
+  "modified": "2023-10-10 15:17:18.645475",
+  "module": null,
+  "name": "Quotation-order_lost_reason-depends_on",
+  "property": "depends_on",
+  "property_type": "Code",
+  "row_name": null,
+  "value": ""
  }
 ]
