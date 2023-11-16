@@ -80,6 +80,7 @@ def get_time_now(doctype, docname, trigger):
         os.tempo_conserto = "{}".format(time_diff)
         if os.doctype == "Ordem Servico Interna":
              os.status_order_service = "Embalar"
+             os.status_faturamento = "Entregar"
         elif os.doctype == "Ordem Servico Externa":
              os.status_order_service = "Encerrada"
     os.save()
