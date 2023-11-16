@@ -172,8 +172,8 @@
   {
    "fieldname": "status_faturamento",
    "fieldtype": "Select",
-   "label": "Status de Faturamento",
-   "options": "\nFaturar\nFaturado"
+   "label": "Status da Entrega",
+   "options": "\nEntregar\nEntregue"
   },
   {
    "fieldname": "equipment_location",
@@ -1059,7 +1059,7 @@
   }
  ],
  "links": [],
- "modified": "2023-10-02 10:27:19.410221",
+ "modified": "2023-11-16 11:30:08.809738",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
