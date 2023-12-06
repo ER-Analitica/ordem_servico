@@ -5070,5 +5070,53 @@
   "property_type": "Text",
   "row_name": null,
   "value": "\u2022 Mencionar Pedido de Compra na Nota Fiscal. A falta da informa\u00e7\u00e3o poder\u00e1 impactar no lan\u00e7amento da nota. \n\u2022 Enviar PDF/XML da nota, e boletos, aos e-mails: financeiro@eranalitica.com.br (cadastro para envio autom\u00e1tico), nfe@eranalitica.com.br.\n\u2022 Em caso de fornecimento de servi\u00e7os, incluir o respons\u00e1vel t\u00e9cnico: wellington@eranalitica.com.br\n\u2022 Para coletas, alinhar com recebimento@eranalitica.com.br. Em caso de emiss\u00e3o de nota de retorno, mencionar o n\u00famero da nota de remessa e o pedido de compra de refer\u00eancia.\n-"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "defeito_constatado",
+  "is_system_generated": 0,
+  "modified": "2023-12-06 15:23:44.109172",
+  "module": null,
+  "name": "Quotation-defeito_constatado-allow_on_submit",
+  "property": "allow_on_submit",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "defeito_constatado",
+  "is_system_generated": 0,
+  "modified": "2023-12-06 15:24:24.346687",
+  "module": null,
+  "name": "Quotation-defeito_constatado-read_only",
+  "property": "read_only",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "defeito_constatado",
+  "is_system_generated": 0,
+  "modified": "2023-12-06 15:25:23.262980",
+  "module": null,
+  "name": "Quotation-defeito_constatado-fieldtype",
+  "property": "fieldtype",
+  "property_type": "select",
+  "row_name": null,
+  "value": "Text Editor"
  }
 ]
