@@ -1285,22 +1285,6 @@
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "nome_do_banco",
-  "is_system_generated": 0,
-  "modified": "2023-07-24 13:18:45.094720",
-  "module": null,
-  "name": "Employee-nome_do_banco-options",
-  "property": "options",
-  "property_type": "Text",
-  "row_name": null,
-  "value": "Bancos"
- },
- {
-  "default_value": null,
-  "doc_type": "Employee",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
   "field_name": "ctc",
   "is_system_generated": 0,
   "modified": "2023-07-25 11:33:55.267833",
@@ -5118,5 +5102,21 @@
   "property_type": "select",
   "row_name": null,
   "value": "Text Editor"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Employee",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "nome_do_banco",
+  "is_system_generated": 0,
+  "modified": "2024-01-15 15:26:03.761754",
+  "module": null,
+  "name": "Employee-nome_do_banco-options",
+  "property": "options",
+  "property_type": "Text",
+  "row_name": null,
+  "value": "Bank"
  }
 ]
