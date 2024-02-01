@@ -4,6 +4,11 @@
 {% include "ordem_servico/public/js/ordem_servico.js" %}
 
 frappe.ui.form.on('Ordem Servico Externa', {
+	validate(frm){
+		if (frm.doc.repair_observation && frm.doc.repair_observation.length){
+		  frm.set_value("repair_observation", frm.doc.repair_observation.replaceAll("img src=", 'img style="max-width:300px !important; max-height:300px !important; width: auto; height: auto;" src='));
+		}
+	  },
 	create_quotation(frm) {
 		const { __unsaved } = cur_frm.doc
 		if (__unsaved) {
