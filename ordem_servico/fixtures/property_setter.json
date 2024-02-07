@@ -4878,5 +4878,21 @@
   "property_type": "select",
   "row_name": null,
   "value": "Text Editor"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Order",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "contact_email",
+  "is_system_generated": 0,
+  "modified": "2024-02-07 13:57:53.828431",
+  "module": null,
+  "name": "Sales Order-contact_email-Check",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
  }
 ]
