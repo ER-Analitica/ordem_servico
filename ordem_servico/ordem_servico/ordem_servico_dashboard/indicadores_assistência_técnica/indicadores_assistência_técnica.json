@@ -1,0 +1,21 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Or\u00e7amentos Internos",
+   "width": "Full"
+  }
+ ],
+ "creation": "2024-02-20 15:46:34.411151",
+ "dashboard_name": "Indicadores Assist\u00eancia T\u00e9cnica",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2024-02-20 16:44:13.316318",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Indicadores Assist\u00eancia T\u00e9cnica",
+ "owner": "Administrator"
+}
