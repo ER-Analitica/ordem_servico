@@ -1,0 +1,40 @@
+{
+ "based_on": "transaction_date",
+ "chart_name": "Or\u00e7amentos Internos",
+ "chart_type": "Count",
+ "color": "#20446C",
+ "creation": "2024-02-20 15:45:48.829900",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Quotation",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Quotation\",\"local_manutencao\",\"=\",\"Interno\",false]]",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "last_synced_on": "2024-02-20 16:33:37.135883",
+ "modified": "2024-02-20 16:43:40.698395",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Or\u00e7amentos Internos",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "Assistente T\u00e9cnico em Eletr\u00f4nica"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "source": "",
+ "time_interval": "Yearly",
+ "timeseries": 1,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}
