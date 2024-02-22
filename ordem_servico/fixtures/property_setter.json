@@ -4894,5 +4894,21 @@
   "property_type": "Check",
   "row_name": null,
   "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Designation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "treinamento",
+  "is_system_generated": 0,
+  "modified": "2024-02-22 13:54:26.310910",
+  "module": null,
+  "name": "Designation-treinamento-allow_bulk_edit",
+  "property": "allow_bulk_edit",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]
