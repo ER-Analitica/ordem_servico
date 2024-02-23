@@ -1,0 +1,35 @@
+{
+ "charts": [
+  {
+   "chart_name": "Or\u00e7amentos Internos",
+   "label": "Or\u00e7amentos Internos"
+  }
+ ],
+ "content": "[{\"type\":\"chart\",\"data\":{\"chart_name\":\"Or\u00e7amentos Internos\",\"col\":12}}]",
+ "creation": "2024-02-23 10:14:16.238107",
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "chart",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Indicadores Assist\u00eancia T\u00e9cnica",
+ "links": [],
+ "modified": "2024-02-23 10:14:51.057464",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Indicadores Assist\u00eancia T\u00e9cnica",
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Indicadores Assistencia Tecnica"
+  }
+ ],
+ "sequence_id": 35.0,
+ "shortcuts": [],
+ "title": "Indicadores Assist\u00eancia T\u00e9cnica"
+}

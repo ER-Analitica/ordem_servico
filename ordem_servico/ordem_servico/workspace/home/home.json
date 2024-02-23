@@ -1,11 +1,6 @@
 {
- "charts": [
-  {
-   "chart_name": "Or\u00e7amentos Internos",
-   "label": "Or\u00e7amentos Internos"
-  }
- ],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Seus atalhos</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Oportunidade\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Or\u00e7amento\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pedido de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"chart\",\"data\":{\"chart_name\":\"Or\u00e7amentos Internos\",\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Ordem de Servi\u00e7o</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Interna\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Externa\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Equipamentos do Cliente\",\"col\":5}}]",
+ "charts": [],
+ "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Seus atalhos</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Oportunidade\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Or\u00e7amento\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pedido de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Ordem de Servi\u00e7o</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Interna\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Externa\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Equipamentos do Cliente\",\"col\":5}}]",
  "creation": "2020-01-23 13:46:38.833076",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -204,7 +199,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-02-21 17:17:19.048199",
+ "modified": "2024-02-23 08:46:08.067442",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Home",
