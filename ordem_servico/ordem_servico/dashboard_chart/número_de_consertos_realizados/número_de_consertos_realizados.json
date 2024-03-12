@@ -1,0 +1,36 @@
+{
+ "based_on": "creation",
+ "chart_name": "N\u00famero de Consertos Realizados",
+ "chart_type": "Count",
+ "creation": "2024-03-11 16:43:31.896352",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Ordem Servico Interna",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Ordem Servico Interna\",\"status_order_service\",\"=\",\"Embalar\",false],[\"Ordem Servico Interna\",\"status_faturamento\",\"=\",\"Entregar\",false],[\"Ordem Servico Interna\",\"status_conserto\",\"like\",\"%Finalizado%\",false],[\"Ordem Servico Interna\",\"quotation_status\",\"=\",\"Conclu\u00eddo\",false]]",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "last_synced_on": "2024-03-11 16:44:24.146204",
+ "modified": "2024-03-11 16:56:25.448577",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "N\u00famero de Consertos Realizados",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "Indicadores Assistencia Tecnica"
+  }
+ ],
+ "source": "",
+ "time_interval": "Daily",
+ "timeseries": 1,
+ "timespan": "Last Month",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}
