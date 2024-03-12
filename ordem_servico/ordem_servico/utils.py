@@ -126,7 +126,7 @@ def make_quotation(os_docname):
     quot_doc.rouding_adjustment = 0
     quot_doc.tc_name = "Boleto 15 dias"
     quot_doc.hash_orc = "1"
-    quot_doc.selling_price_list = os_doc.lista_preco
+   
     
     #quot_doc.terms = frappe.db.get_value(
     #    "Terms and Conditions", {"name": "Boleto 15 dias"}, ["terms"]
