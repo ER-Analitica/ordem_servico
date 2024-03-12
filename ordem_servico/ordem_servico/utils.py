@@ -8,6 +8,7 @@ from datetime import datetime
 import time
 from frappe.model.document import Document
 import frappe
+import json
 from frappe.utils.data import time_diff, today
 from pytz import timezone
 
@@ -58,6 +59,7 @@ def get_time_now(doctype, docname, trigger):
     if trigger == "start_quotation":
         os.start_quotation_time = time_now()
         os.technical_person_name = frappe.get_user().doc.full_name
+        os.status_orcamento = "Iniciado"
     #elif trigger == "schedule_quotation_event":
     elif trigger == "end_quotation":
         os.end_quotation_time = time_now()
@@ -67,9 +69,11 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_orcamento = "{}".format(time_diff)
+        os.status_orcamento = "Finalizado"
     elif trigger == "start_repair":
         os.start_repair_time = time_now()
         os.repaired_by_name = frappe.get_user().doc.full_name
+        os.status_conserto = "Iniciado"
     elif trigger == "end_repair":
         os.end_repair_time = time_now()
         os.repaired_by_name2 = frappe.get_user().doc.full_name
@@ -78,6 +82,7 @@ def get_time_now(doctype, docname, trigger):
         format = "%d-%m-%Y %H:%M:%S"
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
+        os.status_conserto = "Finalizado"
         if os.doctype == "Ordem Servico Interna":
              os.status_order_service = "Embalar"
              os.status_faturamento = "Entregar"
@@ -106,6 +111,7 @@ def make_quotation(os_docname):
     quot_doc.email = frappe.db.get_value(
         "Contacts", {"customer": os_doc.customer}, ["email_id"]
     )
+    #quot_doc.contact_person = os_doc.contact_link
     quot_doc = get_items(os_doc, quot_doc)
     total_rate = get_total(os_doc)
     quot_doc.total = total_rate
@@ -120,6 +126,7 @@ def make_quotation(os_docname):
     quot_doc.rouding_adjustment = 0
     quot_doc.tc_name = "Boleto 15 dias"
     quot_doc.hash_orc = "1"
+    quot_doc.selling_price_list = os_doc.lista_preco
     
     #quot_doc.terms = frappe.db.get_value(
     #    "Terms and Conditions", {"name": "Boleto 15 dias"}, ["terms"]
@@ -151,8 +158,18 @@ def make_nfs(os_docname):
 '''
 def get_items(os_doc, quot_doc):
     items = os_doc.os_items
+    
     for item in items:
+
+        
+        selling_price_list = frappe.db.get_value("Quotation", filters={"os_interna_link": "OS-19908"}, fieldname="selling_price_list")
+        rate = frappe.get_value("Item Price", filters={"item_code": item.item_code, "price_list": selling_price_list}, fieldname="price_list_rate")
+        
+        item.item_price = rate
+
+
         quot_doc.append(
+            
             "items",
             {
                 "item_code": item.item_code,
@@ -163,7 +180,7 @@ def get_items(os_doc, quot_doc):
                 "uom": item.uom_item,
                 "stock_uom": item.uom_item,
                 "qty": item.item_qty,
-                "rate": item.item_price,
+                "rate":item.item_price,
                 "net_rate": item.item_price,
                 "base_rate": item.item_price,
                 "base_net_rate": item.item_price,
