@@ -68,7 +68,8 @@ fixtures = [
              'Employee',
              'Employee Education',
              'Designation',
-             'Letter Head'
+             'Letter Head',
+             'Quality Feedback Parameter'
              
          )
      ]]
@@ -95,7 +96,8 @@ fixtures = [
              'Employee',
              'Employee Education',
              'Designation',
-             'Letter Head'
+             'Letter Head',
+             'Quality Feedback Parameter'
              
          )
      ]]
