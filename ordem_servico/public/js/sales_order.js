@@ -1,13 +1,19 @@
 frappe.ui.form.on('Sales Order', {
   refresh(frm) {
+  
     frm.events._add_custom_button(frm)
+    
   },
+  
   _add_custom_button(frm) {
     const overdued = frm.events.overdued()
     if (overdued) {
       frm.add_custom_button(__('Emenda'),
         () => frm.events.update_delivery_date(frm))
     }
+    
+     
+    
   },
   update_delivery_date(frm) {
     frappe.prompt([
@@ -54,5 +60,7 @@ frappe.ui.form.on('Sales Order', {
       cur_frm.doc.status != 'Cancelled' &&
       cur_frm.doc.status != 'Completed'
     )
+    
   }
+  
 })
