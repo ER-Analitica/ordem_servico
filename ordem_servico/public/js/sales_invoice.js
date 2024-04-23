@@ -9,9 +9,11 @@ frappe.ui.form.on('Sales Invoice', {
       () => frm.events.make_nfs(frm, DocTypes.NFS),
       'Make'
     )
+ 
 
   },
   after_save(frm) {
+    
     //Set Sales Invoice on OS History section
     if (frm.doc.os_interna_link) {
       const { name, posting_date, os_interna_link } = frm.doc

@@ -251,5 +251,16 @@
   "name": "Valida\u00e7\u00e3o pontos de calibra\u00e7\u00e3o vazio em or\u00e7amento",
   "script": "frappe.ui.form.on('Quotation', {\n    validate: function(frm) {\n        console.log(\"validate\");\n\n        // Obter o valor do campo pontos_de_calibracao\n        let pontos_de_calibracao = frm.doc.pontos_de_calibracao;\n\n        // Verificar se o campo est\u00e1 vazio ou cont\u00e9m apenas formata\u00e7\u00e3o HTML\n        let htmlContent = $('<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div>').html(pontos_de_calibracao).text();\n        \n        if (!htmlContent.trim() && !frm.doc.hash_orc) {\n            frappe.msgprint({\n                title: __('Campos vazios'),\n                message: __('O Campo de \"Pontos de calibra\u00e7\u00e3o\" est\u00e1 vazio'),\n                indicator: 'red'\n            });\n            frappe.validated = false;\n        }\n        else{\n            frappe.validated = true;\n        }\n       \n    }\n});\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 0,
+  "modified": "2023-10-25 14:57:40.994636",
+  "module": null,
+  "name": "Confirma\u00e7\u00e3o se campo for vazio",
+  "script": "frappe.ui.form.on('Sales Order', {\n    \n     validate: async (frm) => {\n         if (frm.doc.tipo == \"\"|| frm.doc.confirmacao ==\"\") {\n         \n        let prompt = new Promise((resolve, reject) => {\n            \n            frappe.confirm(\n                'Are you sure?',\n                () => resolve(),\n                () => reject()\n            );\n        });\n        await prompt.then(\n            () => frappe.show_alert(\"Submitted\", 3), \n            () => {\n                frappe.validated = false;\n                frappe.show_alert(\"Not submitted\", 3)\n            }\n        );\n         }\n        \n    }\n});\n",
+  "view": "Form"
  }
 ]
