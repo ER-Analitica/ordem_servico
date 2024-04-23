@@ -34,4 +34,3 @@ def update_data_vencimento(doc, method):
           
             data_vencimento.save(ignore_permissions=True)
             frappe.publish_realtime("doc_update", {"doctype": "Opportunity", "name": opportunity.name})
-
