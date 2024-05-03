@@ -776,7 +776,7 @@
    "fieldname": "repair_status",
    "fieldtype": "Select",
    "label": "Status do Conserto",
-   "options": "\nLiberado\nLiberado com Restri\u00e7\u00e3o\nN\u00e3o Liberado"
+   "options": "\nLiberado\nLiberado com Restri\u00e7\u00e3o\nN\u00e3o Liberado\nSem Conserto"
   },
   {
    "depends_on": "eval: doc.status_order_service",
@@ -1074,7 +1074,7 @@
   }
  ],
  "links": [],
- "modified": "2024-04-25 14:41:43.083663",
+ "modified": "2024-05-03 11:24:01.598411",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
