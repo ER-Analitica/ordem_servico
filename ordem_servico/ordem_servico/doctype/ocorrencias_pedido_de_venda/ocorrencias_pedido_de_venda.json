@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-05-17 10:53:39.212698",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "data_solicitacao",
+  "motivo",
+  "descricao",
+  "status",
+  "data_conclusao"
+ ],
+ "fields": [
+  {
+   "allow_on_submit": 1,
+   "fieldname": "data_solicitacao",
+   "fieldtype": "Datetime",
+   "label": "Data da Solicita\u00e7\u00e3o"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "motivo",
+   "fieldtype": "Select",
+   "label": "Motivo",
+   "options": "Dados cadastrais incorretos/incompletos\nDiverg\u00eancia nos termos/condi\u00e7\u00f5es de pagamento\nDiverg\u00eancia de Valor\nServi\u00e7o n\u00e3o finalizado\nConfirma\u00e7\u00e3o do cliente pendente\nFora da data de corte\nEvid\u00eancia n\u00e3o anexada"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "descricao",
+   "fieldtype": "Small Text",
+   "label": "Descri\u00e7\u00e3o"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pendente\nEm Andamento\nConclu\u00eddo"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "data_conclusao",
+   "fieldtype": "Datetime",
+   "label": "Data da Conclus\u00e3o"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-05-17 10:53:39.212698",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Ocorrencias Pedido de Venda",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

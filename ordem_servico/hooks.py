@@ -69,7 +69,8 @@ fixtures = [
              'Employee Education',
              'Designation',
              'Letter Head',
-             'Quality Feedback Parameter'
+             'Quality Feedback Parameter',
+             'Supplier'
              
          )
      ]]
@@ -97,7 +98,8 @@ fixtures = [
              'Employee Education',
              'Designation',
              'Letter Head',
-             'Quality Feedback Parameter'
+             'Quality Feedback Parameter',
+             'Supplier'
              
          )
      ]]
@@ -109,13 +111,28 @@ fixtures = [
 ]
 doc_events = {
     "Customer": {
-        "validate": "ordem_servico.doc_events.customer.validate",
-        
-    },  
+        "validate": [
+            "ordem_servico.doc_events.customer.validate",
+            "ordem_servico.doc_events.data_limite_dn.data_limite_dn",
+            "ordem_servico.doc_events.data_limite_pv.data_limite_pv"
+        ]
+    }, 
     "Sales Invoice": {
         "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
-        
     },
+   
+    "Sales Invoice":{
+        "validate":[
+            "ordem_servico.doc_events.termo_pagamento_dn.validate",
+        ]
+    },
+
+    "Delivery Note":{
+        "validate":[
+            "ordem_servico.doc_events.termo_pagamento_si.validate",
+        ]
+    },
+  
     "Item Price":{
         "on_update": "ordem_servico.doc_events.update_item.on_update",
     },
