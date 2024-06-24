@@ -71,7 +71,8 @@ fixtures = [
              'Letter Head',
              'Quality Feedback Parameter',
              'Supplier',
-             'Request for Quotation'
+             'Request for Quotation',
+             'Request for Quotation Item'
              
          )
      ]]
@@ -101,7 +102,8 @@ fixtures = [
              'Letter Head',
              'Quality Feedback Parameter',
              'Supplier',
-             'Request for Quotation'
+             'Request for Quotation',
+             'Request for Quotation Item'
              
          )
      ]]
