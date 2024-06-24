@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2018-10-15 09:30:35.250270",
+ "creation": "2024-05-03 11:44:34.797517",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -1074,7 +1074,7 @@
   }
  ],
  "links": [],
- "modified": "2024-05-03 11:24:01.598411",
+ "modified": "2024-06-11 09:46:59.371525",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
