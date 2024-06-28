@@ -10,6 +10,15 @@ frappe.ui.form.on(cur_frm.doctype, {
 				}
 			}
 		}
+		cur_frm.fields_dict.contact_link.get_query = () => {
+			return {
+				filters: {
+					'link_doctype': 'Customer', // ou 'Company', dependendo do vínculo
+					'link_name': cur_frm.doc.customer // ou cur_frm.doc.company
+				}
+			}
+		}
+		
 		cur_frm.fields_dict.initial_scheduled_to.get_query = () => {
 			return {
 				filters: {
