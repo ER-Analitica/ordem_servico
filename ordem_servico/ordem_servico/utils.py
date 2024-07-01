@@ -111,7 +111,11 @@ def make_quotation(os_docname):
     quot_doc.email = frappe.db.get_value(
         "Contacts", {"customer": os_doc.customer}, ["email_id"]
     )
-    #quot_doc.contact_person = os_doc.contact_link
+    #inserir contato da os no orç ao gerar orç
+    quot_doc.contact_person = os_doc.contact_link
+    quot_doc.contact_mobile = os_doc.contact_mobile
+    quot_doc.contact_email = os_doc.contact_email
+    quot_doc.contact_display = frappe.db.get_value("Contact", os_doc.contact_link, "first_name") + " " + frappe.db.get_value("Contact", os_doc.contact_link, "last_name")
     quot_doc = get_items(os_doc, quot_doc)
     total_rate = get_total(os_doc)
     quot_doc.total = total_rate
