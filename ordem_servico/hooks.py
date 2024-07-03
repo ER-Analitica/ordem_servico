@@ -123,13 +123,11 @@ doc_events = {
     }, 
     "Sales Invoice": {
         "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
-    },
-   
-    "Sales Invoice":{
-        "validate":[
+        "validate": [
             "ordem_servico.doc_events.termo_pagamento_dn.validate",
         ]
     },
+    
 
     "Delivery Note":{
         "validate":[
