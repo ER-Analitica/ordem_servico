@@ -15,7 +15,7 @@
   "doctype": "Client Script",
   "dt": "Sales Invoice",
   "enabled": 1,
-  "modified": "2024-05-09 09:43:28.513294",
+  "modified": "2024-07-03 14:56:02.012665",
   "module": null,
   "name": "Confirma\u00e7\u00e3o se campo for vazio - Fatura de Venda",
   "script": "frappe.ui.form.on('Sales Invoice', {\n    \n     validate: async (frm) => {\n         if (frm.doc.confirmacao_do_cliente === 'SIM' && (!frm.doc.tipo || !frm.doc.confirmacao)) {\n         \n        let prompt = new Promise((resolve, reject) => {\n            \n            frappe.confirm(\n                \"A confirma\u00e7\u00e3o do cliente est\u00e1 definida como 'SIM', por\u00e9m os campos relacionados de 'Tipo' ou de 'Confirma\u00e7\u00e3o' est\u00e3o sem informa\u00e7\u00e3o. Deseja continuar com a fatura?\",\n                () => resolve(),\n                () => reject()\n            );\n        });\n        await prompt.then(\n            () => frappe.show_alert(\"Confirmado\", 3), \n            () => {\n                frappe.validated = false;\n                frappe.show_alert(\"N\u00e3o Confirmado\", 3)\n            }\n        );\n         }\n        \n    }\n});",
@@ -344,6 +344,28 @@
   "module": null,
   "name": "Particularidades do cliente",
   "script": "frappe.ui.form.on('Ordem Servico Interna', {\n    refresh: function(frm) {\n        update_headline(frm);\n    },\n    status_order_service: function(frm) {\n        update_headline(frm);\n    },\n    customer: function(frm) {\n        update_headline(frm);\n    }\n});\n\nfunction update_headline(frm) {\n    // Vari\u00e1vel para armazenar a nova mensagem\n    let new_headline = '';\n\n    if (frm.doc.status_order_service) {\n        if (frm.doc.customer) {\n            frappe.call({\n                method: 'frappe.client.get',\n                args: {\n                    doctype: 'Customer',\n                    name: frm.doc.customer\n                },\n                callback: function(r) {\n                    if (r.message && r.message.customer_details) {\n                        new_headline = 'Detalhes do cliente: ' + r.message.customer_details;\n                    } else {\n                        new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n                    }\n\n                    // Limpa e define o novo aviso se ele for diferente do atual\n                    if (frm.dashboard.headline !== new_headline) {\n                        frm.dashboard.clear_headline();\n                        frm.dashboard.set_headline(new_headline);\n                    }\n                }\n            });\n        } else {\n            new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n            \n            // Limpa e define o novo aviso se ele for diferente do atual\n            if (frm.dashboard.headline !== new_headline) {\n                frm.dashboard.clear_headline();\n                frm.dashboard.set_headline(new_headline);\n            }\n        }\n    } else {\n        frm.dashboard.clear_headline();\n    }\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Quotation",
+  "enabled": 1,
+  "modified": "2024-07-08 14:36:15.376652",
+  "module": null,
+  "name": "Particularidades do cliente Quotation",
+  "script": "frappe.ui.form.on('Quotation', {\n    refresh: function(frm) {\n        update_headline(frm);\n    },\n    status_order_service: function(frm) {\n        update_headline(frm);\n    },\n    customer: function(frm) {\n        update_headline(frm);\n    }\n});\n\nfunction update_headline(frm) {\n    // Vari\u00e1vel para armazenar a nova mensagem\n    let new_headline = '';\n\n    if (frm.doc.status) {\n        if (frm.doc.party_name) {\n            frappe.call({\n                method: 'frappe.client.get',\n                args: {\n                    doctype: 'Customer',\n                    name: frm.doc.party_name\n                },\n                callback: function(r) {\n                    if (r.message && r.message.customer_details) {\n                        new_headline = 'Detalhes do cliente: ' + r.message.customer_details;\n                    } else {\n                        new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n                    }\n\n                    // Limpa e define o novo aviso se ele for diferente do atual\n                    if (frm.dashboard.headline !== new_headline) {\n                        frm.dashboard.clear_headline();\n                        frm.dashboard.set_headline(new_headline);\n                    }\n                }\n            });\n        } else {\n            new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n            \n            // Limpa e define o novo aviso se ele for diferente do atual\n            if (frm.dashboard.headline !== new_headline) {\n                frm.dashboard.clear_headline();\n                frm.dashboard.set_headline(new_headline);\n            }\n        }\n    } else {\n        frm.dashboard.clear_headline();\n    }\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 1,
+  "modified": "2024-07-08 14:42:04.375006",
+  "module": null,
+  "name": "Particularidades do cliente Pedido Vendas",
+  "script": "frappe.ui.form.on('Sales Order', {\n    refresh: function(frm) {\n        update_headline(frm);\n    },\n    status_order_service: function(frm) {\n        update_headline(frm);\n    },\n    customer: function(frm) {\n        update_headline(frm);\n    }\n});\n\nfunction update_headline(frm) {\n    // Vari\u00e1vel para armazenar a nova mensagem\n    let new_headline = '';\n\n    if (frm.doc.status) {\n        if (frm.doc.customer) {\n            frappe.call({\n                method: 'frappe.client.get',\n                args: {\n                    doctype: 'Customer',\n                    name: frm.doc.customer\n                },\n                callback: function(r) {\n                    if (r.message && r.message.customer_details) {\n                        new_headline = 'Detalhes do cliente: ' + r.message.customer_details;\n                    } else {\n                        new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n                    }\n\n                    // Limpa e define o novo aviso se ele for diferente do atual\n                    if (frm.dashboard.headline !== new_headline) {\n                        frm.dashboard.clear_headline();\n                        frm.dashboard.set_headline(new_headline);\n                    }\n                }\n            });\n        } else {\n            new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n            \n            // Limpa e define o novo aviso se ele for diferente do atual\n            if (frm.dashboard.headline !== new_headline) {\n                frm.dashboard.clear_headline();\n                frm.dashboard.set_headline(new_headline);\n            }\n        }\n    } else {\n        frm.dashboard.clear_headline();\n    }\n}\n",
   "view": "Form"
  }
 ]
