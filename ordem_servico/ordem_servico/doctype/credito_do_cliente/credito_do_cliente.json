@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-11 14:53:28.131446",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "contato",
+  "sales_order",
+  "valor"
+ ],
+ "fields": [
+  {
+   "fieldname": "contato",
+   "fieldtype": "Link",
+   "label": "Contato",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Pedido de Venda",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "valor",
+   "fieldtype": "Currency",
+   "label": "Valor",
+   "options": "Currency"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-11 15:17:20.450848",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Credito do Cliente",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
