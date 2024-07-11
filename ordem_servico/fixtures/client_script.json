@@ -367,5 +367,49 @@
   "name": "Particularidades do cliente Pedido Vendas",
   "script": "frappe.ui.form.on('Sales Order', {\n    refresh: function(frm) {\n        update_headline(frm);\n    },\n    status_order_service: function(frm) {\n        update_headline(frm);\n    },\n    customer: function(frm) {\n        update_headline(frm);\n    }\n});\n\nfunction update_headline(frm) {\n    // Vari\u00e1vel para armazenar a nova mensagem\n    let new_headline = '';\n\n    if (frm.doc.status) {\n        if (frm.doc.customer) {\n            frappe.call({\n                method: 'frappe.client.get',\n                args: {\n                    doctype: 'Customer',\n                    name: frm.doc.customer\n                },\n                callback: function(r) {\n                    if (r.message && r.message.customer_details) {\n                        new_headline = 'Detalhes do cliente: ' + r.message.customer_details;\n                    } else {\n                        new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n                    }\n\n                    // Limpa e define o novo aviso se ele for diferente do atual\n                    if (frm.dashboard.headline !== new_headline) {\n                        frm.dashboard.clear_headline();\n                        frm.dashboard.set_headline(new_headline);\n                    }\n                }\n            });\n        } else {\n            new_headline = 'Sem observa\u00e7\u00f5es referentes \u00e0s particularidades do cliente.';\n            \n            // Limpa e define o novo aviso se ele for diferente do atual\n            if (frm.dashboard.headline !== new_headline) {\n                frm.dashboard.clear_headline();\n                frm.dashboard.set_headline(new_headline);\n            }\n        }\n    } else {\n        frm.dashboard.clear_headline();\n    }\n}\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 0,
+  "modified": "2024-07-11 15:34:50.644638",
+  "module": null,
+  "name": "Bot\u00e3o Gerar Formul\u00e1rio de Visita",
+  "script": "frappe.listview_settings['Ordem Servico Interna'] = {\n    onload: function(listview) {\n        listview.page.add_inner_button(__('Imprimir Formul\u00e1rio de Visita'), function() {\n            let selected_docs = listview.get_checked_items();\n            if (selected_docs.length > 0) {\n                let docnames = selected_docs.map(doc => doc.name).join(',');\n\n                let print_format = 'Formulario de Visita';\n                let print_url = frappe.urllib.get_full_url(`/api/method/frappe.utils.print_format.download_pdf?doctype=Ordem%20Servico%20Interna&name=${docnames}&format=${print_format}&no_letterhead=0`);\n\n                window.open(print_url, '_blank');\n            } else {\n                frappe.msgprint(__('Por favor, selecione pelo menos uma Ordem de Servi\u00e7o.'));\n            }\n        });\n    }\n};\n",
+  "view": "List"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Interna",
+  "enabled": 0,
+  "modified": "2024-07-11 15:34:25.536262",
+  "module": null,
+  "name": "Limpar numero de serie ao inserir cliente na os",
+  "script": "frappe.ui.form.on('Ordem Servico Interna', {\n\t\n\tcustomer: function(frm) {\n        frm.set_value('serie_number', ''); // Limpa o campo de equipamento\n    }\n\t\n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Ordem Servico Externa",
+  "enabled": 0,
+  "modified": "2024-07-11 15:34:19.223691",
+  "module": null,
+  "name": "Limpar numero de serie ao inserir cliente na os externa",
+  "script": "frappe.ui.form.on('Ordem Servico Externa', {\n    \n    customer: function(frm) {\n        frm.set_value('serie_number', ''); // Limpa o campo de equipamento\n    }\n    \n})",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customer",
+  "enabled": 1,
+  "modified": "2024-07-11 15:39:44.008229",
+  "module": null,
+  "name": "Filtrar contatos da tabela de credito de clientes em clientes",
+  "script": "frappe.ui.form.on('Customer', {\n    refresh: function(frm) {\n        // Filtro para o campo 'contato' na tabela 'credito_cliente'\n        frm.fields_dict['credito_cliente'].grid.get_field('contato').get_query = function(doc) {\n            return {\n                filters: {\n                    'link_doctype': 'Customer',\n                    'link_name': doc.name\n                }\n            };\n        };\n\n        // Filtro para o campo 'sales_order' na tabela 'credito_cliente'\n        frm.fields_dict['credito_cliente'].grid.get_field('sales_order').get_query = function(doc) {\n            return {\n                filters: {\n                    'customer': doc.name\n                }\n            };\n        };\n    }\n});\n",
+  "view": "Form"
  }
 ]
