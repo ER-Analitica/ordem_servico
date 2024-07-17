@@ -36,7 +36,7 @@ frappe.ui.form.on('Sales Invoice', {
   doc.customer_address = customer_address
   doc.base_total = base_total*/
   make_nfs(frm, doctype) {
-    const { customer, name, address_display, descricao_do_servico, contact_person, contact_email, customer_address, net_total, payment_terms_template, po_no, tipo, confirmacao } = frm.doc
+    const { customer, name, address_display, descricao_do_servico, contact_person, contact_email, customer_address, net_total, payment_terms_template, po_no, tipo, confirmacao, company } = frm.doc
     
     // iterar sobre as linhas da tabela filha e pegar as informações do due_date
     let due_dates = ""
@@ -52,6 +52,18 @@ frappe.ui.form.on('Sales Invoice', {
     }else{
         tipo_confirmacao = "";
     }
+
+    frappe.call({
+      method: 'frappe.client.get',
+      args: {
+        doctype: 'Company',
+        name: company
+      },
+      callback: function(response) {
+        const companyDetails = response.message;
+        const dados_bancarios_para_emissao_da_nfs = companyDetails ? companyDetails.dados_bancarios_para_emissao_da_nfs : '';
+    
+  
     
     frappe.call({
       method: 'ordem_servico.ordem_servico.utils.make_nfs',
@@ -60,7 +72,7 @@ frappe.ui.form.on('Sales Invoice', {
         customer: customer,
         docname: name,
         address_display: address_display,
-        descricao_do_servico: `${descricao_do_servico}\n\nPedido de Compra n°: ${po_no}${tipo_confirmacao}\n\nVencimentos:\n${due_dates}\nDados Bancários: \nBANCO ITAU – AG. 0796 – C/C: 06717-1\nBRADESCO – AG. 2830-4 – C/C: 13475-9\nBANCO DO BRASIL – AG. 2766-9 – C/C: 34922-4\nCHAVE PIX/CNPJ: 17358703000199`,
+        descricao_do_servico: `${descricao_do_servico}\n\nPedido de Compra n°: ${po_no}${tipo_confirmacao}\n\nVencimentos:\n${due_dates}\nDados Bancários: \n${dados_bancarios_para_emissao_da_nfs}`,
         contact_person: contact_person,
         contact_email: contact_email,
         customer_address: customer_address,
@@ -77,4 +89,6 @@ frappe.ui.form.on('Sales Invoice', {
   }
   
 
+})
+}
 })
