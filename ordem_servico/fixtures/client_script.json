@@ -372,11 +372,11 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Ordem Servico Interna",
-  "enabled": 0,
-  "modified": "2024-07-11 15:34:50.644638",
+  "enabled": 1,
+  "modified": "2024-07-15 10:53:11.179111",
   "module": null,
   "name": "Bot\u00e3o Gerar Formul\u00e1rio de Visita",
-  "script": "frappe.listview_settings['Ordem Servico Interna'] = {\n    onload: function(listview) {\n        listview.page.add_inner_button(__('Imprimir Formul\u00e1rio de Visita'), function() {\n            let selected_docs = listview.get_checked_items();\n            if (selected_docs.length > 0) {\n                let docnames = selected_docs.map(doc => doc.name).join(',');\n\n                let print_format = 'Formulario de Visita';\n                let print_url = frappe.urllib.get_full_url(`/api/method/frappe.utils.print_format.download_pdf?doctype=Ordem%20Servico%20Interna&name=${docnames}&format=${print_format}&no_letterhead=0`);\n\n                window.open(print_url, '_blank');\n            } else {\n                frappe.msgprint(__('Por favor, selecione pelo menos uma Ordem de Servi\u00e7o.'));\n            }\n        });\n    }\n};\n",
+  "script": "frappe.listview_settings['Ordem Servico Interna'] = {\n    onload: function(listview) {\n        listview.page.add_inner_button(__('Imprimir Formul\u00e1rio de Visita'), function() {\n            let selected_docs = listview.get_checked_items();\n            if (selected_docs.length > 0) {\n                let docnames = selected_docs.map(doc => doc.name);\n\n                frappe.call({\n                    method: 'frappe.utils.print_format.download_multi_pdf',\n                    args: {\n                        doctype: 'Ordem Servico Interna',\n                        docnames: JSON.stringify(docnames),\n                        format: 'Formulario de Visita',\n                        no_letterhead: 0\n                    },\n                    callback: function(response) {\n                        if (response) {\n                            let blob = new Blob([response], { type: 'application/pdf' });\n                            let link = document.createElement('a');\n                            link.href = window.URL.createObjectURL(blob);\n                            link.download = 'formulario_de_visita.pdf';\n                            link.click();\n                        } else {\n                            frappe.msgprint(__('Erro ao gerar o PDF.'));\n                        }\n                    }\n                });\n            } else {\n                frappe.msgprint(__('Por favor, selecione pelo menos uma Ordem de Servi\u00e7o.'));\n            }\n        });\n    }\n};\n",
   "view": "List"
  },
  {
@@ -410,6 +410,17 @@
   "module": null,
   "name": "Filtrar contatos da tabela de credito de clientes em clientes",
   "script": "frappe.ui.form.on('Customer', {\n    refresh: function(frm) {\n        // Filtro para o campo 'contato' na tabela 'credito_cliente'\n        frm.fields_dict['credito_cliente'].grid.get_field('contato').get_query = function(doc) {\n            return {\n                filters: {\n                    'link_doctype': 'Customer',\n                    'link_name': doc.name\n                }\n            };\n        };\n\n        // Filtro para o campo 'sales_order' na tabela 'credito_cliente'\n        frm.fields_dict['credito_cliente'].grid.get_field('sales_order').get_query = function(doc) {\n            return {\n                filters: {\n                    'customer': doc.name\n                }\n            };\n        };\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Quotation",
+  "enabled": 1,
+  "modified": "2024-07-18 16:41:07.075689",
+  "module": null,
+  "name": "Filtrar condicoes em orcamento com base em na empresa",
+  "script": "frappe.ui.form.on('Quotation', {\n    onload: function(frm) {\n        \n        if (frm.doc.company === 'ER Metrologia') {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {\n                        'name': ['in', ['CART\u00c3O CORPORATIVO', 'CART\u00c3O DE CR\u00c9DITO', 'DEP\u00d3SITO', 'TRANSFER\u00caNCIA BANC\u00c1RIA']]\n                    }\n                };\n            };\n        }\n    },\n    company: function(frm) {\n        if (frm.doc.company === 'ER Metrologia') {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {\n                        'name': ['in', ['CART\u00c3O CORPORATIVO', 'CART\u00c3O DE CR\u00c9DITO', 'DEP\u00d3SITO', 'TRANSFER\u00caNCIA BANC\u00c1RIA']]\n                    }\n                };\n            };\n        } else {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {}\n                };\n            };\n        }\n    }\n\n});\n\n",
   "view": "Form"
  }
 ]
