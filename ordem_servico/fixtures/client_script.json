@@ -355,17 +355,6 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Ordem Servico Interna",
-  "enabled": 1,
-  "modified": "2024-07-15 10:53:11.179111",
-  "module": null,
-  "name": "Bot\u00e3o Gerar Formul\u00e1rio de Visita",
-  "script": "frappe.listview_settings['Ordem Servico Interna'] = {\n    onload: function(listview) {\n        listview.page.add_inner_button(__('Imprimir Formul\u00e1rio de Visita'), function() {\n            let selected_docs = listview.get_checked_items();\n            if (selected_docs.length > 0) {\n                let docnames = selected_docs.map(doc => doc.name);\n\n                frappe.call({\n                    method: 'frappe.utils.print_format.download_multi_pdf',\n                    args: {\n                        doctype: 'Ordem Servico Interna',\n                        docnames: JSON.stringify(docnames),\n                        format: 'Formulario de Visita',\n                        no_letterhead: 0\n                    },\n                    callback: function(response) {\n                        if (response) {\n                            let blob = new Blob([response], { type: 'application/pdf' });\n                            let link = document.createElement('a');\n                            link.href = window.URL.createObjectURL(blob);\n                            link.download = 'formulario_de_visita.pdf';\n                            link.click();\n                        } else {\n                            frappe.msgprint(__('Erro ao gerar o PDF.'));\n                        }\n                    }\n                });\n            } else {\n                frappe.msgprint(__('Por favor, selecione pelo menos uma Ordem de Servi\u00e7o.'));\n            }\n        });\n    }\n};\n",
-  "view": "List"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Ordem Servico Interna",
   "enabled": 0,
   "modified": "2024-07-11 15:34:25.536262",
   "module": null,
@@ -404,6 +393,17 @@
   "module": null,
   "name": "Filtrar condicoes em orcamento com base em na empresa",
   "script": "frappe.ui.form.on('Quotation', {\n    onload: function(frm) {\n        \n        if (frm.doc.company === 'ER Metrologia') {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {\n                        'name': ['in', ['CART\u00c3O CORPORATIVO', 'CART\u00c3O DE CR\u00c9DITO', 'DEP\u00d3SITO', 'TRANSFER\u00caNCIA BANC\u00c1RIA']]\n                    }\n                };\n            };\n        }\n    },\n    company: function(frm) {\n        if (frm.doc.company === 'ER Metrologia') {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {\n                        'name': ['in', ['CART\u00c3O CORPORATIVO', 'CART\u00c3O DE CR\u00c9DITO', 'DEP\u00d3SITO', 'TRANSFER\u00caNCIA BANC\u00c1RIA']]\n                    }\n                };\n            };\n        } else {\n            frm.fields_dict.tc_name.get_query = function() {\n                return {\n                    filters: {}\n                };\n            };\n        }\n    }\n\n});\n\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Quotation",
+  "enabled": 1,
+  "modified": "2024-07-26 08:35:14.126789",
+  "module": null,
+  "name": "party_name_check",
+  "script": "frappe.ui.form.on('Quotation', {\n    party_name: function(frm) {\n        if (frm.doc.party_name) {\n            frappe.db.get_value('Customer', frm.doc.party_name, 'company', (r) => {\n                if (r.company) {\n                    frm.set_value('company', r.company);\n                } else {\n                    // N\u00e3o faz nada, mantendo o valor atual\n                    frm.refresh_field('company');\n                }\n            });\n        }\n    }\n});\n",
   "view": "Form"
  }
 ]

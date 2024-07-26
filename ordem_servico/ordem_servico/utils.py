@@ -130,6 +130,9 @@ def make_quotation(os_docname):
     quot_doc.rouding_adjustment = 0
     quot_doc.tc_name = "Boleto 15 dias"
     quot_doc.hash_orc = "1"
+    customer_company = frappe.db.get_value("Customer", quot_doc.party_name, "company")
+    if customer_company:
+        quot_doc.company = customer_company
    
     
     #quot_doc.terms = frappe.db.get_value(
