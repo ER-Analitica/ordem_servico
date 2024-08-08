@@ -1,0 +1,386 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-07 08:33:22.375964",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ordem_servico",
+  "cliente",
+  "contato",
+  "quantidade",
+  "ordem_servico_interna",
+  "status_order_service_interna",
+  "loc_equip",
+  "identification_section",
+  "modalidade_entrada",
+  "nome_transportadora_entrada",
+  "outro",
+  "base_total",
+  "entry_date",
+  "column_break_10",
+  "entry_sales_invoice",
+  "valor",
+  "peso",
+  "initial_schedule_section",
+  "initial_scheduled_to",
+  "initial_scheduled_to_name",
+  "initial_scheduled_by_name",
+  "cb_2",
+  "quotation_schedule_date",
+  "quotation_schedule_time",
+  "quotation_time",
+  "schedule_quotation_event",
+  "quotation_event_link",
+  "section_break_46",
+  "possui_orcamento",
+  "orcamento",
+  "os_items",
+  "pontos_cal_criterios_aceitacao",
+  "ordem_servico_externa",
+  "amended_from",
+  "status_order_service",
+  "sales_order_reference",
+  "agendamentolaudo_final_tab",
+  "final_schedule_section",
+  "final_scheduled_to",
+  "final_scheduled_to_name",
+  "final_scheduled_by",
+  "final_scheduled_by_name",
+  "cb_4",
+  "repair_schedule_date",
+  "repair_schedule_time",
+  "repair_time",
+  "repair_event_link",
+  "schedule_repair_event"
+ ],
+ "fields": [
+  {
+   "fieldname": "ordem_servico",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Tipo da Ordem de Servi\u00e7o",
+   "options": "\nOrdem Servico Interna\nOrdem Servico Externa",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cliente",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contato",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Contato",
+   "options": "Contact",
+   "reqd": 1
+  },
+  {
+   "fieldname": "loc_equip",
+   "fieldtype": "Data",
+   "label": "Localiza\u00e7\u00e3o do Equipamento"
+  },
+  {
+   "fieldname": "quantidade",
+   "fieldtype": "Data",
+   "label": "Quantidade"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Criador de Ordens de Servico em Lote",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_orcamento == 1",
+   "fieldname": "orcamento",
+   "fieldtype": "Link",
+   "label": "Or\u00e7amento",
+   "options": "Quotation"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "fieldname": "possui_orcamento",
+   "fieldtype": "Check",
+   "label": "Possui Or\u00e7amento?"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "fieldname": "ordem_servico_interna",
+   "fieldtype": "Tab Break",
+   "label": "Ordem de Servi\u00e7o Interna"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
+   "fieldname": "ordem_servico_externa",
+   "fieldtype": "Tab Break",
+   "label": "Ordem de Servi\u00e7o Externa"
+  },
+  {
+   "bold": 1,
+   "default": "Em Or\u00e7amento",
+   "fieldname": "status_order_service",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status Ordem de Servi\u00e7o",
+   "options": "\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_order_reference",
+   "fieldtype": "Link",
+   "label": "Pedido de Venda Refer\u00eancia",
+   "options": "Sales Order"
+  },
+  {
+   "bold": 1,
+   "fieldname": "status_order_service_interna",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status Ordem de Servi\u00e7o",
+   "options": "Em Recebimento\nAguardando Or\u00e7amento\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nSem Conserto\nEmbalar",
+   "reqd": 1
+  },
+  {
+   "fieldname": "identification_section",
+   "fieldtype": "Section Break",
+   "label": "Entrada"
+  },
+  {
+   "fieldname": "modalidade_entrada",
+   "fieldtype": "Select",
+   "label": "Modalidade de Entrada",
+   "options": "\nCORREIOS\nTRANSPORTADORA\nOUTRO"
+  },
+  {
+   "depends_on": "eval: doc.modalidade_entrada == 'TRANSPORTADORA'",
+   "fieldname": "nome_transportadora_entrada",
+   "fieldtype": "Data",
+   "label": "Nome da Transportadora"
+  },
+  {
+   "depends_on": "eval: doc.modalidade_entrada == 'OUTRO'",
+   "fieldname": "outro",
+   "fieldtype": "Data",
+   "label": "Outro"
+  },
+  {
+   "depends_on": "eval: doc.modalidade_entrada == 'CORREIOS'",
+   "fieldname": "base_total",
+   "fieldtype": "Currency",
+   "label": "Valor do Frete",
+   "options": "currency"
+  },
+  {
+   "fieldname": "entry_date",
+   "fieldtype": "Date",
+   "label": "Data Entrada"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "entry_sales_invoice",
+   "fieldtype": "Data",
+   "label": "N\u00famero da NF"
+  },
+  {
+   "fieldname": "valor",
+   "fieldtype": "Currency",
+   "label": "Valor",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "fieldname": "peso",
+   "fieldtype": "Data",
+   "label": "Peso"
+  },
+  {
+   "depends_on": "eval: doc.situacao_equipamento != 'N\u00c3O CONFORME'",
+   "fieldname": "initial_schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Agendamento Inicial"
+  },
+  {
+   "fieldname": "initial_scheduled_to",
+   "fieldtype": "Link",
+   "label": "Agendado Para",
+   "options": "User"
+  },
+  {
+   "fetch_from": "initial_scheduled_to.full_name",
+   "fieldname": "initial_scheduled_to_name",
+   "fieldtype": "Data",
+   "label": "Nome",
+   "read_only": 1
+  },
+  {
+   "fieldname": "initial_scheduled_by_name",
+   "fieldtype": "Read Only",
+   "label": "Agendamento Inicial Realizado Por"
+  },
+  {
+   "fieldname": "cb_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quotation_schedule_date",
+   "fieldtype": "Date",
+   "label": "Data de Agendamento - Or\u00e7amento"
+  },
+  {
+   "default": "00:00:00",
+   "fieldname": "quotation_schedule_time",
+   "fieldtype": "Time",
+   "label": "Hora de Agendamento - Or\u00e7amento"
+  },
+  {
+   "default": "00:00:00",
+   "fieldname": "quotation_time",
+   "fieldtype": "Time",
+   "label": "Tempo de Or\u00e7amento"
+  },
+  {
+   "depends_on": "eval: !(doc.quotation_event_link)",
+   "fieldname": "schedule_quotation_event",
+   "fieldtype": "Button",
+   "label": "Agendar Or\u00e7amento",
+   "read_only": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "quotation_event_link",
+   "fieldtype": "Link",
+   "label": "Agenda de Or\u00e7amento",
+   "options": "Event",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_46",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "os_items",
+   "fieldtype": "Table",
+   "label": "Itens para Or\u00e7amento",
+   "options": "Ordem Servico Items"
+  },
+  {
+   "fieldname": "agendamentolaudo_final_tab",
+   "fieldtype": "Tab Break",
+   "label": "Agendamento/Laudo Final"
+  },
+  {
+   "depends_on": "eval: doc.orcamento || doc.tempo_orcamento || doc.possui_orcamento",
+   "fieldname": "final_schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Agendamento Final"
+  },
+  {
+   "fieldname": "final_scheduled_to",
+   "fieldtype": "Link",
+   "label": "Agendado Para",
+   "options": "User"
+  },
+  {
+   "bold": 1,
+   "fetch_from": "final_scheduled_to.full_name",
+   "fieldname": "final_scheduled_to_name",
+   "fieldtype": "Data",
+   "label": "Nome ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "final_scheduled_by",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Agendado Por",
+   "options": "Employee"
+  },
+  {
+   "bold": 1,
+   "fetch_from": "final_scheduled_by.employee_name",
+   "fieldname": "final_scheduled_by_name",
+   "fieldtype": "Data",
+   "label": "Agendamento Final Realizado Por",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "repair_schedule_date",
+   "fieldtype": "Date",
+   "label": "Data Agendamento - Conserto"
+  },
+  {
+   "default": "00:00:00",
+   "fieldname": "repair_schedule_time",
+   "fieldtype": "Time",
+   "label": "Hora Agendamento - Conserto"
+  },
+  {
+   "default": "00:00:00",
+   "fieldname": "repair_time",
+   "fieldtype": "Time",
+   "label": "Tempo de Conserto"
+  },
+  {
+   "bold": 1,
+   "fieldname": "repair_event_link",
+   "fieldtype": "Link",
+   "label": "Agenda de Conserto",
+   "options": "Event",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: !doc.repair_event_link",
+   "fieldname": "schedule_repair_event",
+   "fieldtype": "Button",
+   "label": "Agendar Conserto"
+  },
+  {
+   "fetch_from": "orcamento.pontos_de_calibracao",
+   "fieldname": "pontos_cal_criterios_aceitacao",
+   "fieldtype": "Text Editor",
+   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios de Aceita\u00e7\u00e3o"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-08-07 16:08:22.394879",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Criador de Ordens de Servico em Lote",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
