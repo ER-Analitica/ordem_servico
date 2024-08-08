@@ -145,7 +145,25 @@ doc_events = {
     },
     "Quotation":{
         "validate": "ordem_servico.doc_events.limpar_hash.validate",
-    }
+    },
+    
+    "Criador de Ordens de Servico em Lote":{
+        "on_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.on_submit",
+    },
+
+
+    #"Ordem Servico Interna":{
+    #    "validate": "ordem_servico.doc_events.validar_equip.validate",
+    #}
+
+    
+    #"Criador de Ordem de Servico Por XML": {
+       #"validate": [
+           #"ordem_servico.doc_events.xml.process_xml",
+           #"ordem_servico.doc_events.pypdf2.process_pdf",
+           #"ordem_servico.doc_events.ocr.process_image"
+       #]
+    #},
     
     
     #"Contact": {
