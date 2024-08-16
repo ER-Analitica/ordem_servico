@@ -112,7 +112,11 @@ fixtures = [
      },
      {
          "dt":"Client Script"
-     }
+     },
+
+     {
+         "dt":"Server Script"
+     },
     
 ]
 doc_events = {
@@ -150,6 +154,14 @@ doc_events = {
     "Criador de Ordens de Servico em Lote":{
         "on_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.on_submit",
     },
+    "Employee":{
+        "validate": [
+            "ordem_servico.doc_events.data_validade_colaborador.validate",
+            "ordem_servico.doc_events.sem_data_validade.validate",
+            "ordem_servico.doc_events.atualiza_status_com_base_data_documentos_colaborador.validate",
+
+        ]
+    }
 
 
     #"Ordem Servico Interna":{

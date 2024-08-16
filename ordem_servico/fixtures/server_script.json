@@ -1,0 +1,62 @@
+[
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2023-11-07 10:54:00.553491",
+  "module": "Ordem Servico",
+  "name": "Atualizar status Guia de Remessa",
+  "reference_doctype": null,
+  "script": "for dn in frappe.get_all(\"Delivery Note\", filters = {\"per_billed\":100, \"workflow_state\":[\"not in\",[\"Conclu\u00eddo\",\"Cancelado\"]],\"docstatus\":1}):\n    \n    frappe.get_doc(\"Delivery Note\",dn.name).update({\"workflow_state\": \"Conclu\u00eddo\"}).save()",
+  "script_type": "Scheduler Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2024-05-08 15:37:03.688986",
+  "module": "Ordem Servico",
+  "name": "Altera\u00e7\u00e3o de status com base na data limite de faturamento",
+  "reference_doctype": null,
+  "script": "current_day = int(frappe.utils.nowdate().split(\"-\")[2])\nfor dn in frappe.get_all(\"Delivery Note\", filters={\"status\": \"To Bill\", \"data_limite_de_faturamento\": (\">\", current_day), \"docstatus\": 1}): \n    frappe.get_doc(\"Delivery Note\", dn.name).update({\"status\": \"Em Espera\"}).save()\n    \n'''for dn in frappe.get_all(\"Delivery Note\", filters={\"status\": \"Em Espera\", \"data_limite_de_faturamento\": (\">=\", current_day), \"docstatus\": 1}): \n    frappe.get_doc(\"Delivery Note\", dn.name).update({\"status\": \"To Bill\"}).save()'''\n\n# Mover notas de entrega \"Em Espera\" com data limite no dia atual ou posterior para \"Para Faturar\"\n'''\nfor dn in frappe.get_all(\"Delivery Note\", filters={\"workflow_state\": \"Em Espera\", \"data_limite_de_faturamento\": (\">=\", current_day), \"docstatus\": 1}): \n    try:\n        doc = frappe.get_doc(\"Delivery Note\", dn.name)\n        sales_order_name = doc.sales_order  # Obt\u00e9m o Sales Order vinculado\n\n        # Atualiza o estado da Delivery Note\n        doc.update({\"workflow_state\": \"Para Faturar\"}).save()\n\n        # Atualiza o campo per_delivered no Sales Order vinculado\n        update_per_delivered(sales_order_name)\n\n    except Exception as e:\n        # Log ou customize a mensagem de erro aqui\n        frappe.msgprint(f\"Erro ao atualizar a nota de entrega {dn.name}: {e}\")\n        \n        \ndef update_per_delivered(sales_order_name):\n    # Fun\u00e7\u00e3o para atualizar o campo per_delivered no Sales Order\n    \n    so = frappe.get_doc(\"Sales Order\", sales_order_name)\n    \n    # Obt\u00e9m todas as Delivery Notes vinculadas ao Sales Order\n    delivery_notes = frappe.get_all(\n        \"Delivery Note\",\n        filters={\"sales_order\": so.name, \"workflow_state\": \"Para Faturar\", \"docstatus\": 1}\n    )\n    \n    total_entregue = 0\n    total_pedido = sum([item.qty for item in so.items])\n\n    for dn in delivery_notes:\n        # Obt\u00e9m a Delivery Note\n        delivery_note = frappe.get_doc(\"Delivery Note\", dn.name)\n        \n        # Soma as quantidades entregues\n        total_entregue += sum([item.qty for item in delivery_note.items])\n\n    if total_pedido > 0:\n        porcentagem_entrega = (total_entregue / total_pedido) * 100\n    else:\n        porcentagem_entrega = 0\n\n    # Ajuste: Limita a porcentagem_entrega a 100%\n    so.per_delivered = min(porcentagem_entrega, 100)\n    so.save()\n    '''\n    \n\n\n\n\n'''for dn in frappe.get_all(\"Delivery Note\", filters={\"workflow_state\": \"Para Faturar\", \"data_limite_de_faturamento\": (\"<\", current_day), \"docstatus\": 1}): \n    frappe.get_doc(\"Delivery Note\",dn.name).update({\"workflow_state\": \"Em Espera\"}).save()'''\n\n''''''",
+  "script_type": "Scheduler Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "All",
+  "modified": "2024-01-08 13:34:30.250315",
+  "module": "Ordem Servico",
+  "name": "Valida\u00e7\u00e3o para quando o faturamento parcial for igual a \"N\u00e3o\"",
+  "reference_doctype": null,
+  "script": "for dn in frappe.get_all(\"Delivery Note\", filters={\"workflow_state\": \"Em Espera\", \"faturamento_parcial\": \"N\u00c3O\", \"docstatus\": 1}):\n    delivery_note = frappe.get_doc(\"Delivery Note\", dn.name)\n    sales_order_name = delivery_note.reference_name\n\n    # Obt\u00e9m o campo per_delivered da Sales Order\n    per_delivered = frappe.db.get_value(\"Sales Order\", sales_order_name, \"per_delivered\")\n\n    if per_delivered == 100:\n        # Atualiza o workflow_state para \"Para Faturar\" na Delivery Note\n        delivery_note.workflow_state = \"Para Faturar\"\n        delivery_note.bypass_workflow = True\n        delivery_note.save()\n\n        # Impede que o valor de per_delivered na Sales Order seja recalculado\n        frappe.db.set_value(\"Sales Order\", sales_order_name, \"per_delivered\", per_delivered)\n",
+  "script_type": "Scheduler Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Insert",
+  "event_frequency": "Daily",
+  "modified": "2024-08-15 10:18:20.209656",
+  "module": "Ordem Servico",
+  "name": "Validacao Status",
+  "reference_doctype": null,
+  "script": "# Obt\u00e9m a data atual como string no formato \"YYYY-MM-DD\"\ndata_atual = frappe.utils.nowdate()\n\n# Filtra colaboradores ativos\nfor dn in frappe.get_all(\"Employee\", filters={\"status\": \"Active\"}):\n    employee = frappe.get_doc(\"Employee\", dn.name)\n    \n    # Verifica se h\u00e1 linhas na tabela filha \"documentos_internos\" com status \"Em dia\"\n    documentos_em_dia = [doc for doc in employee.get(\"documentos_internos\") if doc.status == \"Em dia\"]\n    \n    if documentos_em_dia:\n        # Percorre a tabela filha \"documentos_internos\"\n        for doc in documentos_em_dia:\n            # Verifica se a data de validade \u00e9 menor que a data atual\n            if frappe.utils.get_datetime(doc.data_validade) < frappe.utils.get_datetime(data_atual):\n                # Atualiza o campo \"status\" para \"Vencido\"\n                doc.status = \"Vencido\"\n        \n        # Ignora campos obrigat\u00f3rios e salva o colaborador\n        employee.flags.ignore_mandatory = True\n        employee.save()\n \n        # Confirma as altera\u00e7\u00f5es no banco de dados\n        frappe.db.commit()\n",
+  "script_type": "Scheduler Event"
+ }
+]
