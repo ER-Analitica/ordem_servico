@@ -13155,7 +13155,7 @@
   "description": null,
   "docstatus": 0,
   "doctype": "Custom Field",
-  "dt": "Sales Invoice",
+  "dt": "Delivery Note",
   "fetch_from": null,
   "fetch_if_empty": 0,
   "fieldname": "reference_name",
