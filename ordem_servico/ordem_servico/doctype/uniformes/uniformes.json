@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-13 09:35:51.118098",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tipo",
+  "tamanho",
+  "numero"
+ ],
+ "fields": [
+  {
+   "fieldname": "tipo",
+   "fieldtype": "Select",
+   "label": "Tipo",
+   "options": "\nCamisa Social feminina\nCamisa Social masculina\nCamiseta feminina\nCamiseta masculina"
+  },
+  {
+   "fieldname": "tamanho",
+   "fieldtype": "Data",
+   "label": "Tamanho"
+  },
+  {
+   "fieldname": "numero",
+   "fieldtype": "Int",
+   "label": "N\u00famero"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-08-13 09:35:51.118098",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Uniformes",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

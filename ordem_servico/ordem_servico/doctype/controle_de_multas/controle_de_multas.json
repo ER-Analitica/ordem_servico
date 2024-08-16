@@ -1,0 +1,107 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-13 09:09:27.587888",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "infracao",
+  "dt_infracao",
+  "veiculo",
+  "tipo",
+  "renainf",
+  "renainf_multa_original",
+  "condutor_indicado",
+  "data_recurso",
+  "valor_original",
+  "valor_pago_empresa",
+  "valor_pago_colaborador",
+  "observacoes",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "infracao",
+   "fieldtype": "Data",
+   "label": "Infra\u00e7\u00e3o"
+  },
+  {
+   "fieldname": "dt_infracao",
+   "fieldtype": "Date",
+   "label": "Data da Infra\u00e7\u00e3o"
+  },
+  {
+   "fieldname": "veiculo",
+   "fieldtype": "Select",
+   "label": "Ve\u00edculo",
+   "options": "\nBSX4I28\nEWW2B06\nFTD6J02"
+  },
+  {
+   "fieldname": "tipo",
+   "fieldtype": "Data",
+   "label": "Tipo"
+  },
+  {
+   "fieldname": "renainf",
+   "fieldtype": "Data",
+   "label": "RENAINF"
+  },
+  {
+   "fieldname": "renainf_multa_original",
+   "fieldtype": "Data",
+   "label": "RENAINF da multa original"
+  },
+  {
+   "fieldname": "condutor_indicado",
+   "fieldtype": "Data",
+   "label": "Condutor Indicado"
+  },
+  {
+   "fieldname": "data_recurso",
+   "fieldtype": "Date",
+   "label": "Data do Recuros"
+  },
+  {
+   "fieldname": "valor_original",
+   "fieldtype": "Currency",
+   "label": "Valor Original",
+   "options": "currency"
+  },
+  {
+   "fieldname": "valor_pago_empresa",
+   "fieldtype": "Currency",
+   "label": "Valor Pago Pela Empresa",
+   "options": "currency"
+  },
+  {
+   "fieldname": "valor_pago_colaborador",
+   "fieldtype": "Currency",
+   "label": "Valor Pago Pelo Colaborador",
+   "options": "currency"
+  },
+  {
+   "fieldname": "observacoes",
+   "fieldtype": "Text",
+   "label": "Observa\u00e7\u00f5es"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nAguardando notifica\u00e7\u00e3o de penalidade\nAguardando pagamento\nAguardando reembolso\nConclu\u00edda"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-08-15 11:02:07.931559",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Controle de Multas",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
