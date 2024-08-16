@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-12 14:36:44.632133",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "documento",
+  "validade",
+  "emissao",
+  "data_validade",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "documento",
+   "fieldtype": "Link",
+   "label": "Documento",
+   "options": "Documentos Internos"
+  },
+  {
+   "fetch_from": "documento.validade",
+   "fieldname": "validade",
+   "fieldtype": "Int",
+   "label": "Validade (em dias)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "emissao",
+   "fieldtype": "Date",
+   "label": "Emiss\u00e3o"
+  },
+  {
+   "fieldname": "data_validade",
+   "fieldtype": "Date",
+   "label": "Data de Validade",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Em dia\nVencido"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-08-13 10:32:08.078102",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Doc Internos",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
