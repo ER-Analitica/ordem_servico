@@ -30,7 +30,13 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
+web_include_js = [
+    "/assets/ordem_servico/datatables/dataTables.min.js"
+]
 
+web_include_css = [
+    "/assets/ordem_servico/datatables/dataTables.min.css"
+]
 
 doctype_js = {
     #"Customer" : "public/js/jquery.mask.min.js",
@@ -160,6 +166,12 @@ doc_events = {
             "ordem_servico.doc_events.sem_data_validade.validate",
             "ordem_servico.doc_events.atualiza_status_com_base_data_documentos_colaborador.validate",
 
+        ]
+    },
+    "Sales Order": {
+        "on_submit": "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
+        "validate":[
+             "ordem_servico.doc_events.analise_critica_customer.pegar_valor_cliente",
         ]
     }
 
