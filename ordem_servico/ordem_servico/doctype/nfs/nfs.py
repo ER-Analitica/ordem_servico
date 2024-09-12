@@ -31,7 +31,7 @@ class NFS(Document):
 				self.totalliquido = totaliss
 		
 			#listar cliente
-			url = "https://asaas.com/api/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
+			url = "https://api.asaas.com/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
 			payload={}
 			headers = {
 			'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ class NFS(Document):
 			if self.client_exist == 0:
 			
 				#criar cliente 
-				url = "https://asaas.com/api/v3/customers"
+				url = "https://api.asaas.com/v3/customers"
 
 				payload = json.dumps({
 							"name": frappe.db.get_value("Customer", self.customer, "customer_name"),
@@ -81,7 +81,7 @@ class NFS(Document):
 				
 
 
-				url = "https://asaas.com/api/v3/invoices"
+				url = "https://api.asaas.com/v3/invoices"
 
 				payload = json.dumps({
 						"customer": self.id_client,
@@ -137,7 +137,7 @@ class NFS(Document):
 				#cliente existe apenas criar nota
 
 
-				url = "https://asaas.com/api/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
+				url = "https://api.asaas.com/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
 				headers = {
 				'Content-Type': 'application/json',
 				'access_token': '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAyNjA5NzM6OiRhYWNoXzQ0YWMzZDRmLTE4NDEtNDY3Ny04NGFkLTQ0NzVjMDEwYTk4Mg==',
@@ -154,7 +154,7 @@ class NFS(Document):
 				#criar nota
 			
 				
-				url = "https://asaas.com/api/v3/invoices"
+				url = "https://api.asaas.com/v3/invoices"
 
 				payload = json.dumps({
 						"customer": self.id_client,
@@ -211,7 +211,7 @@ class NFS(Document):
 					"%d/%m/%Y"
 				)
 				return now
-			url = "https://asaas.com/api/v3/invoices/"+self.name+"/cancel"
+			url = "https://api.asaas.com/v3/invoices/"+self.name+"/cancel"
 
 			payload={}
 			headers = {
@@ -231,7 +231,7 @@ class NFS(Document):
 	#emitir nota
 	def on_submit(self):
 		#self.company = id
-			url2 = "https://asaas.com/api/v3/invoices/"+str(self.name)+"/authorize"
+			url2 = "https://api.asaas.com/v3/invoices/"+str(self.name)+"/authorize"
 			
 			headers = {
 			'Content-Type': 'application/json',

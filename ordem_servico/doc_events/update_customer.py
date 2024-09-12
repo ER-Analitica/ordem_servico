@@ -7,7 +7,7 @@ from frappe.model.document import Document
 
 
 def on_submit(self, method):
-            url = "https://asaas.com/api/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
+            url = "https://api.asaas.com/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
             payload={}
             headers = {
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ def on_submit(self, method):
                 id_customer = datajson['data'][0]
                 self.id_cliente_asaas = id_customer['id']
 
-                url = "https://asaas.com/api/v3/customers/"+str(self.id_cliente_asaas)
+                url = "https://api.asaas.com/v3/customers/"+str(self.id_cliente_asaas)
 
                 payload = json.dumps({
 							"name": frappe.db.get_value("Customer", self.customer, "customer_name"),

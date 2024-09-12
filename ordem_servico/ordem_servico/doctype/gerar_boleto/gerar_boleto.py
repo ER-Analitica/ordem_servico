@@ -42,7 +42,7 @@ class GerarBoleto(Document):
 				campo_multa = self.fixo_multa
 
 
-			url3 = "https://asaas.com/api/v3/payments"
+			url3 = "https://api.asaas.com/v3/payments"
 			payload = json.dumps({
 			"customer": self.id_client,
 			"billingType": tipo_pagamento,
