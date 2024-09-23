@@ -179,7 +179,7 @@ doc_events = {
 
     "Ordem Servico Interna": {
         "validate":[
-             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
              "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
         ]
     },
