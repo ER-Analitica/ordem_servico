@@ -158,7 +158,7 @@ doc_events = {
     },
     
     "Criador de Ordens de Servico em Lote":{
-        "on_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.on_submit",
+        "before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
     },
     "Employee":{
         "validate": [
@@ -172,6 +172,21 @@ doc_events = {
         "on_submit": "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
         "validate":[
              "ordem_servico.doc_events.analise_critica_customer.pegar_valor_cliente",
+             "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
+        ],
+        
+    },
+
+    "Ordem Servico Interna": {
+        "validate":[
+             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+             "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+        ]
+    },
+
+    "Ordem Servico Externa": {
+        "validate":[
+             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
         ]
     }
 
