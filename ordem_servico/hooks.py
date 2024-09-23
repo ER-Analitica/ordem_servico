@@ -158,7 +158,10 @@ doc_events = {
     },
     
     "Criador de Ordens de Servico em Lote":{
-        "before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
+        "on_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
+        #o doc_events comentado será utilizado quando estiver pronto o formulário de visita caso o hooks suba para produção sem ainda ter o formulário de visita
+        #é necessário comentar a linha 164
+        #"before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
     },
     "Employee":{
         "validate": [
