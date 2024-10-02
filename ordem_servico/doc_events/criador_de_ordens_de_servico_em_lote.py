@@ -3,22 +3,70 @@ from __future__ import unicode_literals
 import frappe
 
 
-def on_submit(doc, method):
+def before_submit(doc, method):
      
     try:
         if doc.ordem_servico == "Ordem Servico Externa":
+            
+            item_codes_group = frappe.get_all(
+                'Item',
+                filters={
+                    'item_group': ['in', ['Calibração Acreditada RBC', 'Calibração Rastreável']]
+                },
+                pluck='name'
+            )
+
+            item_codes_service = frappe.get_all(
+                'Item',
+                filters={
+                    'criar_ordem_servico': 1
+                },
+                pluck='name'
+            )
+
+            # Unindo as listas de códigos de itens
+            item_codes = list(set(item_codes_group) | set(item_codes_service))
+
+            # Obtendo os itens da Sales Order Item que correspondem aos códigos filtrados
+            items = frappe.get_all(
+                'Sales Order Item',
+                filters={
+                    'parent': doc.sales_order_reference,
+                    'item_code': ['in', item_codes]
+                },
+                fields=['item_name', 'item_code', 'qty', 'item_group']
+            )
+
+            quantidade_total = sum(item['qty'] for item in items)
+            print(quantidade_total)
             count = 0
-            while count < int(doc.quantidade):
-                os = frappe.new_doc(doc.ordem_servico)
-                os.customer = doc.cliente
-                #os.equipment_location = doc.loc_equip
-                os.contact_link = doc.contato
-                #os.has_quotation_link = doc.orcamento
-                #os.have_quotation = doc.possui_orcamento
-                os.status_order_service = doc.status_order_service
-                os.sales_order_reference = doc.sales_order_reference
-                os.save()
-                count += 1
+            #while count < quantidade_total:
+            for item in items:
+                for _ in range(int(item['qty'])):
+                    
+                    # Cria uma nova Ordem de Serviço
+                    os = frappe.new_doc(doc.ordem_servico)
+                    
+                    # Preenchendo os campos necessários
+                    os.customer = doc.cliente
+                    os.contact_link = doc.contato
+                    os.status_order_service = doc.status_order_service
+                    os.sales_order_reference = doc.sales_order_reference
+                    
+                    # Salva a nova OS
+                    os.save()
+
+                    # Adiciona a OS criada na tabela interna
+                    adiciona_os = doc.append("os_interna_table", {})
+                    adiciona_os.os = os.name
+                    adiciona_os.equipamento = item.item_name
+                    adiciona_os.tipo_servico = item.item_group
+                    adiciona_os.preventiva = 1
+
+                    count += 1
+                
+
+                
         elif doc.ordem_servico == "Ordem Servico Interna":
             count = 0
             while count < int(doc.quantidade):
