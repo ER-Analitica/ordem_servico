@@ -10,7 +10,17 @@
   "ordem_servico",
   "cliente",
   "contato",
+  "data_do_servico",
+  "cb1",
+  "integracao",
+  "data_integracao",
+  "hora_integracao",
+  "endereco_empresa",
+  "qs1",
+  "observacoes_visita",
+  "pontos_calibracao",
   "quantidade",
+  "os_interna_table",
   "ordem_servico_interna",
   "status_order_service_interna",
   "loc_equip",
@@ -87,6 +97,7 @@
    "label": "Localiza\u00e7\u00e3o do Equipamento"
   },
   {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
    "fieldname": "quantidade",
    "fieldtype": "Data",
    "label": "Quantidade"
@@ -356,12 +367,94 @@
    "fieldname": "pontos_cal_criterios_aceitacao",
    "fieldtype": "Text Editor",
    "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios de Aceita\u00e7\u00e3o"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
+   "fieldname": "os_interna_table",
+   "fieldtype": "Table",
+   "in_filter": 1,
+   "label": "Itens Formul\u00e1rio de Visita",
+   "options": "Ordem Servico Interna Tabela"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.data_do_servico",
+   "fetch_if_empty": 1,
+   "fieldname": "data_do_servico",
+   "fieldtype": "Date",
+   "label": "Data do Servi\u00e7o"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.integracao",
+   "fetch_if_empty": 1,
+   "fieldname": "integracao",
+   "fieldtype": "Select",
+   "label": "Integra\u00e7\u00e3o",
+   "options": "\nSIM\nN\u00c3O"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.observacoes_visita",
+   "fetch_if_empty": 1,
+   "fieldname": "observacoes_visita",
+   "fieldtype": "Small Text",
+   "label": "Observa\u00e7\u00f5es da Visita"
+  },
+  {
+   "fieldname": "qs1",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.data_integracao",
+   "fetch_if_empty": 1,
+   "fieldname": "data_integracao",
+   "fieldtype": "Date",
+   "label": "Data Integra\u00e7\u00e3o"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.hora_integracao",
+   "fetch_if_empty": 1,
+   "fieldname": "hora_integracao",
+   "fieldtype": "Data",
+   "label": "Hora Integra\u00e7\u00e3o"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.shipping_address_name",
+   "fetch_if_empty": 1,
+   "fieldname": "endereco_empresa",
+   "fieldtype": "Data",
+   "label": "Endere\u00e7o / Empresa"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa' && doc.sales_order_reference",
+   "fetch_from": "sales_order_reference.pontos_de_calibracao",
+   "fetch_if_empty": 1,
+   "fieldname": "pontos_calibracao",
+   "fieldtype": "Text Editor",
+   "label": "Pontos de Calibra\u00e7\u00e3o"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-07 16:08:22.394879",
+ "modified": "2024-10-01 17:07:33.330634",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
