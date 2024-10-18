@@ -407,7 +407,7 @@
    "fetch_from": "sales_order_reference.observacoes_visita",
    "fetch_if_empty": 1,
    "fieldname": "observacoes_visita",
-   "fieldtype": "Small Text",
+   "fieldtype": "Text Editor",
    "label": "Observa\u00e7\u00f5es da Visita"
   },
   {
@@ -454,7 +454,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-01 17:07:33.330634",
+ "modified": "2024-10-18 08:49:49.305512",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
