@@ -237,7 +237,7 @@ def set_quotation_history(source_docname, source_transaction_date, target_docnam
     os_doc.quotation_date = source_transaction_date
     os_doc.status_order_service = "Em Aprovação"
     os_doc.save()
-
+    
 
 @frappe.whitelist()
 def set_sales_order_history(source_docname, source_transaction_date, target_docname):
@@ -320,6 +320,8 @@ def make_gerar_boleto(doctype, customer, totalliquidoboleto, id_nfs, id_client, 
     doc.payment_terms_template = payment_terms_template
     #doc.items = items
     return doc
+
+
 
 
 
