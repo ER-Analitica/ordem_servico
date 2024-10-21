@@ -47,7 +47,30 @@ def get_cnpj(cnpj):
               
               
             }
-            
+
+@frappe.whitelist()
+def get_transaction_list(
+    doctype,
+    txt=None,
+    filters=None,
+    limit_start=None,
+    limit_page_length=20,
+    order_by='creation',
+    custom=False):
+
+    from erpnext.controllers.website_list_for_contact import get_transaction_list
+
+    return get_transaction_list(
+        doctype=doctype,
+        txt=txt,
+        filters=filters,
+        limit_start=limit_start,
+        limit_page_length=limit_page_length,
+        order_by=order_by,
+        custom=custom
+    )
+
+                  
             
             
             
