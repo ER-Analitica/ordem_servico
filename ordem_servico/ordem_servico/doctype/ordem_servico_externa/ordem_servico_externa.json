@@ -19,11 +19,13 @@
   "cb_0",
   "sales_order_reference",
   "equipment_details_section",
-  "equipment",
   "serie_number",
-  "equipment_model",
-  "equipment_tag",
   "equipment_description",
+  "tipo_equipamento",
+  "equipment_model",
+  "marca_equipamento",
+  "capacidade_equipamento",
+  "equipment_tag",
   "cb_1",
   "created_by",
   "final_schedule_section",
@@ -61,6 +63,24 @@
   "quotation_status",
   "repair_status",
   "defeito_constatado",
+  "ipem",
+  "pam",
+  "cb1",
+  "divisao",
+  "column_break_144",
+  "ano",
+  "section_break_146",
+  "lacres_retirados",
+  "column_break_148",
+  "lacres_afixados",
+  "section_break_150",
+  "observacoes_ipem",
+  "section_break_152",
+  "status_prestacao_contas",
+  "column_break_154",
+  "data_prestacao_contas",
+  "column_break_156",
+  "responsavel_prestacao_contas",
   "quotation_section",
   "quotation_link",
   "valor",
@@ -150,33 +170,31 @@
    "label": "Detalhes do Equipamento"
   },
   {
-   "fieldname": "equipment",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Equipamento",
-   "options": "Equipamentos do Cliente"
-  },
-  {
    "fieldname": "serie_number",
-   "fieldtype": "Data",
-   "label": "N\u00famero de S\u00e9rie"
+   "fieldtype": "Link",
+   "label": "N\u00famero de S\u00e9rie",
+   "options": "Equipamentos"
   },
   {
-   "bold": 1,
+   "fetch_from": "serie_number.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
-   "label": "Modelo"
+   "label": "Modelo",
+   "read_only": 1
   },
   {
-   "bold": 1,
+   "fetch_from": "serie_number.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
-   "label": "Tag"
+   "label": "Tag",
+   "read_only": 1
   },
   {
+   "fetch_from": "serie_number.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
-   "label": "Descri\u00e7\u00e3o do Equipamento"
+   "label": "Equipamento",
+   "read_only": 1
   },
   {
    "fieldname": "cb_1",
@@ -441,10 +459,132 @@
    "label": "T\u00edtulo do Documento",
    "options": "Print Heading",
    "read_only": 1
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serie_number.marca_equipamento",
+   "fieldname": "marca_equipamento",
+   "fieldtype": "Data",
+   "label": "Marca",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "serie_number.capacidade",
+   "fieldname": "capacidade_equipamento",
+   "fieldtype": "Data",
+   "label": "Capacidade",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ipem",
+   "fieldtype": "Section Break",
+   "label": "IPEM"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "pam",
+   "fieldtype": "Data",
+   "label": "PAM",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "divisao",
+   "fieldtype": "Data",
+   "label": "Divis\u00e3o",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "column_break_144",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "ano",
+   "fieldtype": "Data",
+   "label": "Ano",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "fieldname": "section_break_146",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.start_repair_time",
+   "fieldname": "lacres_retirados",
+   "fieldtype": "Data",
+   "label": "Lacres Retirados",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "fieldname": "column_break_148",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.start_repair_time",
+   "fieldname": "lacres_afixados",
+   "fieldtype": "Data",
+   "label": "Lacres Afixados",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "fieldname": "section_break_150",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "observacoes_ipem",
+   "fieldtype": "Small Text",
+   "label": "Observa\u00e7\u00f5es",
+   "mandatory_depends_on": "eval: doc.repaired_by_name2"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "section_break_152",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "status_prestacao_contas",
+   "fieldtype": "Select",
+   "label": "Status de Presta\u00e7\u00e3o de Contas",
+   "options": "\nPendente\nConclu\u00eddo"
+  },
+  {
+   "depends_on": "eval: doc.repair_status == 'Liberado'",
+   "fieldname": "column_break_154",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.status_prestacao_contas == 'Conclu\u00eddo' && doc.repair_status == 'Liberado'",
+   "fieldname": "data_prestacao_contas",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "column_break_156",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "responsavel_prestacao_contas",
+   "fieldtype": "Data",
+   "label": "Respons\u00e1vel"
   }
  ],
  "links": [],
- "modified": "2024-01-31 09:29:57.680304",
+ "modified": "2024-10-21 10:42:36.888396",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
