@@ -12938,7 +12938,7 @@
   "collapsible": 0,
   "collapsible_depends_on": null,
   "columns": 0,
-  "default": "O Contratante / Tomador dos Servi\u00e7os dever\u00e1 informar previamente sobre eventual obrigatoriedade de reten\u00e7\u00e3o de impostos, especialmente sobre a\npresta\u00e7\u00e3o de Servi\u00e7os (ISS), informando inclusive a al\u00edquota cobrada por seu munic\u00edpio, a fim de que possamos fazer constar tal reten\u00e7\u00e3o em nossa nota fiscal de servi\u00e7os. \nA presente proposta tem base no ISS cobrado dentro da al\u00edquota do simples Nacional, sem reten\u00e7\u00e3o.\nEventuais diferen\u00e7as de al\u00edquotas ser\u00e3o adicionadas ao valor da presente proposta.",
+  "default": null,
   "depends_on": null,
   "description": null,
   "docstatus": 0,
