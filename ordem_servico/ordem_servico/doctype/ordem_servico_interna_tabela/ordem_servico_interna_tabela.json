@@ -10,6 +10,8 @@
   "equipamento",
   "tipo_servico",
   "modelo",
+  "cal_rastr",
+  "cal_rbc",
   "preventiva",
   "corretiva",
   "pecas"
@@ -59,12 +61,26 @@
    "fieldname": "tipo_servico",
    "fieldtype": "Data",
    "label": "Tipo Servi\u00e7o"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "cal_rastr",
+   "fieldtype": "Check",
+   "label": "Calibra\u00e7\u00e3o Rastre\u00e1vel"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "cal_rbc",
+   "fieldtype": "Check",
+   "label": "Calibra\u00e7\u00e3o RBC"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-25 09:45:14.048359",
+ "modified": "2024-11-06 11:44:26.537571",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna Tabela",

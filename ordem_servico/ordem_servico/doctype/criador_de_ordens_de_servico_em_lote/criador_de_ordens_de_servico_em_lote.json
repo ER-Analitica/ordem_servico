@@ -10,8 +10,11 @@
   "ordem_servico",
   "cliente",
   "contato",
-  "data_do_servico",
+  "escolher_como_criar_osexterna",
+  "sales_order_reference",
+  "quantidade",
   "cb1",
+  "data_do_servico",
   "integracao",
   "data_integracao",
   "hora_integracao",
@@ -19,7 +22,6 @@
   "qs1",
   "observacoes_visita",
   "pontos_calibracao",
-  "quantidade",
   "os_interna_table",
   "ordem_servico_interna",
   "status_order_service_interna",
@@ -52,7 +54,6 @@
   "ordem_servico_externa",
   "amended_from",
   "status_order_service",
-  "sales_order_reference",
   "agendamentolaudo_final_tab",
   "final_schedule_section",
   "final_scheduled_to",
@@ -97,7 +98,7 @@
    "label": "Localiza\u00e7\u00e3o do Equipamento"
   },
   {
-   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' || doc.escolher_como_criar_osexterna == 'Quantidade'",
    "fieldname": "quantidade",
    "fieldtype": "Data",
    "label": "Quantidade"
@@ -148,6 +149,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
    "fieldname": "sales_order_reference",
    "fieldtype": "Link",
    "label": "Pedido de Venda Refer\u00eancia",
@@ -449,12 +451,20 @@
    "fieldname": "pontos_calibracao",
    "fieldtype": "Text Editor",
    "label": "Pontos de Calibra\u00e7\u00e3o"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
+   "fieldname": "escolher_como_criar_osexterna",
+   "fieldtype": "Select",
+   "label": "Como deseja criar as Ordens de Servi\u00e7o Externa?",
+   "mandatory_depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
+   "options": "\nQuantidade\nRefer\u00eancia do Pedido de Venda"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-18 08:49:49.305512",
+ "modified": "2024-11-05 09:22:27.265260",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
