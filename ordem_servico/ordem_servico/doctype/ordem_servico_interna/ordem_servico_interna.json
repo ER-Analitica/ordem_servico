@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2018-10-15 09:30:35.250270",
+ "creation": "2024-11-13 14:25:35.941401",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -764,7 +764,7 @@
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "qualificacao_temperatura",
    "fieldtype": "Check",
-   "label": "QUALIFICA\u00c7\u00c3O RASTRE\u00c1VEL EM TEMPERATURA"
+   "label": "QUALIFICA\u00c7\u00c3O RBC EM TEMPERATURA"
   },
   {
    "fieldname": "repair_observation",
@@ -1074,7 +1074,7 @@
   }
  ],
  "links": [],
- "modified": "2024-05-03 11:24:01.598411",
+ "modified": "2024-11-13 14:26:49.052953",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
