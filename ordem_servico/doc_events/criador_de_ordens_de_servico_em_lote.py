@@ -6,7 +6,7 @@ import frappe
 def before_submit(doc, method):
      
     try:
-        if doc.ordem_servico == "Ordem Servico Externa":
+        if doc.ordem_servico == "Ordem Servico Externa" and doc.escolher_como_criar_osexterna == 'Referência do Pedido de Venda':
             
             item_codes_group = frappe.get_all(
                 'Item',
@@ -61,9 +61,26 @@ def before_submit(doc, method):
                     adiciona_os.os = os.name
                     adiciona_os.equipamento = item.item_name
                     adiciona_os.tipo_servico = item.item_group
+                    if adiciona_os.tipo_servico == "Calibração Rastreável":
+                        adiciona_os.cal_rastr = 1
+                    if adiciona_os.tipo_servico == "Calibração Acreditada RBC":
+                        adiciona_os.cal_rbc = 1
                     adiciona_os.preventiva = 1
 
                     count += 1
+
+        elif doc.ordem_servico == "Ordem Servico Externa" and doc.escolher_como_criar_osexterna == 'Quantidade':
+            count = 0
+            while count < int(doc.quantidade):
+                os = frappe.new_doc(doc.ordem_servico)
+                os.customer = doc.cliente
+                os.contact_link = doc.contato
+                os.status_order_service = doc.status_order_service
+                os.sales_order_reference = doc.sales_order_reference
+                os.save()
+                adiciona_os = doc.append("os_interna_table", {})
+                adiciona_os.os = os.name
+                count += 1
                 
 
                 
