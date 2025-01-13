@@ -123,6 +123,10 @@ fixtures = [
      {
          "dt":"Server Script"
      },
+
+     {
+         "dt":"Web Page"
+     },
     
 ]
 doc_events = {

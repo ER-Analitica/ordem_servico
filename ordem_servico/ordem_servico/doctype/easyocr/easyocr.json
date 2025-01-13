@@ -1,0 +1,94 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-26 14:52:38.125206",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "xml",
+  "texto_xml",
+  "primeira_linha",
+  "campo1",
+  "campo2",
+  "ocr",
+  "texto_ocr",
+  "pdf",
+  "texto_pdf"
+ ],
+ "fields": [
+  {
+   "fieldname": "campo1",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "campo1"
+  },
+  {
+   "fieldname": "campo2",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "campo2"
+  },
+  {
+   "fieldname": "primeira_linha",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "primeira linha"
+  },
+  {
+   "fieldname": "xml",
+   "fieldtype": "Attach",
+   "label": "xml"
+  },
+  {
+   "fieldname": "texto_xml",
+   "fieldtype": "Long Text",
+   "label": "texto xml"
+  },
+  {
+   "fieldname": "ocr",
+   "fieldtype": "Attach Image",
+   "label": "ocr"
+  },
+  {
+   "fieldname": "texto_ocr",
+   "fieldtype": "Text",
+   "label": "texto ocr"
+  },
+  {
+   "fieldname": "pdf",
+   "fieldtype": "Attach",
+   "label": "pdf"
+  },
+  {
+   "fieldname": "texto_pdf",
+   "fieldtype": "Text",
+   "label": "texto pdf"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-06 11:37:50.583245",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "EasyOCR",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
