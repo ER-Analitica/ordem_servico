@@ -8,6 +8,8 @@ from frappe.model.document import Document
 
 
 class OrdemServicoExterna(Document):
+	pass
+	'''
 	def validate(self):
 		if self.equipment:
 			self.update_equipamento()
@@ -17,5 +19,7 @@ class OrdemServicoExterna(Document):
 		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "tag", self.get('equipment_tag'))
 		frappe.db.set_value("Equipamentos do Cliente", self.equipment, "description", self.get('equipment_description'))
 		frappe.db.commit()
+	'''
+		
 
 

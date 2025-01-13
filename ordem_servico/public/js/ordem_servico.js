@@ -3,7 +3,7 @@
 
 frappe.ui.form.on(cur_frm.doctype, {
 	onload() {
-		cur_frm.fields_dict.equipment.get_query = () => {
+		cur_frm.fields_dict.serie_number.get_query = () => {
 			return {
 				filters: {
 					'customer': cur_frm.doc.customer
@@ -100,6 +100,10 @@ frappe.ui.form.on(cur_frm.doctype, {
 			})
 		}
 	},*/
+	customer: function(frm) {
+        // Limpa o valor do campo serie_number quando o campo customer é alterado
+        frm.set_value('serie_number', '');
+	},
 	start_repair(frm) {
 		const { __unsaved } = cur_frm.doc
 		if (__unsaved) {
