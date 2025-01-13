@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2018-10-23 11:20:19.315314",
+ "creation": "2024-11-13 15:55:06.417300",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -560,7 +560,8 @@
    "fieldname": "status_prestacao_contas",
    "fieldtype": "Select",
    "label": "Status de Presta\u00e7\u00e3o de Contas",
-   "options": "\nPendente\nConclu\u00eddo"
+   "options": "\nPendente\nConclu\u00eddo",
+   "permlevel": 7
   },
   {
    "depends_on": "eval: doc.repair_status == 'Liberado'",
@@ -571,7 +572,8 @@
    "depends_on": "eval: doc.status_prestacao_contas == 'Conclu\u00eddo' && doc.repair_status == 'Liberado'",
    "fieldname": "data_prestacao_contas",
    "fieldtype": "Date",
-   "label": "Date"
+   "label": "Date",
+   "permlevel": 7
   },
   {
    "fieldname": "column_break_156",
@@ -580,11 +582,12 @@
   {
    "fieldname": "responsavel_prestacao_contas",
    "fieldtype": "Data",
-   "label": "Respons\u00e1vel"
+   "label": "Respons\u00e1vel",
+   "permlevel": 7
   }
  ],
  "links": [],
- "modified": "2024-10-21 10:42:36.888396",
+ "modified": "2024-11-18 11:45:09.737479",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
