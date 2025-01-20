@@ -123,6 +123,10 @@ fixtures = [
      {
          "dt":"Server Script"
      },
+
+     {
+         "dt":"Web Page"
+     },
     
 ]
 doc_events = {
@@ -155,6 +159,7 @@ doc_events = {
     },
     "Quotation":{
         "validate": "ordem_servico.doc_events.limpar_hash.validate",
+        "on_submit": "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
     },
     
     "Criador de Ordens de Servico em Lote":{
@@ -182,14 +187,14 @@ doc_events = {
 
     "Ordem Servico Interna": {
         "validate":[
-             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
              "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
         ]
     },
 
     "Ordem Servico Externa": {
         "validate":[
-             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
         ]
     }
 
