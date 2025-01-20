@@ -159,6 +159,7 @@ doc_events = {
     },
     "Quotation":{
         "validate": "ordem_servico.doc_events.limpar_hash.validate",
+        "on_submit": "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
     },
     
     "Criador de Ordens de Servico em Lote":{
