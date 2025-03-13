@@ -67,6 +67,10 @@ def before_submit(doc, method):
                         adiciona_os.cal_rbc = 1
                     adiciona_os.preventiva = 1
 
+                    # Adiciona a OS criada na tabela de equipamentos relatório de serviço
+                    adiciona_os_rel = doc.append("equipamentos_relatorio_servico", {})
+                    adiciona_os_rel.os_rel_servico = os.name
+
                     count += 1
 
         elif doc.ordem_servico == "Ordem Servico Externa" and doc.escolher_como_criar_osexterna == 'Quantidade':
@@ -80,8 +84,11 @@ def before_submit(doc, method):
                 os.save()
                 adiciona_os = doc.append("os_interna_table", {})
                 adiciona_os.os = os.name
+                 # Adiciona a OS criada na tabela de equipamentos relatório de serviço
+                adiciona_os_rel = doc.append("equipamentos_relatorio_servico", {})
+                adiciona_os_rel.os_rel_servico = os.name
                 count += 1
-                
+               
 
                 
         elif doc.ordem_servico == "Ordem Servico Interna":

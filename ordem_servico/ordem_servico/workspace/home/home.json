@@ -1,7 +1,8 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Seus atalhos</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Oportunidade\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Or\u00e7amento\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pedido de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Venda\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fornecedor\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Compra\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Ordem de Servi\u00e7o</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Interna\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Externa\",\"col\":5}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Equipamentos do Cliente\",\"col\":5}}]",
+ "content": "[{\"id\":\"eyxinSbWwh\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Seus atalhos</b></span>\",\"col\":12}},{\"id\":\"9-LQum2ph8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Oportunidade\",\"col\":3}},{\"id\":\"biYp9uljtG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Customer\",\"col\":3}},{\"id\":\"BnCM4jnmMF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Or\u00e7amento\",\"col\":3}},{\"id\":\"HSyeyr1BYb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Pedido de Venda\",\"col\":3}},{\"id\":\"nvQik8OM-5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Venda\",\"col\":3}},{\"id\":\"1RmxiBVBCb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"njaoGSZWC9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Dashboard\",\"col\":3}},{\"id\":\"u1TrAluKVW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fornecedor\",\"col\":3}},{\"id\":\"yJasL0Vtj4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Fatura de Compra\",\"col\":3}},{\"id\":\"ePzESwM5sx\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"0jBITgLtEv\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Ordem de Servi\u00e7o</b></span>\",\"col\":12}},{\"id\":\"FM4YcRhQSt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Interna\",\"col\":5}},{\"id\":\"L2cC89Bcvp\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Ordem de Servi\u00e7o Externa\",\"col\":5}},{\"id\":\"5CWa1UPTTF\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Equipamentos do Cliente\",\"col\":5}},{\"id\":\"J52YN4AWer\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"xlwjPW_8xU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Criador de O.S. em Lote\",\"col\":5}}]",
  "creation": "2020-01-23 13:46:38.833076",
+ "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
  "for_user": "",
@@ -199,10 +200,11 @@
    "type": "Link"
   }
  ],
- "modified": "2024-04-18 10:54:17.510128",
+ "modified": "2025-03-12 14:46:55.962766",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Home",
+ "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
@@ -216,6 +218,15 @@
    "doc_view": "List",
    "label": "Ordem de Servi\u00e7o Interna",
    "link_to": "Ordem Servico Interna",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "format": "Voc\u00ea tamb\u00e9m pode emitir o Formul\u00e1rio de Visita e o Relat\u00f3rio de Servi\u00e7o diretamente por aqui!",
+   "label": "Criador de O.S. em Lote",
+   "link_to": "Criador de Ordens de Servico em Lote",
+   "stats_filter": "[]",
    "type": "DocType"
   },
   {
@@ -268,7 +279,7 @@
    "color": "Blue",
    "doc_view": "List",
    "label": "Equipamentos do Cliente",
-   "link_to": "Equipamentos do Cliente",
+   "link_to": "Equipamentos",
    "type": "DocType"
   },
   {
