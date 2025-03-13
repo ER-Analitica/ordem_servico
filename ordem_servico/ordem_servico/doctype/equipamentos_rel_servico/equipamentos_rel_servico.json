@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-06 08:20:27.401469",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "os_rel_servico",
+  "equipamento_rel_servico",
+  "marca_rel_servico",
+  "numero_serie_rel_servico",
+  "identif_cliente_rel_servico",
+  "cal_rbc_rel",
+  "cal_rastreavel_rel",
+  "man_prev_rel",
+  "man_corretiva_rel",
+  "qualificacao_rbc_temperatura_rel",
+  "troca_pecas_rel",
+  "quais_pecas_rel",
+  "obs_rel_servico"
+ ],
+ "fields": [
+  {
+   "fieldname": "os_rel_servico",
+   "fieldtype": "Link",
+   "label": "OS",
+   "options": "Ordem Servico Externa"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "equipamento_rel_servico",
+   "fieldtype": "Data",
+   "label": "Equipamento"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "marca_rel_servico",
+   "fieldtype": "Data",
+   "label": "Marca"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "numero_serie_rel_servico",
+   "fieldtype": "Data",
+   "label": "N\u00famero de S\u00e9rie"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "identif_cliente_rel_servico",
+   "fieldtype": "Data",
+   "label": "Identif. Cliente"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "obs_rel_servico",
+   "fieldtype": "Text Editor",
+   "label": "Observa\u00e7\u00f5es"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "cal_rbc_rel",
+   "fieldtype": "Check",
+   "label": "CALIBRA\u00c7\u00c3O RBC"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "cal_rastreavel_rel",
+   "fieldtype": "Check",
+   "label": "CALIBRA\u00c7\u00c3O RASTRE\u00c1VEL"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "man_prev_rel",
+   "fieldtype": "Check",
+   "label": " MANUTEN\u00c7\u00c3O PREVENTIVA"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "man_corretiva_rel",
+   "fieldtype": "Check",
+   "label": " MANUTEN\u00c7\u00c3O CORRETIVA"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "qualificacao_rbc_temperatura_rel",
+   "fieldtype": "Check",
+   "label": "QUALIFICA\u00c7\u00c3O RBC EM TEMPERATURA"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "troca_pecas_rel",
+   "fieldtype": "Check",
+   "label": "TROCA DE PE\u00c7AS"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.troca_pecas_rel == 1",
+   "fieldname": "quais_pecas_rel",
+   "fieldtype": "Text",
+   "label": "Quais pe\u00e7as?"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-17 16:31:58.418030",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Equipamentos Rel Servico",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
