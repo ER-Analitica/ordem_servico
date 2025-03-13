@@ -127,6 +127,33 @@ fixtures = [
      {
          "dt":"Web Page"
      },
+
+     {
+         "dt":"Builder Client Script"
+     },
+
+     {
+         "dt":"Builder Component"
+     },
+
+     {
+         "dt":"Builder Page"
+     },
+
+     {
+         "dt":"Builder Page Client Script"
+     },
+
+     {
+         "dt":"Builder Project Folder"
+     },
+
+     {
+         "dt":"Builder Settings"
+     },
+
+
+     
     
 ]
 doc_events = {
@@ -167,6 +194,7 @@ doc_events = {
         #o doc_events comentado será utilizado quando estiver pronto o formulário de visita caso o hooks suba para produção sem ainda ter o formulário de visita
         #é necessário comentar a linha 164
         "before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
+        "on_update_after_submit": "ordem_servico.doc_events.emitir_rel_servico.on_update_after_submit",
     },
     "Employee":{
         "validate": [
@@ -184,20 +212,26 @@ doc_events = {
         ],
         
     },
+    
+   
+    #"Ordem Servico Interna": {
+        #"validate":[
+             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+             #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+        #]
+   # },
 
-    "Ordem Servico Interna": {
-        "validate":[
-             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-             "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
-        ]
-    },
-
-    "Ordem Servico Externa": {
-        "validate":[
-             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-        ]
-    }
-
+    #"Ordem Servico Externa": {
+        #"validate":[
+             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+        #]
+    #},
+    #"Equipamentos": {
+        #"validate":[
+            #"ordem_servico.doc_events.validacao_cadastro_equip.validacao_cadastro_equip",
+        #]
+    #}
+   
 
     #"Ordem Servico Interna":{
     #    "validate": "ordem_servico.doc_events.validar_equip.validate",

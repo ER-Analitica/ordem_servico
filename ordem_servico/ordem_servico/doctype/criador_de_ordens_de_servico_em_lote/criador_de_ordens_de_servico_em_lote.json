@@ -65,7 +65,20 @@
   "repair_schedule_time",
   "repair_time",
   "repair_event_link",
-  "schedule_repair_event"
+  "schedule_repair_event",
+  "rel_servico",
+  "emitir_rel_servico",
+  "qs6",
+  "data_inicio",
+  "equipamentos_relatorio_servico",
+  "responsavel_tecnico_e_contratante",
+  "responsavel_tecnico",
+  "q5",
+  "termino",
+  "qs5",
+  "contratante_responsavel",
+  "q6",
+  "email_rel_servico"
  ],
  "fields": [
   {
@@ -459,12 +472,83 @@
    "label": "Como deseja criar as Ordens de Servi\u00e7o Externa?",
    "mandatory_depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
    "options": "\nQuantidade\nRefer\u00eancia do Pedido de Venda"
+  },
+  {
+   "fieldname": "rel_servico",
+   "fieldtype": "Tab Break",
+   "label": "Relat\u00f3rio de Servi\u00e7o"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "equipamentos_relatorio_servico",
+   "fieldtype": "Table",
+   "in_filter": 1,
+   "label": "Equipamentos Relat\u00f3rio de Servi\u00e7o",
+   "options": "Equipamentos Rel Servico"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "emitir_rel_servico",
+   "fieldtype": "Select",
+   "label": "Emitir Relat\u00f3rio de Servi\u00e7o",
+   "options": "\nEMITIR RELAT\u00d3RIO\nRELAT\u00d3RIO EMITIDO"
+  },
+  {
+   "fieldname": "responsavel_tecnico_e_contratante",
+   "fieldtype": "Section Break",
+   "label": "Respons\u00e1vel T\u00e9cnico e Contratante Respons\u00e1vel"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "responsavel_tecnico",
+   "fieldtype": "Data",
+   "label": "Respons\u00e1vel T\u00e9cnico"
+  },
+  {
+   "fieldname": "q5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "termino",
+   "fieldtype": "Data",
+   "label": "T\u00e9rmino"
+  },
+  {
+   "fieldname": "qs5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "contratante_responsavel",
+   "fieldtype": "Data",
+   "label": "Contratante respons\u00e1vel"
+  },
+  {
+   "fieldname": "q6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "email_rel_servico",
+   "fieldtype": "Data",
+   "label": "E-mail"
+  },
+  {
+   "fieldname": "qs6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "data_inicio",
+   "fieldtype": "Data",
+   "label": "Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-05 09:22:27.265260",
+ "modified": "2025-02-18 08:31:59.543525",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
