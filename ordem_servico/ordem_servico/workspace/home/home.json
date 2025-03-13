@@ -200,7 +200,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-03-12 14:46:55.962766",
+ "modified": "2025-03-13 09:55:22.852300",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Home",
@@ -218,15 +218,6 @@
    "doc_view": "List",
    "label": "Ordem de Servi\u00e7o Interna",
    "link_to": "Ordem Servico Interna",
-   "type": "DocType"
-  },
-  {
-   "color": "Blue",
-   "doc_view": "List",
-   "format": "Voc\u00ea tamb\u00e9m pode emitir o Formul\u00e1rio de Visita e o Relat\u00f3rio de Servi\u00e7o diretamente por aqui!",
-   "label": "Criador de O.S. em Lote",
-   "link_to": "Criador de Ordens de Servico em Lote",
-   "stats_filter": "[]",
    "type": "DocType"
   },
   {
@@ -254,6 +245,15 @@
    "doc_view": "List",
    "label": "Oportunidade",
    "link_to": "Opportunity",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "format": "Voc\u00ea tamb\u00e9m pode emitir o Formul\u00e1rio de Visita e o Relat\u00f3rio de Servi\u00e7o diretamente por aqui!",
+   "label": "Criador de O.S. em Lote",
+   "link_to": "Criador de Ordens de Servico em Lote",
+   "stats_filter": "[]",
    "type": "DocType"
   },
   {
