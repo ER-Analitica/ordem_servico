@@ -138,9 +138,12 @@ doc_events = {
         ]
     }, 
     "Sales Invoice": {
-        "on_submit": "ordem_servico.doc_events.update_customer.on_submit",
         "validate": [
             "ordem_servico.doc_events.termo_pagamento_dn.validate",
+        ],
+        "on_submit":[
+            "ordem_servico.doc_events.update_customer.on_submit",
+            "ordem_servico.doc_events.obter_fatura_os_interna_atraves_da_sinv.obter_fatura_os_interna_atraves_da_sinv",
         ]
     },
     
@@ -178,10 +181,12 @@ doc_events = {
         ]
     },
     "Sales Order": {
-        "on_submit": "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
+        "on_submit": [
+            "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
+            "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
+        ],
         "validate":[
              "ordem_servico.doc_events.analise_critica_customer.pegar_valor_cliente",
-             "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
         ],
         
     },
@@ -192,7 +197,7 @@ doc_events = {
              #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
              #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
         #]
-   # },
+   #},
 
     #"Ordem Servico Externa": {
         #"validate":[
