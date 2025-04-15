@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2024-11-13 14:25:45.870934",
+ "creation": "2024-11-13 14:47:01.779521",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -22,6 +22,7 @@
   "equipment",
   "serie_number",
   "equipment_model",
+  "marca_equipamento",
   "equipment_tag",
   "equipment_description",
   "cb_1",
@@ -441,10 +442,15 @@
    "label": "T\u00edtulo do Documento",
    "options": "Print Heading",
    "read_only": 1
+  },
+  {
+   "fieldname": "marca_equipamento",
+   "fieldtype": "Data",
+   "label": "Marca"
   }
  ],
  "links": [],
- "modified": "2024-11-13 14:27:14.104674",
+ "modified": "2025-03-13 14:30:21.251922",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
