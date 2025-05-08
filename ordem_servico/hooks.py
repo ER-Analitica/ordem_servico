@@ -171,6 +171,7 @@ doc_events = {
         "on_submit":[
             "ordem_servico.doc_events.update_customer.on_submit",
             "ordem_servico.doc_events.obter_fatura_os_interna_atraves_da_sinv.obter_fatura_os_interna_atraves_da_sinv",
+            "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv"
         ]
     },
     
@@ -208,15 +209,21 @@ doc_events = {
         ]
     },
     "Sales Order": {
-        "on_submit": [
-            "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
-            "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
-        ],
         "validate":[
              "ordem_servico.doc_events.analise_critica_customer.pegar_valor_cliente",
         ],
+        "on_submit": [
+            "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
+            "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
+            "ordem_servico.doc_events.obter_pedido_os_externa_atraves_da_so.obter_pedido_os_externa_atraves_da_so"
+        ],
         
     },
+    "Ordem Servico Externa":{
+        "validate":[
+            "ordem_servico.doc_events.criando_os_externa_avulsa.validate"
+        ]
+    }
     
    
     #"Ordem Servico Interna": {
