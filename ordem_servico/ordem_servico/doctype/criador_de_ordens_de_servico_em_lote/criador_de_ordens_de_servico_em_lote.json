@@ -128,7 +128,7 @@
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_orcamento == 1",
    "fieldname": "orcamento",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Or\u00e7amento",
    "options": "Quotation"
   },
@@ -164,7 +164,7 @@
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
    "fieldname": "sales_order_reference",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Pedido de Venda Refer\u00eancia",
    "options": "Sales Order"
   },
@@ -548,7 +548,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-18 08:31:59.543525",
+ "modified": "2025-05-13 08:05:55.784892",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
