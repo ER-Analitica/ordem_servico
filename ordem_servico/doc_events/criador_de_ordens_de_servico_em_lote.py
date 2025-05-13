@@ -52,6 +52,10 @@ def before_submit(doc, method):
                     os.contact_link = doc.contato
                     os.status_order_service = doc.status_order_service
                     os.sales_order_reference = doc.sales_order_reference
+                    os.quotation_name = frappe.db.get_value("Sales Order", doc.sales_order_reference, "quotation_name")
+                    os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
+                    os.sales_order_name = doc.sales_order_reference
+                    os.sales_order_date = frappe.db.get_value("Sales Order", doc.sales_order_reference, "transaction_date")
                     
                     # Salva a nova OS
                     os.save()
@@ -81,6 +85,10 @@ def before_submit(doc, method):
                 os.contact_link = doc.contato
                 os.status_order_service = doc.status_order_service
                 os.sales_order_reference = doc.sales_order_reference
+                os.quotation_name = frappe.db.get_value("Sales Order", doc.sales_order_reference, "quotation_name")
+                os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
+                os.sales_order_name = doc.sales_order_reference
+                os.sales_order_date = frappe.db.get_value("Sales Order", doc.sales_order_reference, "transaction_date")
                 os.save()
                 adiciona_os = doc.append("os_interna_table", {})
                 adiciona_os.os = os.name

@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2024-11-13 14:47:01.779521",
+ "creation": "2025-02-13 09:23:42.866301",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -66,7 +66,16 @@
   "quotation_link",
   "valor",
   "peso",
-  "select_print_heading"
+  "select_print_heading",
+  "historico_tab",
+  "qh1",
+  "quotation_name",
+  "sales_order_name",
+  "invoice_name",
+  "qc_1",
+  "quotation_date",
+  "sales_order_date",
+  "invoice_date"
  ],
  "fields": [
   {
@@ -447,10 +456,60 @@
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
    "label": "Marca"
+  },
+  {
+   "fieldname": "historico_tab",
+   "fieldtype": "Tab Break",
+   "label": "Hist\u00f3rico"
+  },
+  {
+   "fieldname": "qh1",
+   "fieldtype": "Section Break",
+   "label": "Hist\u00f3rico"
+  },
+  {
+   "fieldname": "sales_order_name",
+   "fieldtype": "Link",
+   "label": "Pedido de Venda",
+   "options": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "invoice_name",
+   "fieldtype": "Link",
+   "label": "Fatura",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qc_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quotation_date",
+   "fieldtype": "Read Only",
+   "label": "Data do Or\u00e7amento"
+  },
+  {
+   "fieldname": "sales_order_date",
+   "fieldtype": "Read Only",
+   "label": "Data do Pedido de Venda"
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Read Only",
+   "label": "Data da Fatura"
+  },
+  {
+   "fieldname": "quotation_name",
+   "fieldtype": "Link",
+   "label": "Or\u00e7amento",
+   "options": "Quotation",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2025-03-13 14:30:21.251922",
+ "modified": "2025-04-28 15:31:28.602165",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
