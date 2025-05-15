@@ -128,7 +128,7 @@
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_orcamento == 1",
    "fieldname": "orcamento",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Or\u00e7amento",
    "options": "Quotation"
   },
@@ -162,11 +162,13 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
+   "description": "O n\u00famero do pedido de venda deve ser informado corretamente <b>(exemplo: SO-99999)</b>, pois \u00e9 com base nele que as informa\u00e7\u00f5es ser\u00e3o preenchidas de forma autom\u00e1tica e correta nos documentos <b>Formul\u00e1rio de Visita</b> e <b>Relat\u00f3rio de Servi\u00e7o.</b>",
    "fieldname": "sales_order_reference",
    "fieldtype": "Data",
    "label": "Pedido de Venda Refer\u00eancia",
-   "options": "Sales Order"
+   "placeholder": "Informe o n\u00famero do pedido (exemplo: SO-99999)"
   },
   {
    "bold": 1,
@@ -548,7 +550,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-13 08:05:55.784892",
+ "modified": "2025-05-15 09:51:10.018459",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
