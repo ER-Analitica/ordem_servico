@@ -199,6 +199,7 @@ doc_events = {
         #é necessário comentar a linha 164
         "before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
         "on_update_after_submit": "ordem_servico.doc_events.emitir_rel_servico.on_update_after_submit",
+        "validate": "ordem_servico.doc_events.obter_informacoes_da_so_no_criador_em_lote.validate",
     },
     "Employee":{
         "validate": [
