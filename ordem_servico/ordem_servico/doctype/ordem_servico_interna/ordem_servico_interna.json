@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2024-11-13 14:25:35.941401",
+ "creation": "2025-05-22 09:31:48.887356",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -56,14 +56,13 @@
   "peso_saida",
   "equipamento_tab",
   "equipment_details_section",
+  "equipment",
   "serie_number",
-  "equipment_description",
-  "tipo_equipamento",
   "equipment_model",
   "marca_equipamento",
-  "capacidade_equipamento",
   "equipment_tag",
   "tipo_servico",
+  "equipment_description",
   "nome_equip",
   "descricao_item",
   "column_break_29",
@@ -133,7 +132,9 @@
   "end_repair",
   "repaired_by_name2",
   "tempo_conserto",
-  "repair_description",
+  "data_cal",
+  "data_cal_recomendada",
+  "anexo_certificado",
   "cb_5",
   "serv_realizado",
   "cal_rbc",
@@ -145,24 +146,6 @@
   "qualificacao_temperatura",
   "repair_observation",
   "repair_status",
-  "ipem",
-  "pam",
-  "cb1",
-  "divisao",
-  "column_break_144",
-  "ano",
-  "section_break_146",
-  "lacres_retirados",
-  "column_break_148",
-  "lacres_afixados",
-  "section_break_150",
-  "observacoes_ipem",
-  "section_break_152",
-  "status_prestacao_contas",
-  "column_break_154",
-  "data_prestacao_contas",
-  "column_break_156",
-  "responsavel_prestacao_contas",
   "hist\u00f3rico_tab",
   "history_section",
   "tempo_inicio_recebimento",
@@ -371,31 +354,33 @@
    "label": "Garantia"
   },
   {
-   "fieldname": "serie_number",
+   "fieldname": "equipment",
    "fieldtype": "Link",
-   "label": "N\u00famero de S\u00e9rie",
-   "options": "Equipamentos"
+   "hidden": 1,
+   "label": "Equipamento do Cliente",
+   "options": "Equipamentos do Cliente"
   },
   {
-   "fetch_from": "serie_number.modelo_equipamento",
+   "fieldname": "serie_number",
+   "fieldtype": "Data",
+   "label": "N\u00famero de S\u00e9rie"
+  },
+  {
+   "bold": 1,
    "fieldname": "equipment_model",
    "fieldtype": "Data",
-   "label": "Modelo",
-   "read_only": 1
+   "label": "Modelo"
   },
   {
-   "fetch_from": "serie_number.tag",
+   "bold": 1,
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
-   "label": "Tag",
-   "read_only": 1
+   "label": "Tag"
   },
   {
-   "fetch_from": "serie_number.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
-   "label": "Equipamento",
-   "read_only": 1
+   "label": "Equipamento"
   },
   {
    "fieldname": "created_by_observation",
@@ -720,13 +705,6 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: doc.repaired_by_name",
-   "fieldname": "repair_description",
-   "fieldtype": "Small Text",
-   "hidden": 1,
-   "label": "Servi\u00e7o Realizado"
-  },
-  {
    "fieldname": "cb_5",
    "fieldtype": "Column Break"
   },
@@ -983,18 +961,21 @@
    "fieldname": "tempo_inicio_recebimento",
    "fieldtype": "Data",
    "label": "Tempo In\u00edcio Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
    "fieldname": "tempo_final_recebimento",
    "fieldtype": "Data",
    "label": "Tempo Final de Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
    "fieldname": "tempo_em_recebimento",
    "fieldtype": "Data",
    "label": "Tempo em Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
@@ -1091,130 +1072,31 @@
    "read_only": 1
   },
   {
-   "fetch_from": "serie_number.tipo_equipamento",
-   "fieldname": "tipo_equipamento",
-   "fieldtype": "Data",
-   "label": "Tipo",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "serie_number.marca_equipamento",
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
-   "label": "Marca",
-   "read_only": 1
+   "label": "Marca"
   },
   {
-   "fetch_from": "serie_number.capacidade",
-   "fieldname": "capacidade_equipamento",
-   "fieldtype": "Data",
-   "label": "Capacidade",
-   "read_only": 1
-  },
-  {
-   "fieldname": "ipem",
-   "fieldtype": "Section Break",
-   "label": "IPEM"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "pam",
-   "fieldtype": "Data",
-   "label": "PAM",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "cb1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "divisao",
-   "fieldtype": "Data",
-   "label": "Divis\u00e3o",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "column_break_144",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "ano",
-   "fieldtype": "Data",
-   "label": "Ano",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "fieldname": "section_break_146",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval: doc.status_conserto",
-   "fieldname": "lacres_retirados",
-   "fieldtype": "Data",
-   "label": "Lacres Retirados",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "fieldname": "column_break_148",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.status_conserto",
-   "fieldname": "lacres_afixados",
-   "fieldtype": "Data",
-   "label": "Lacres Afixados",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "observacoes_ipem",
-   "fieldtype": "Small Text",
-   "label": "Observa\u00e7\u00f5es",
-   "mandatory_depends_on": "eval: doc.repaired_by_name2"
-  },
-  {
-   "fieldname": "section_break_150",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "section_break_152",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "status_prestacao_contas",
-   "fieldtype": "Select",
-   "label": "Status de Presta\u00e7\u00e3o de Contas",
-   "options": "\nPendente\nConclu\u00eddo"
-  },
-  {
-   "depends_on": "eval: doc.repair_status == 'Liberado'",
-   "fieldname": "column_break_154",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "eval: doc.status_prestacao_contas == 'Conclu\u00eddo' && doc.repair_status == 'Liberado'",
-   "fieldname": "data_prestacao_contas",
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
    "fieldtype": "Date",
-   "label": "Date"
+   "label": "Data da Calibra\u00e7\u00e3o",
+   "length": 50
   },
   {
-   "fieldname": "column_break_156",
-   "fieldtype": "Column Break"
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada"
   },
   {
-   "fieldname": "responsavel_prestacao_contas",
-   "fieldtype": "Data",
-   "label": "Respons\u00e1vel"
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
   }
  ],
  "links": [],
- "modified": "2024-11-13 14:26:49.052953",
+ "modified": "2025-05-22 09:49:10.217259",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
