@@ -58,11 +58,13 @@
   "equipment_details_section",
   "equipment",
   "serie_number",
+  "equipment_description",
+  "tipo_equipamento",
   "equipment_model",
   "marca_equipamento",
   "equipment_tag",
+  "capacidade_equipamento",
   "tipo_servico",
-  "equipment_description",
   "nome_equip",
   "descricao_item",
   "column_break_29",
@@ -362,22 +364,26 @@
   },
   {
    "fieldname": "serie_number",
-   "fieldtype": "Data",
-   "label": "N\u00famero de S\u00e9rie"
+   "fieldtype": "Link",
+   "label": "N\u00famero de S\u00e9rie",
+   "options": "Equipamentos"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
    "label": "Modelo"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
    "label": "Tag"
   },
   {
+   "fetch_from": "serie_number.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
    "label": "Equipamento"
@@ -1072,6 +1078,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "serie_number.marca_equipamento",
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
    "label": "Marca"
@@ -1093,10 +1100,22 @@
    "fieldname": "anexo_certificado",
    "fieldtype": "Attach",
    "label": "Anexar Certificado"
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
+  },
+  {
+   "fetch_from": "serie_number.capacidade",
+   "fieldname": "capacidade_equipamento",
+   "fieldtype": "Data",
+   "label": "Capacidade"
   }
  ],
  "links": [],
- "modified": "2025-05-22 09:49:10.217259",
+ "modified": "2025-05-26 10:47:03.089077",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
