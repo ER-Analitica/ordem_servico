@@ -20,10 +20,12 @@ def on_update_after_submit(doc, method):
 
                 # Preenchendo os campos do relatório de serviço
                 relatorio_servico.equipamento_rel_servico = os_externa_doc.equipment_description 
+                relatorio_servico.equipment_model_rel_servico = os_externa_doc.equipment_model
                 relatorio_servico.marca_rel_servico = os_externa_doc.marca_equipamento 
                 relatorio_servico.numero_serie_rel_servico = os_externa_doc.serie_number
                 relatorio_servico.identif_cliente_rel_servico = os_externa_doc.equipment_tag
                 relatorio_servico.obs_rel_servico = os_externa_doc.repair_observation
+                relatorio_servico.repair_status = os_externa_doc.repair_status
                 relatorio_servico.cal_rbc_rel = os_externa_doc.cal_rbc
                 relatorio_servico.cal_rastreavel_rel = os_externa_doc.cal_rastreavel
                 relatorio_servico.man_prev_rel = os_externa_doc.manutencao_preventiva
