@@ -114,7 +114,10 @@ def make_quotation(os_docname):
     quot_doc.contact_person = os_doc.contact_link
     quot_doc.contact_mobile = os_doc.contact_mobile
     quot_doc.contact_email = os_doc.contact_email
-    quot_doc.contact_display = frappe.db.get_value("Contact", os_doc.contact_link, "first_name") + " " + frappe.db.get_value("Contact", os_doc.contact_link, "last_name")
+    #quot_doc.contact_display = frappe.db.get_value("Contact", os_doc.contact_link, "first_name") + " " + frappe.db.get_value("Contact", os_doc.contact_link, "last_name")
+    first_name = frappe.db.get_value("Contact", os_doc.contact_link, "first_name") or ""
+    last_name = frappe.db.get_value("Contact", os_doc.contact_link, "last_name") or ""
+    quot_doc.contact_display = first_name + " " + last_name
     quot_doc = get_items(os_doc, quot_doc)
     total_rate = get_total(os_doc)
     quot_doc.total = total_rate
@@ -241,19 +244,19 @@ def set_quotation_history(source_docname, source_transaction_date, target_docnam
 @frappe.whitelist()
 def set_sales_order_history(source_docname, source_transaction_date, target_docname):
     os_doc = frappe.get_doc("Ordem Servico Interna", target_docname)
-    if not os_doc.sales_order_name:
-        os_doc.sales_order_name = source_docname
-        os_doc.sales_order_date = source_transaction_date
-        os_doc.save()
+    #if not os_doc.sales_order_name:
+    os_doc.sales_order_name = source_docname
+    os_doc.sales_order_date = source_transaction_date
+    os_doc.save()
 
 
 @frappe.whitelist()
 def set_sales_invoice_history(source_docname, source_transaction_date, target_docname):
     os_doc = frappe.get_doc("Ordem Servico Interna", target_docname)
-    if not os_doc.invoice_name:
-        os_doc.invoice_name = source_docname
-        os_doc.invoice_date = source_transaction_date
-        os_doc.save()
+    #if not os_doc.invoice_name:
+    os_doc.invoice_name = source_docname
+    os_doc.invoice_date = source_transaction_date
+    os_doc.save()
 
 
 @frappe.whitelist()
