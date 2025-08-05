@@ -215,9 +215,11 @@ doc_events = {
         "validate":[
             #"ordem_servico.doc_events.validacao_data_cal_os_interna.validate",
             #"ordem_servico.doc_events.validar_equip.validate",
-            "ordem_servico.doc_events.pre_orcamento_status_em_conserto.validate"
-             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-             #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+            #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+            #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+        ],
+        "before_save":[
+            "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"
         ]
    },
 
