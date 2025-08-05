@@ -189,8 +189,15 @@ doc_events = {
         "on_update": "ordem_servico.doc_events.update_data_vencimento.update_data_vencimento",
     },
     "Quotation":{
-        "validate": "ordem_servico.doc_events.limpar_hash.validate",
-        "on_submit": "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
+        "validate": [ 
+            "ordem_servico.doc_events.limpar_hash.validate",
+        ],
+        "on_update_after_submit":[
+             "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_update_after_submit"
+        ],
+        "on_submit": [
+            "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
+        ]
     },
     
     "Criador de Ordens de Servico em Lote":{
@@ -223,7 +230,8 @@ doc_events = {
     "Ordem Servico Externa":{
         "validate":[
             "ordem_servico.doc_events.criando_os_externa_avulsa.validate",
-            "ordem_servico.doc_events.validacao_data_cal_os_externa.validate"
+            #"ordem_servico.doc_events.validacao_data_cal_os_externa.validate",
+            #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico"
         ]
     },
 
@@ -232,9 +240,13 @@ doc_events = {
    
     "Ordem Servico Interna": {
         "validate":[
-            "ordem_servico.doc_events.validacao_data_cal_os_interna.validate"
-             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-             #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+            #"ordem_servico.doc_events.validacao_data_cal_os_interna.validate",
+            #"ordem_servico.doc_events.validar_equip.validate",
+            #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+            #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+        ],
+        "before_save":[
+            "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"
         ]
    },
 
