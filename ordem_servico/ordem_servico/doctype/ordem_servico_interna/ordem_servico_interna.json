@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2025-05-22 09:31:48.887356",
+ "creation": "2025-05-26 11:05:41.014338",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -1120,17 +1120,19 @@
    "fetch_from": "serie_number.tipo_equipamento",
    "fieldname": "tipo_equipamento",
    "fieldtype": "Data",
-   "label": "Tipo do Equipamento"
+   "label": "Tipo",
+   "read_only": 1
   },
   {
    "fetch_from": "serie_number.capacidade",
    "fieldname": "capacidade_equipamento",
    "fieldtype": "Data",
-   "label": "Capacidade"
+   "label": "Capacidade",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2025-05-26 10:47:03.089077",
+ "modified": "2025-05-26 11:17:42.937094",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
