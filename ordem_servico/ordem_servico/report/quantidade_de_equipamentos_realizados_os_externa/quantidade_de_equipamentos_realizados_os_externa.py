@@ -1,12 +1,14 @@
 import frappe
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def execute(filters=None):
     from_date = None
     to_date = None
     if filters:
-        from_date = datetime.strptime(filters.get("from_date"), "%Y-%m-%d") if filters.get("from_date") else None
-        to_date = datetime.strptime(filters.get("to_date"), "%Y-%m-%d") if filters.get("to_date") else None
+        if filters.get("from_date"):
+            from_date = datetime.strptime(filters.get("from_date"), "%Y-%m-%d")
+        if filters.get("to_date"):
+            to_date = datetime.strptime(filters.get("to_date"), "%Y-%m-%d") + timedelta(days=1) - timedelta(seconds=1)
 
     columns = [
         {"label": "Nome", "fieldname": "name", "fieldtype": "Link", "options": "Ordem Servico Externa", "width": 350},
