@@ -2,28 +2,16 @@
  "cards": [],
  "charts": [
   {
-   "chart": "Or\u00e7amentos Internos",
-   "width": "Half"
+   "chart": "Servi\u00e7os Internos",
+   "width": "Full"
   },
   {
-   "chart": "N\u00famero de Or\u00e7amentos Iniciados e n\u00e3o Finalizados",
-   "width": "Half"
+   "chart": "Visitas Externas",
+   "width": "Full"
   },
   {
-   "chart": "N\u00famero de Consertos em aberto",
-   "width": "Half"
-  },
-  {
-   "chart": "N\u00famero de Consertos Realizados",
-   "width": "Half"
-  },
-  {
-   "chart": "N\u00famero de Or\u00e7amentos em aberto",
-   "width": "Half"
-  },
-  {
-   "chart": "Or\u00e7amentos Realizados",
-   "width": "Half"
+   "chart": "Equipamentos em Garantia",
+   "width": "Full"
   }
  ],
  "creation": "2024-02-20 15:46:34.411151",
@@ -33,7 +21,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2024-03-12 13:49:47.464480",
+ "modified": "2025-08-15 10:25:30.665865",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Indicadores Assist\u00eancia T\u00e9cnica",

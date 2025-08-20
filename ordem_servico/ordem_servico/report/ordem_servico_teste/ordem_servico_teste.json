@@ -1,0 +1,37 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-08-01 16:17:22.821343",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Orcamento",
+ "letterhead": null,
+ "modified": "2025-08-01 16:17:22.821343",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "ordem servico teste",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Ordem Servico Interna",
+ "report_name": "ordem servico teste",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Maintenance User"
+  },
+  {
+   "role": "Ordem Servi\u00e7o"
+  },
+  {
+   "role": "Guest"
+  },
+  {
+   "role": "Customer"
+  }
+ ],
+ "timeout": 0
+}
