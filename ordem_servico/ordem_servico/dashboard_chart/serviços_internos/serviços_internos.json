@@ -1,0 +1,42 @@
+{
+ "chart_name": "Servi\u00e7os Internos",
+ "chart_type": "Report",
+ "creation": "2025-08-01 16:20:18.592230",
+ "custom_options": "{\n  \"valuesOverPoints\": 1\n}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2025-08-06 11:55:08.436748",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Servi\u00e7os Internos",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "ordem servico teste",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "mes_label",
+ "y_axis": [
+  {
+   "color": "#449CF0",
+   "y_field": "Equipamentos Internos"
+  },
+  {
+   "color": "#EC864B",
+   "y_field": "Orcamentos Internos"
+  },
+  {
+   "color": "#29CD42",
+   "y_field": "Consertos Internos"
+  }
+ ]
+}
