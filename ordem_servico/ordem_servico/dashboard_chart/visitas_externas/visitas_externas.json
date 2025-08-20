@@ -1,0 +1,38 @@
+{
+ "chart_name": "Visitas Externas",
+ "chart_type": "Report",
+ "creation": "2025-08-12 11:29:26.087118",
+ "custom_options": "{\n  \"valuesOverPoints\": 1\n}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2025-08-15 09:55:04.490505",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Visitas Externas",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "ordem servico teste",
+ "roles": [],
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "mes_label",
+ "y_axis": [
+  {
+   "color": "#449CF0",
+   "y_field": "Visitas Externas"
+  },
+  {
+   "color": "#EC864B",
+   "y_field": "Equipamentos Externos"
+  }
+ ]
+}
