@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2025-05-26 11:05:41.014338",
+ "creation": "2025-05-22 09:31:48.887356",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -1109,7 +1109,8 @@
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
    "fieldname": "data_cal_recomendada",
    "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o Recomendada"
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
   },
   {
    "fieldname": "anexo_certificado",
@@ -1120,19 +1121,17 @@
    "fetch_from": "serie_number.tipo_equipamento",
    "fieldname": "tipo_equipamento",
    "fieldtype": "Data",
-   "label": "Tipo",
-   "read_only": 1
+   "label": "Tipo do Equipamento"
   },
   {
    "fetch_from": "serie_number.capacidade",
    "fieldname": "capacidade_equipamento",
    "fieldtype": "Data",
-   "label": "Capacidade",
-   "read_only": 1
+   "label": "Capacidade"
   }
  ],
  "links": [],
- "modified": "2025-05-26 11:17:42.937094",
+ "modified": "2025-08-21 11:38:34.114292",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

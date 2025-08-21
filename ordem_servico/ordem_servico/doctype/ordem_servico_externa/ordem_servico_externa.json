@@ -527,7 +527,8 @@
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
    "fieldname": "data_cal_recomendada",
    "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o Recomendada"
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
   },
   {
    "fieldname": "anexo_certificado",
@@ -548,7 +549,7 @@
   }
  ],
  "links": [],
- "modified": "2025-05-26 11:52:44.911748",
+ "modified": "2025-08-21 11:43:25.375394",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
