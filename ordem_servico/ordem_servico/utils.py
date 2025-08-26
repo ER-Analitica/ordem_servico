@@ -101,6 +101,7 @@ def make_quotation(os_docname):
     quot_doc.local_manutencao = "Interno"
     quot_doc.party_name = os_doc.customer
     quot_doc.cnpj = frappe.db.get_value("Customer", os_doc.customer, "cnpj")
+    quot_doc.opportunity = frappe.db.get_value("Customer", os_doc.customer, "opportunity_name")
     quot_doc.numero_serie = os_doc.serie_number
     quot_doc.descricao_equipamento = os_doc.equipment_description
     quot_doc.modalidade_de_entrada = os_doc.modalidade_entrada
