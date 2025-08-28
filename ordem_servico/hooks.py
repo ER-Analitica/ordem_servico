@@ -144,8 +144,14 @@ doc_events = {
         "on_submit":[
             "ordem_servico.doc_events.update_customer.on_submit",
             "ordem_servico.doc_events.obter_fatura_os_interna_atraves_da_sinv.obter_fatura_os_interna_atraves_da_sinv",
-            "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv"
+            "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv",
+            "ordem_servico.doc_events.atualizar_vencimento_fatura.atualizar_vencimento_fatura"
         ]
+    },
+
+    "Payment Entry":{
+        "on_submit": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura",
+        "on_cancel": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura"
     },
     
 
