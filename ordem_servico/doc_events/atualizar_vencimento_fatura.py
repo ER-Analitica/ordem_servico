@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import frappe
-from frappe.utils import flt
+from frappe.utils import flt, formatdate
 
 def atualizar_vencimento_fatura(doc, method):
     """
@@ -15,5 +15,13 @@ def atualizar_vencimento_fatura(doc, method):
     # percorre a payment_schedule e pega a primeira parcela
     primeira_parcela = doc.payment_schedule[0]
 
-    doc.db_set("custom_proximo_vencimento", primeira_parcela.due_date)
-    doc.db_set("custom_proxima_parcela", primeira_parcela.payment_amount)
+    # Formatar data no padrão brasileiro
+    data_formatada = formatdate(primeira_parcela.due_date, "dd/mm/yyyy")
+
+    # Formatar valor em R$
+    valor_formatado = f"R$ {primeira_parcela.payment_amount:,.2f}" \
+        .replace(".", ",") \
+        .replace(",", ".", 1)
+
+    doc.db_set("custom_proximo_vencimento", data_formatada)
+    doc.db_set("custom_proxima_parcela", valor_formatado)
