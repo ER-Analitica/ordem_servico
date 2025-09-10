@@ -8,6 +8,7 @@
  "field_order": [
   "customer",
   "contact_link",
+  "contact_email",
   "numero_serie",
   "descricao",
   "tipo_equipamento",
@@ -106,6 +107,13 @@
    "fieldtype": "Link",
    "label": "Contato",
    "options": "Contact"
+  },
+  {
+   "fetch_from": "contact_link.email_id",
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "E-mail",
+   "read_only": 1
   }
  ],
  "links": [
@@ -126,7 +134,7 @@
    "link_fieldname": "serie_number"
   }
  ],
- "modified": "2025-09-10 11:04:28.966713",
+ "modified": "2025-09-10 14:23:39.378192",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Equipamentos",
