@@ -1,20 +1,23 @@
 {
  "actions": [],
- "allow_rename": 1,
  "autoname": "field:numero_serie",
- "creation": "2019-08-31 20:15:41.802734",
+ "creation": "2024-10-24 14:41:44.320145",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "customer",
+  "contact_link",
   "numero_serie",
   "descricao",
   "tipo_equipamento",
   "modelo_equipamento",
   "marca_equipamento",
   "capacidade",
-  "tag"
+  "tag",
+  "naming_series",
+  "pontos_calibracao",
+  "criterios_aceitacao"
  ],
  "fields": [
   {
@@ -22,7 +25,8 @@
    "fieldname": "modelo_equipamento",
    "fieldtype": "Link",
    "label": "Modelo",
-   "options": "Modelo do Equipamento"
+   "options": "Modelo do Equipamento",
+   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -33,8 +37,10 @@
   {
    "allow_in_quick_entry": 1,
    "fieldname": "descricao",
-   "fieldtype": "Data",
-   "label": "Equipamento"
+   "fieldtype": "Link",
+   "label": "Equipamento",
+   "options": "Nome Equipamento",
+   "reqd": 1
   },
   {
    "fieldname": "numero_serie",
@@ -63,13 +69,43 @@
    "fieldname": "marca_equipamento",
    "fieldtype": "Link",
    "label": "Marca",
-   "options": "Marca do Equipamento"
+   "options": "Marca do Equipamento",
+   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
    "fieldname": "capacidade",
    "fieldtype": "Data",
    "label": "Capacidade"
+  },
+  {
+   "bold": 1,
+   "default": "EQUIPC-",
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Series",
+   "options": "EQUIPC-",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "pontos_calibracao",
+   "fieldtype": "Small Text",
+   "label": "Pontos de Calibra\u00e7\u00e3o"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "criterios_aceitacao",
+   "fieldtype": "Small Text",
+   "label": "Crit\u00e9rios de Aceita\u00e7\u00e3o"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "contact_link",
+   "fieldtype": "Link",
+   "label": "Contato",
+   "options": "Contact"
   }
  ],
  "links": [
@@ -90,7 +126,7 @@
    "link_fieldname": "serie_number"
   }
  ],
- "modified": "2024-09-13 14:03:04.497935",
+ "modified": "2025-09-10 11:04:28.966713",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Equipamentos",
