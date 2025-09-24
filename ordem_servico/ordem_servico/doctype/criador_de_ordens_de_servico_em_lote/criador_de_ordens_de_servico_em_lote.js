@@ -8,7 +8,7 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
                 }
             }
         }
-		cur_frm.fields_dict.responsavel_tecnico.get_query = () => {
+		cur_frm.fields_dict.responsavel_tecnico_user.get_query = () => {
 			return {
 				filters: {
 					'role_profile_name': ['in', ['Diretor Executivo', 'Supervisor Técnico', 'Assistente Técnico em Eletrônica', 'Estágiário Técnico', 'Gerente Técnico', 'Coordenador Técnico', 'Técnico em Eletrônica Senior', 'Técnico em Eletrônica Pleno', 'Técnico em Eletrônica Junior', 'Diretor Técnico']],

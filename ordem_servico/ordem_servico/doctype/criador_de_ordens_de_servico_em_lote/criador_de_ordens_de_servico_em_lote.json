@@ -72,6 +72,7 @@
   "data_inicio",
   "equipamentos_relatorio_servico",
   "responsavel_tecnico_e_contratante",
+  "responsavel_tecnico_user",
   "responsavel_tecnico",
   "q5",
   "termino",
@@ -503,10 +504,10 @@
   },
   {
    "allow_on_submit": 1,
+   "fetch_from": "responsavel_tecnico_user.full_name",
    "fieldname": "responsavel_tecnico",
-   "fieldtype": "Link",
-   "label": "Respons\u00e1vel T\u00e9cnico",
-   "options": "User"
+   "fieldtype": "Data",
+   "label": "Nome do Respons\u00e1vel T\u00e9cnico"
   },
   {
    "fieldname": "q5",
@@ -555,12 +556,19 @@
    "fieldtype": "Date",
    "label": "T\u00e9rmino",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "responsavel_tecnico_user",
+   "fieldtype": "Link",
+   "label": "Respons\u00e1vel T\u00e9cnico",
+   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-18 17:15:51.448803",
+ "modified": "2025-09-24 14:46:15.298011",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
