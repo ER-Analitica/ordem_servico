@@ -30,10 +30,10 @@ def execute(filters=None):
             SELECT 9 UNION ALL SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12
         ) m
         LEFT JOIN `tabQuotation` q 
-            ON MONTH(q.creation) = m.mes 
-            AND YEAR(q.creation) = %(ano)s
+            ON MONTH(q.transaction_date) = m.mes 
+            AND YEAR(q.transaction_date) = %(ano)s
             AND q.os_interna_link LIKE '%%OS%%'
-            AND (q.amended_from IS NULL OR q.amended_from != '-')
+            AND (q.amended_from IS NULL OR q.amended_from NOT LIKE '%%-%%')
         GROUP BY m.mes
         ORDER BY m.mes
     """, {"ano": ano}, as_dict=True)
@@ -51,11 +51,7 @@ def execute(filters=None):
         LEFT JOIN `tabOrdem Servico Interna` o 
             ON MONTH(STR_TO_DATE(o.end_repair_time, '%%d-%%m-%%Y %%H:%%i:%%s')) = m.mes
             AND YEAR(STR_TO_DATE(o.end_repair_time, '%%d-%%m-%%Y %%H:%%i:%%s')) = %(ano)s
-            AND o.status_conserto LIKE '%%Finalizado%%'
-            AND o.status_faturamento = 'Entregar'
-            AND o.status_order_service IN ('Aguardando Retirada', 'Embalar', 'Encerrada')
-            AND IFNULL(o.sem_conserto, 0) = 0
-            AND IFNULL(o.repair_status, '') != 'Sem Conserto'
+            AND o.status_order_service IN ('Aguardando Retirada', 'Embalar', 'Encerrada', 'Sem Conserto')
         GROUP BY m.mes
         ORDER BY m.mes
     """, {"ano": ano}, as_dict=True)

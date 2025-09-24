@@ -11,7 +11,7 @@
  "idx": 0,
  "is_public": 0,
  "is_standard": 1,
- "modified": "2025-08-15 11:42:29.622728",
+ "modified": "2025-09-24 09:31:21.208739",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Equipamentos em Garantia",
@@ -27,7 +27,7 @@
  "x_field": "mes_label",
  "y_axis": [
   {
-   "color": "#449CF0",
+   "color": "#20446c",
    "y_field": "Equipamentos em Garantia"
   }
  ]

@@ -75,6 +75,7 @@
   "responsavel_tecnico",
   "q5",
   "termino",
+  "termino_tipo_data",
   "qs5",
   "contratante_responsavel",
   "q6",
@@ -503,8 +504,9 @@
   {
    "allow_on_submit": 1,
    "fieldname": "responsavel_tecnico",
-   "fieldtype": "Data",
-   "label": "Respons\u00e1vel T\u00e9cnico"
+   "fieldtype": "Link",
+   "label": "Respons\u00e1vel T\u00e9cnico",
+   "options": "User"
   },
   {
    "fieldname": "q5",
@@ -514,7 +516,8 @@
    "allow_on_submit": 1,
    "fieldname": "termino",
    "fieldtype": "Data",
-   "label": "T\u00e9rmino"
+   "hidden": 1,
+   "label": "T\u00e9rmino PDF"
   },
   {
    "fieldname": "qs5",
@@ -545,12 +548,19 @@
    "fieldname": "data_inicio",
    "fieldtype": "Data",
    "label": "Date"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "termino_tipo_data",
+   "fieldtype": "Date",
+   "label": "T\u00e9rmino",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-15 09:51:10.018459",
+ "modified": "2025-09-18 17:15:51.448803",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",

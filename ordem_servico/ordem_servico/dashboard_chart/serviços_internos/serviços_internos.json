@@ -11,7 +11,7 @@
  "idx": 0,
  "is_public": 0,
  "is_standard": 1,
- "modified": "2025-08-06 11:55:08.436748",
+ "modified": "2025-09-24 09:36:18.689042",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Servi\u00e7os Internos",
@@ -27,15 +27,15 @@
  "x_field": "mes_label",
  "y_axis": [
   {
-   "color": "#449CF0",
+   "color": "#20446c",
    "y_field": "Equipamentos Internos"
   },
   {
-   "color": "#EC864B",
+   "color": "#00aeef",
    "y_field": "Orcamentos Internos"
   },
   {
-   "color": "#29CD42",
+   "color": "#EFAF11",
    "y_field": "Consertos Internos"
   }
  ]
