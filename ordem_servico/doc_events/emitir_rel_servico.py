@@ -66,6 +66,7 @@ def on_update_after_submit(doc, method):
                         if data_mais_recente is None or data_finalizacao > data_mais_recente:
                             data_mais_recente = data_finalizacao
                             doc.termino = data_mais_recente.strftime('%d/%m/%Y')
+                            doc.termino_tipo_data = data_mais_recente.strftime('%Y-%m-%d')
                             doc.responsavel_tecnico = ultimo_tecnico
                     else:
                         os_sem_fim.append(os_externa_relacionada)

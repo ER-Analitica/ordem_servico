@@ -11,7 +11,7 @@
  "idx": 0,
  "is_public": 0,
  "is_standard": 1,
- "modified": "2025-08-15 09:55:04.490505",
+ "modified": "2025-09-24 09:34:10.717503",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Visitas Externas",
@@ -27,11 +27,11 @@
  "x_field": "mes_label",
  "y_axis": [
   {
-   "color": "#449CF0",
+   "color": "#20446c",
    "y_field": "Visitas Externas"
   },
   {
-   "color": "#EC864B",
+   "color": "#00aeef",
    "y_field": "Equipamentos Externos"
   }
  ]
