@@ -21,9 +21,11 @@ def atualizar_proximo_vencimento_fatura(doc, method):
                 valor_formatado = f"R$ {proxima.payment_amount:,.2f}".replace(".", ",").replace(",", ".", 1)
 
                 invoice.custom_proximo_vencimento = data_formatada
+                invoice.custom_proximo_vencimento_email_automatico = proxima.due_date
                 invoice.custom_proxima_parcela = valor_formatado
             else:
                 invoice.custom_proximo_vencimento = "Fatura quitada"
+                invoice.custom_proximo_vencimento_email_automatico = None
                 invoice.custom_proxima_parcela = "Nenhuma parcela pendente"
 
             invoice.save(ignore_permissions=True)
