@@ -1078,18 +1078,35 @@
    "read_only": 1
   },
   {
-   "fetch_from": "serie_number.tipo_equipamento",
-   "fieldname": "tipo_equipamento",
-   "fieldtype": "Data",
-   "label": "Tipo",
-   "read_only": 1
-  },
-  {
    "fetch_from": "serie_number.marca_equipamento",
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
-   "label": "Marca",
+   "label": "Marca"
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o",
+   "length": 50
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
    "read_only": 1
+  },
+  {
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
   },
   {
    "fetch_from": "serie_number.capacidade",
