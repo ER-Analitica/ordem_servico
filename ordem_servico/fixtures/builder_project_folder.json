@@ -1,0 +1,51 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "Orçamento",
+  "modified": "2025-02-07 20:44:11.923449",
+  "name": "Orçamento"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "Pedidos",
+  "modified": "2025-02-08 14:19:14.660892",
+  "name": "Pedidos"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "Faturamento",
+  "modified": "2025-02-08 14:25:08.326613",
+  "name": "Faturamento"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "OS Interna",
+  "modified": "2025-02-08 14:34:13.562119",
+  "name": "OS Interna"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "OS Externa",
+  "modified": "2025-02-19 10:18:44.068606",
+  "name": "OS Externa"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "Equipamentos",
+  "modified": "2025-03-10 07:26:41.657091",
+  "name": "Equipamentos"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Builder Project Folder",
+  "folder_name": "Padrões",
+  "modified": "2025-03-19 08:12:49.616101",
+  "name": "Padrões"
+ }
+]
