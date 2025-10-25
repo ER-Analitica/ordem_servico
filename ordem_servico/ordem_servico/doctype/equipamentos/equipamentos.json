@@ -1,0 +1,161 @@
+{
+ "actions": [],
+ "autoname": "field:numero_serie",
+ "creation": "2024-10-24 14:41:44.320145",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "contact_link",
+  "contact_email",
+  "numero_serie",
+  "descricao",
+  "tipo_equipamento",
+  "modelo_equipamento",
+  "marca_equipamento",
+  "capacidade",
+  "tag",
+  "naming_series",
+  "pontos_calibracao",
+  "criterios_aceitacao"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "modelo_equipamento",
+   "fieldtype": "Link",
+   "label": "Modelo",
+   "options": "Modelo do Equipamento",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "tag",
+   "fieldtype": "Data",
+   "label": "Tag"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "descricao",
+   "fieldtype": "Link",
+   "label": "Equipamento",
+   "options": "Nome Equipamento",
+   "reqd": 1
+  },
+  {
+   "fieldname": "numero_serie",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "N\u00famero de S\u00e9rie",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Cliente",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Link",
+   "label": "Tipo",
+   "options": "Tipo do Equipamento"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "marca_equipamento",
+   "fieldtype": "Link",
+   "label": "Marca",
+   "options": "Marca do Equipamento",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "capacidade",
+   "fieldtype": "Data",
+   "label": "Capacidade"
+  },
+  {
+   "bold": 1,
+   "default": "EQUIPC-",
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Series",
+   "options": "EQUIPC-",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "pontos_calibracao",
+   "fieldtype": "Small Text",
+   "label": "Pontos de Calibra\u00e7\u00e3o"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "criterios_aceitacao",
+   "fieldtype": "Small Text",
+   "label": "Crit\u00e9rios de Aceita\u00e7\u00e3o"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "contact_link",
+   "fieldtype": "Link",
+   "label": "Contato",
+   "options": "Contact"
+  },
+  {
+   "fetch_from": "contact_link.email_id",
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "E-mail",
+   "read_only": 1
+  }
+ ],
+ "links": [
+  {
+   "link_doctype": "Ordem Servico Interna",
+   "link_fieldname": "customer"
+  },
+  {
+   "link_doctype": "Ordem Servico Interna",
+   "link_fieldname": "serie_number"
+  },
+  {
+   "link_doctype": "Ordem Servico Externa",
+   "link_fieldname": "customer"
+  },
+  {
+   "link_doctype": "Ordem Servico Externa",
+   "link_fieldname": "serie_number"
+  }
+ ],
+ "modified": "2025-09-10 14:23:39.378192",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Equipamentos",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

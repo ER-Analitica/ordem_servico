@@ -1,0 +1,11 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Builder Client Script",
+  "modified": "2024-11-21 16:40:19.309953",
+  "name": "JavaScript-a2725",
+  "public_url": "/files/page_scripts/JavaScript-a2725-bfb4e3d7d9.js?v=0411947ecd",
+  "script": "// Write your script here\n  <!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <title>Bootstrap Example</title>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\">\n  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>\n  <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\"></script>\n  <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\"></script>\n\n  <style type=\"text/css\">\n    .barra {\n      background-color: #0C152A;\n      height: 100%;\n      text-decoration: none;\n      position: fixed;\n      margin-top: -18px;\n      color:#fff;\n      width: 275px;\n    }\n\n#cor {\n  color:#fff;\n  text-decoration: none;\n} \n\n\n\n\n  </style>\n\n</head>\n<body>\n\n<div class=\"barra\" style=\"padding-top: 100px\">\n  <div class=\"container\">\n  <ul class=\"nav flex-column\">\n  <li class=\"nav-item\" >\n    <a id=\"cor\" class=\"nav-link\" href=\"#\">Cadastro de Clientes</a>\n  </li>\n  <li class=\"nav-item\" style=\"margin-top:-15px\" >\n    <a id=\"cor\" class=\"nav-link\" href=\"#\">Listar Clientes</a>\n  </li>\n  <li class=\"nav-item\" style=\"margin-top:-15px\">\n    <a id=\"cor\" class=\"nav-link\" href=\"#\">Editar Clientes</a>\n  </li>\n\n</ul>\n</div>\n</div>\n</body>\n</html>",
+  "script_type": "JavaScript"
+ }
+]

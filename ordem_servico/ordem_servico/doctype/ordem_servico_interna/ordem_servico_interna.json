@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2024-11-13 14:25:35.941401",
+ "creation": "2025-05-22 09:31:48.887356",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -58,10 +58,13 @@
   "equipment_details_section",
   "equipment",
   "serie_number",
-  "equipment_model",
-  "equipment_tag",
-  "tipo_servico",
   "equipment_description",
+  "tipo_equipamento",
+  "equipment_model",
+  "marca_equipamento",
+  "equipment_tag",
+  "capacidade_equipamento",
+  "tipo_servico",
   "nome_equip",
   "descricao_item",
   "column_break_29",
@@ -131,7 +134,9 @@
   "end_repair",
   "repaired_by_name2",
   "tempo_conserto",
-  "repair_description",
+  "data_cal",
+  "data_cal_recomendada",
+  "anexo_certificado",
   "cb_5",
   "serv_realizado",
   "cal_rbc",
@@ -359,22 +364,26 @@
   },
   {
    "fieldname": "serie_number",
-   "fieldtype": "Data",
-   "label": "N\u00famero de S\u00e9rie"
+   "fieldtype": "Link",
+   "label": "N\u00famero de S\u00e9rie",
+   "options": "Equipamentos"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
    "label": "Modelo"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
    "label": "Tag"
   },
   {
+   "fetch_from": "serie_number.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
    "label": "Equipamento"
@@ -702,13 +711,6 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: doc.repaired_by_name",
-   "fieldname": "repair_description",
-   "fieldtype": "Small Text",
-   "hidden": 1,
-   "label": "Servi\u00e7o Realizado"
-  },
-  {
    "fieldname": "cb_5",
    "fieldtype": "Column Break"
   },
@@ -965,18 +967,21 @@
    "fieldname": "tempo_inicio_recebimento",
    "fieldtype": "Data",
    "label": "Tempo In\u00edcio Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
    "fieldname": "tempo_final_recebimento",
    "fieldtype": "Data",
    "label": "Tempo Final de Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
    "fieldname": "tempo_em_recebimento",
    "fieldtype": "Data",
    "label": "Tempo em Recebimento",
+   "length": 40,
    "read_only": 1
   },
   {
@@ -1071,10 +1076,79 @@
    "fieldtype": "Data",
    "label": "Status Conserto",
    "read_only": 1
+  },
+  {
+   "fetch_from": "serie_number.marca_equipamento",
+   "fieldname": "marca_equipamento",
+   "fieldtype": "Data",
+   "label": "Marca"
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o",
+   "length": 50
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
+  },
+  {
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
+  },
+  {
+   "fetch_from": "serie_number.capacidade",
+   "fieldname": "capacidade_equipamento",
+   "fieldtype": "Data",
+   "label": "Capacidade",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o",
+   "length": 50
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
+  },
+  {
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
+  },
+  {
+   "fetch_from": "serie_number.capacidade",
+   "fieldname": "capacidade_equipamento",
+   "fieldtype": "Data",
+   "label": "Capacidade"
   }
  ],
  "links": [],
- "modified": "2024-11-13 14:26:49.052953",
+ "modified": "2025-08-21 11:38:34.114292",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

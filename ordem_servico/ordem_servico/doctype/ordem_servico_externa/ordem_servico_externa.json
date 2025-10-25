@@ -21,10 +21,12 @@
   "equipment_details_section",
   "equipment",
   "serie_number",
+  "equipment_description",
+  "tipo_equipamento",
   "equipment_model",
   "marca_equipamento",
   "equipment_tag",
-  "equipment_description",
+  "capacidade_equipamento",
   "cb_1",
   "created_by",
   "final_schedule_section",
@@ -48,6 +50,9 @@
   "end_repair",
   "repaired_by_name2",
   "tempo_conserto",
+  "data_cal",
+  "data_cal_recomendada",
+  "anexo_certificado",
   "repair_description",
   "cb_4",
   "serv_realizado",
@@ -168,25 +173,29 @@
   },
   {
    "fieldname": "serie_number",
-   "fieldtype": "Data",
-   "label": "N\u00famero de S\u00e9rie"
+   "fieldtype": "Link",
+   "label": "N\u00famero de S\u00e9rie",
+   "options": "Equipamentos"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
    "label": "Modelo"
   },
   {
    "bold": 1,
+   "fetch_from": "serie_number.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
    "label": "Tag"
   },
   {
+   "fetch_from": "serie_number.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
-   "label": "Descri\u00e7\u00e3o do Equipamento"
+   "label": "Equipamento"
   },
   {
    "fieldname": "cb_1",
@@ -453,6 +462,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "serie_number.marca_equipamento",
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
    "label": "Marca"
@@ -510,6 +520,40 @@
  ],
  "links": [],
  "modified": "2025-04-28 15:31:28.602165",
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o"
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
+  },
+  {
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
+  },
+  {
+   "fetch_from": "serie_number.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
+  },
+  {
+   "fetch_from": "serie_number.capacidade",
+   "fieldname": "capacidade_equipamento",
+   "fieldtype": "Data",
+   "label": "Capacidade"
+  }
+ ],
+ "links": [],
+ "modified": "2025-08-21 11:43:25.375394",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",

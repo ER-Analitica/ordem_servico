@@ -127,6 +127,31 @@ fixtures = [
      {
          "dt":"Web Page"
      },
+
+     {
+         "dt":"Builder Client Script"
+     },
+
+     {
+         "dt":"Builder Component"
+     },
+
+     {
+         "dt":"Builder Page"
+     },
+
+     {
+         "dt":"Builder Page Client Script"
+     },
+
+     {
+         "dt":"Builder Project Folder"
+     },
+
+     {
+         "dt":"Builder Settings"
+     },
+
     
 ]
 doc_events = {
@@ -144,8 +169,14 @@ doc_events = {
         "on_submit":[
             "ordem_servico.doc_events.update_customer.on_submit",
             "ordem_servico.doc_events.obter_fatura_os_interna_atraves_da_sinv.obter_fatura_os_interna_atraves_da_sinv",
-            "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv"
+            "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv",
+            "ordem_servico.doc_events.atualizar_vencimento_fatura.atualizar_vencimento_fatura"
         ]
+    },
+
+    "Payment Entry":{
+        "on_submit": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura",
+        "on_cancel": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura"
     },
     
 
@@ -200,35 +231,40 @@ doc_events = {
         ],
         
     },
+    #SE SUBIR ALGO PARA A PRODUÇÃO RELACIONADO A OS INTERNA, COMENTAR LINHAS QUE ESTÃO EM DESENVOLVIMENTO
     "Ordem Servico Externa":{
         "validate":[
             "ordem_servico.doc_events.criando_os_externa_avulsa.validate",
-            #"ordem_servico.doc_events.validacao_data_cal_os_externa.validate",
-            #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico"
+            #verifica se o campo data_cal está preenchido caso a os for uma calibração
+            "ordem_servico.doc_events.validacao_data_cal_os_externa.validate",
+            #Verifica se o número de série do equipamento é vinculado ao cliente
+            "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+            #calcular data da calibração recomendada com base da data da calibração na OS
+            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada"
         ]
     },
-
-    
-    
-   
+    #SE SUBIR ALGO PARA A PRODUÇÃO RELACIONADO A OS INTERNA, COMENTAR LINHAS QUE ESTÃO EM DESENVOLVIMENTO
     "Ordem Servico Interna": {
         "validate":[
-            #"ordem_servico.doc_events.validacao_data_cal_os_interna.validate",
-            #"ordem_servico.doc_events.validar_equip.validate",
-            #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-            #"ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+            #verifica se o campo data_cal está preenchido caso a os for uma calibração
+            "ordem_servico.doc_events.validacao_data_cal_os_interna.validate",
+            #Verifica se o número de série do equipamento é vinculado ao cliente
+            "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+            #Obten Pedido de venda e data do pedido quando tiver um pré orçamento
+            "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
+             #calcular data da calibração recomendada com base da data da calibração na OS
+            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada"
         ],
         "before_save":[
             "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"
         ]
    },
 
-   # "Ordem Servico Externa": {
-       # "validate":[
-            # "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
-       # ]
-   # }
-
+    #"Ordem Servico Externa": {
+        #"validate":[
+             #"ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
+        #]
+    #},
     #"Equipamentos": {
         #"validate":[
             #"ordem_servico.doc_events.validacao_cadastro_equip.validacao_cadastro_equip",
