@@ -313,6 +313,7 @@
    "fieldname": "contact_email",
    "fieldtype": "Data",
    "label": "Email",
+   "options": "Email",
    "read_only": 1
   },
   {
@@ -1148,7 +1149,7 @@
   }
  ],
  "links": [],
- "modified": "2025-08-21 11:38:34.114292",
+ "modified": "2025-10-17 09:51:57.012614",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
