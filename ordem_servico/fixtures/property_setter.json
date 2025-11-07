@@ -1,7 +1,39 @@
 [
  {
   "default_value": null,
-  "doc_type": "Request for Quotation",
+  "doc_type": "Designation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "appraisal_template",
+  "is_system_generated": 0,
+  "modified": "2024-11-01 15:28:00.268219",
+  "module": null,
+  "name": "Designation-appraisal_template-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Designation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocType",
+  "field_name": null,
+  "is_system_generated": 0,
+  "modified": "2024-11-04 08:18:48.287649",
+  "module": null,
+  "name": "Designation-main-field_order",
+  "property": "field_order",
+  "property_type": "Data",
+  "row_name": null,
+  "value": "[\"secao_identificacao\", \"codigo\", \"departamento\", \"proximo_nivel_imediato\", \"coluna1\", \"revisao\", \"superior_imediato\", \"designation_name\", \"description\", \"appraisal_template\", \"required_skills_section\", \"educacao\", \"treinamento\", \"experiencia\", \"skills\", \"secao2\", \"requisitos_desejaveis\", \"secao3\", \"atividades_e_responsabilidades\", \"secao4\", \"metas\", \"secao5\", \"missao\", \"visao\", \"valores\"]"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -829,7 +861,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": ""
  },
  {
   "default_value": null,
@@ -881,7 +913,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Opportunity",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -945,7 +977,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Opportunity",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -1021,8 +1053,9 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1",
-{
+  "value": "1"
+ },
+ {
   "default_value": null,
   "doc_type": "Employee Education",
   "docstatus": 0,
@@ -2105,7 +2138,8 @@
   "modified": "2023-02-19 09:13:47.082337",
   "module": null,
   "name": "Opportunity-opportunity_owner-in_list_view",
-  "property": "in_list_view",
+  "property": "in_list_view"
+},
 {
   "default_value": null,
   "doc_type": "Purchase Order",
@@ -2316,7 +2350,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2364,7 +2398,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2396,7 +2430,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Invoice",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2616,11 +2650,11 @@
   "property": "unique",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "Salário"
  },
  {
   "default_value": null,
-  "doc_type": "Customer",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2680,11 +2714,11 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "Dados Pessoais"
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2700,7 +2734,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2732,7 +2766,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation",
+  "doc_type": "Employee",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -2872,7 +2906,7 @@
   "property": "reqd",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -2972,7 +3006,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Quotation Item",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -3400,7 +3434,7 @@
   "property": "translatable",
   "property_type": null,
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -3464,7 +3498,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "Text Editor"
  },
  {
   "default_value": null,
@@ -3640,7 +3674,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "O fornecedor possuí sistematica para tratativa de reclamações?"
  },
  {
   "default_value": null,
@@ -3672,7 +3706,7 @@
   "property": "in_list_view",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "O Fornecedor possuí SGQ documentado, implementado e consoslidado?"
  },
  {
   "default_value": null,
@@ -3772,7 +3806,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Invoice",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -3816,7 +3850,7 @@
   "property": "reqd",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -3992,7 +4026,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "Criar Ordem de Serviço?"
  },
  {
   "default_value": null,
@@ -4024,7 +4058,7 @@
   "property": "reqd",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "Nome Fantasia"
  },
  {
   "default_value": null,
@@ -4536,7 +4570,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "591"
  },
  {
   "default_value": null,
@@ -4616,7 +4650,7 @@
   "property": "print_hide",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -4648,7 +4682,7 @@
   "property": "print_hide",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -5484,7 +5518,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Delivery Note",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -5500,7 +5534,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Purchase Order",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocType",
@@ -5544,7 +5578,7 @@
   "property": "translatable",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "\nUnidade\nBilling\nShipping\nOffice\nPersonal\nPlant\nPostal\nShop\nSubsidiary\nWarehouse\nCurrent\nPermanent\nOther"
  },
  {
   "default_value": null,
@@ -5560,7 +5594,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
  {
   "default_value": null,
@@ -5580,7 +5614,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Employee",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -5608,37 +5642,37 @@
   "property": "reqd",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "CLIENTE-"
  },
 {
   "default_value": null,
-  "doc_type": "Customer",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "naming_series",
+  "field_name": "order_type",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:14.859185",
   "module": null,
-  "name": "Customer-naming_series-reqd",
-  "property": "reqd",
+  "name": "Quotation-order_type-hidden",
+  "property": "hidden",
   "property_type": "Check",
   "row_name": null,
   "value": "1"
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Quotation Item",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "tax_id",
+  "field_name": "item_code",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:14.942931",
   "module": null,
-  "name": "Sales Order-tax_id-hidden",
-  "property": "hidden",
-  "property_type": "Check",
+  "name": "Quotation Item-item_code-label",
+  "property": "label",
+  "property_type": "Data",
   "row_name": null,
   "value": "0"
  },
@@ -5660,19 +5694,19 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "tax_id",
+  "field_name": "taxes_section",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:14.972723",
   "module": null,
-  "name": "Sales Order-tax_id-print_hide",
-  "property": "print_hide",
+  "name": "Quotation-taxes_section-hidden",
+  "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
  {
   "default_value": null,
@@ -5696,15 +5730,15 @@
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "tax_id",
+  "field_name": "payment_schedule_section",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:15.003287",
   "module": null,
-  "name": "Sales Invoice-tax_id-hidden",
+  "name": "Quotation-payment_schedule_section-hidden",
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
  {
   "default_value": null,
@@ -5728,15 +5762,15 @@
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "tax_id",
+  "field_name": "print_settings",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:15.036269",
   "module": null,
-  "name": "Sales Invoice-tax_id-print_hide",
-  "property": "print_hide",
+  "name": "Quotation-print_settings-hidden",
+  "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
  {
   "default_value": null,
@@ -5752,15 +5786,15 @@
   "property": "reqd",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
 {
   "default_value": null,
-  "doc_type": "Delivery Note",
+  "doc_type": "Quotation",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "tax_id",
+  "field_name": "more_info",
   "is_system_generated": 0,
   "modified": "2023-05-31 16:37:15.068265",
   "module": null,
@@ -5768,7 +5802,7 @@
   "property": "hidden",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": "1"
  },
  {
   "default_value": null,
@@ -5832,7 +5866,7 @@
   "property": "allow_on_submit",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "324"
  },
  {
   "default_value": null,
@@ -5848,7 +5882,7 @@
   "property": "read_only",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": null
  },
  {
   "default_value": null,
@@ -5900,7 +5934,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Sales Order",
+  "doc_type": "Event",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -6060,7 +6094,7 @@
  },
  {
   "default_value": null,
-  "doc_type": "Supplier",
+  "doc_type": "Quotation Item",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
@@ -6152,7 +6186,7 @@
   "property": "print_hide",
   "property_type": "Check",
   "row_name": null,
-  "value": "0"
+  "value": null
  },
  {
   "default_value": null,
@@ -6168,7 +6202,7 @@
   "property": "print_hide",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": null
  },
  {
   "default_value": null,
@@ -6200,7 +6234,7 @@
   "property": "print_hide",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": null
  },
 {
   "default_value": null,
@@ -6216,7 +6250,7 @@
   "property": "allow_bulk_edit",
   "property_type": "Check",
   "row_name": null,
-  "value": "1"
+  "value": "0"
  },
  {
   "default_value": null,
@@ -6272,12 +6306,12 @@
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "company",
+  "field_name": "naming_series",
   "is_system_generated": 0,
   "modified": "2024-07-30 11:47:01.392524",
   "module": null,
-  "name": "Customer-company-ignore_user_permissions",
-  "property": "ignore_user_permissions",
+  "name": "Customer-naming_series-reqd",
+  "property": "reqd",
   "property_type": "Check",
   "row_name": null,
   "value": "1"
@@ -6300,162 +6334,162 @@
  },
  {
   "default_value": null,
-  "doc_type": "Employee",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "documentos_colaborador",
-  "is_system_generated": 0,
-  "modified": "2024-08-12 14:17:21.466676",
-  "module": null,
-  "name": "Employee-documentos_colaborador-allow_bulk_edit",
-  "property": "allow_bulk_edit",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
-  "doc_type": "Employee",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "documentos_internos",
-  "is_system_generated": 0,
-  "modified": "2024-08-12 14:52:46.794312",
-  "module": null,
-  "name": "Employee-documentos_internos-allow_bulk_edit",
-  "property": "allow_bulk_edit",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
-  "doc_type": "Item",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "criar_ordem_servico",
-  "is_system_generated": 0,
-  "modified": "2024-10-01 11:18:38.684090",
-  "module": null,
-  "name": "Item-criar_ordem_servico-Label",
-  "property": "label",
-  "property_type": "Data",
-  "row_name": null,
-  "value": "Criar Ordem de Servi\u00e7o?"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "customer_name",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 09:47:17.374347",
-  "module": null,
-  "name": "Opportunity-customer_name-hidden",
-  "property": "hidden",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "customer_name",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 09:38:13.286626",
-  "module": null,
-  "name": "Opportunity-customer_name-label",
-  "property": "label",
-  "property_type": "Data",
-  "row_name": null,
-  "value": "Nome Fantasia"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "orcamento_link",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 09:49:25.538757",
-  "module": null,
-  "name": "Opportunity-orcamento_link-hidden",
-  "property": "hidden",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "section_break_14",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 09:50:54.417960",
-  "module": null,
-  "name": "Opportunity-section_break_14-hidden",
-  "property": "hidden",
-  "property_type": "Check",
-  "row_name": null,
-  "value": "1"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "contact_email",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 14:14:25.195427",
-  "module": null,
-  "name": "Opportunity-contact_email-fetch_from",
-  "property": "fetch_from",
-  "property_type": "Text",
-  "row_name": null,
-  "value": "contact_person.email_id"
- },
- {
-  "default_value": null,
-  "doc_type": "Opportunity",
-  "docstatus": 0,
-  "doctype": "Property Setter",
-  "doctype_or_field": "DocField",
-  "field_name": "contact_mobile",
-  "is_system_generated": 0,
-  "modified": "2024-10-08 14:21:07.463075",
-  "module": null,
-  "name": "Opportunity-contact_mobile-fetch_from",
-  "property": "fetch_from",
-  "property_type": "Text",
-  "row_name": null,
-  "value": "contact_person.mobile_no"
- },
- {
-  "default_value": null,
   "doc_type": "Sales Order",
   "docstatus": 0,
   "doctype": "Property Setter",
   "doctype_or_field": "DocField",
-  "field_name": "observacoes_visita",
+  "field_name": "tax_id",
   "is_system_generated": 0,
-  "modified": "2024-10-18 08:48:58.578882",
+  "modified": "2025-05-23 09:26:23.018486",
   "module": null,
-  "name": "Sales Order-observacoes_visita-fieldtype",
-  "property": "fieldtype",
-  "property_type": "Text",
+  "name": "Sales Order-tax_id-print_hide",
+  "property": "print_hide",
+  "property_type": "Check",
   "row_name": null,
-  "value": "Text Editor"
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Invoice",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "tax_id",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.036238",
+  "module": null,
+  "name": "Sales Invoice-tax_id-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Invoice",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "tax_id",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.054326",
+  "module": null,
+  "name": "Sales Invoice-tax_id-print_hide",
+  "property": "print_hide",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Delivery Note",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "tax_id",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.070796",
+  "module": null,
+  "name": "Delivery Note-tax_id-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Delivery Note",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "tax_id",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.088846",
+  "module": null,
+  "name": "Delivery Note-tax_id-print_hide",
+  "property": "print_hide",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "0"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Invoice",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "additional_discount_account",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.167361",
+  "module": null,
+  "name": "Sales Invoice-additional_discount_account-hidden",
+  "property": "hidden",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Sales Invoice",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "additional_discount_account",
+  "is_system_generated": 0,
+  "modified": "2025-05-23 09:26:23.184949",
+  "module": null,
+  "name": "Sales Invoice-additional_discount_account-mandatory_depends_on",
+  "property": "mandatory_depends_on",
+  "property_type": "Code",
+  "row_name": null,
+  "value": ""
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "opportunity",
+  "is_system_generated": 0,
+  "modified": "2025-08-27 14:17:46.963399",
+  "module": null,
+  "name": "Quotation-opportunity-fetch_from",
+  "property": "fetch_from",
+  "property_type": "Small Text",
+  "row_name": null,
+  "value": "party_name.opportunity_name"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "opportunity",
+  "is_system_generated": 0,
+  "modified": "2025-08-27 14:06:01.088473",
+  "module": null,
+  "name": "Quotation-opportunity-allow_on_submit",
+  "property": "allow_on_submit",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Quotation",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "opportunity",
+  "is_system_generated": 0,
+  "modified": "2025-08-27 14:28:01.313918",
+  "module": null,
+  "name": "Quotation-opportunity-fetch_if_empty",
+  "property": "fetch_if_empty",
+  "property_type": "Check",
+  "row_name": null,
+  "value": "1"
  }
 ]

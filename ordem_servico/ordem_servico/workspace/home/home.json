@@ -262,15 +262,6 @@
    "type": "DocType"
   },
   {
-   "color": "Blue",
-   "doc_view": "List",
-   "format": "Voc\u00ea tamb\u00e9m pode emitir o Formul\u00e1rio de Visita e o Relat\u00f3rio de Servi\u00e7o diretamente por aqui!",
-   "label": "Criador de O.S. em Lote",
-   "link_to": "Criador de Ordens de Servico em Lote",
-   "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
    "color": "Red",
    "doc_view": "List",
    "label": "Or\u00e7amento",
@@ -287,13 +278,6 @@
    "doc_view": "List",
    "label": "Ordem de Servi\u00e7o Externa",
    "link_to": "Ordem Servico Externa",
-   "type": "DocType"
-  },
-  {
-   "color": "Blue",
-   "doc_view": "List",
-   "label": "Equipamentos do Cliente",
-   "link_to": "Equipamentos",
    "type": "DocType"
   },
   {

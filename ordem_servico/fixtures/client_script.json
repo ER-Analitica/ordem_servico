@@ -455,10 +455,10 @@
   "doctype": "Client Script",
   "dt": "Quotation",
   "enabled": 1,
-  "modified": "2025-05-23 09:43:43.830761",
+  "modified": "2025-05-26 14:53:33.028443",
   "module": "Ordem Servico",
   "name": "Refresh Selling Price List",
-  "script": "frappe.ui.form.on('Quotation', {\n    onload_post_render(frm) {\n        if (frm.doc.selling_price_list) {\n            const lista_original = frm.doc.selling_price_list;\n\n            frm.set_value('selling_price_list', '');\n\n            setTimeout(() => {\n                frm.set_value('selling_price_list', lista_original);\n            }, 300);\n        }\n    }\n});\n",
+  "script": "frappe.ui.form.on('Quotation', {\n    onload_post_render(frm) {\n        // Só executa se o documento ainda não foi enviado\n        if (frm.doc.docstatus === 1) return;\n\n        // Executa apenas se o campo hash_orc for igual a \"1\"\n        if (frm.doc.hash_orc === \"1\" && frm.doc.selling_price_list) {\n            const lista_original = frm.doc.selling_price_list;\n\n            frm.set_value('selling_price_list', '');\n\n            setTimeout(() => {\n                frm.set_value('selling_price_list', lista_original);\n\n                // Opcional: reseta o hash_orc para evitar que rode novamente\n                frm.set_value('hash_orc', \"0\");\n            }, 300);\n        }\n    }\n});\n",
   "view": "Form"
  }
 ]

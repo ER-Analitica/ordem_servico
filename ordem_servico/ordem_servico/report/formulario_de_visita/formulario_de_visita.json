@@ -1,0 +1,38 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2024-07-25 11:24:22.700111",
+ "disabled": 1,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letter_head": "Orcamento",
+ "letterhead": null,
+ "modified": "2025-06-09 16:53:34.823032",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Formulario de Visita",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Ordem Servico Externa",
+ "report_name": "Formulario de Visita",
+ "report_type": "Report Builder",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Ordem Servi\u00e7o"
+  },
+  {
+   "role": "Guest"
+  },
+  {
+   "role": "Customer"
+  }
+ ],
+ "timeout": 0
+}

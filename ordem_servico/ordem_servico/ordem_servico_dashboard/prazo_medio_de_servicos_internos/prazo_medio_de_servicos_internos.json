@@ -1,0 +1,21 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Prazo Medio de Servicos Internos",
+   "width": "Full"
+  }
+ ],
+ "creation": "2025-10-08 10:30:01.790634",
+ "dashboard_name": "Prazo Medio de Servicos Internos",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2025-10-08 16:37:18.069297",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Prazo Medio de Servicos Internos",
+ "owner": "Administrator"
+}
