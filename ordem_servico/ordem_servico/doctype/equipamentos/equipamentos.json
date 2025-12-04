@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "field:numero_serie",
+ "autoname": "naming_series:naming_series",
  "creation": "2024-10-24 14:41:44.320145",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -48,8 +48,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "N\u00famero de S\u00e9rie",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "customer",
@@ -134,11 +133,11 @@
    "link_fieldname": "serie_number"
   }
  ],
- "modified": "2025-09-10 14:23:39.378192",
+ "modified": "2025-11-26 17:03:43.329105",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Equipamentos",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -155,6 +154,7 @@
   }
  ],
  "quick_entry": 1,
+ "search_fields": "numero_serie",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

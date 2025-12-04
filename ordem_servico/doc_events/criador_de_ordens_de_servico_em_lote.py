@@ -104,6 +104,8 @@ def before_submit(doc, method):
             while count < int(doc.quantidade):
                 os = frappe.new_doc(doc.ordem_servico)
                 os.customer = doc.cliente
+                os.id_criador_de_ordens_de_servico_em_lote = doc.name
+                os.email_automatico = doc.email_automatico
                 os.equipment_location = doc.loc_equip
                 os.contact_link = doc.contato
                 os.has_quotation_link = doc.orcamento

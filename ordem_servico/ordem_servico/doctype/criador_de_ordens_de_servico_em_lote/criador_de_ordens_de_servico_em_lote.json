@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "ordem_servico",
+  "email_automatico",
   "cliente",
   "contato",
   "escolher_como_criar_osexterna",
@@ -563,12 +564,20 @@
    "fieldtype": "Link",
    "label": "Respons\u00e1vel T\u00e9cnico",
    "options": "User"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "description": "Ao marcar esta op\u00e7\u00e3o, o sistema enviar\u00e1 automaticamente ao cliente os e-mails referentes ao evento \u201cEquipamento enviado para embalagem e aguardando retirada\u201d. Use esta configura\u00e7\u00e3o caso deseje automatizar essa notifica\u00e7\u00e3o no fluxo da Ordem de Servi\u00e7o.",
+   "fieldname": "email_automatico",
+   "fieldtype": "Check",
+   "label": "Enviar e-mail autom\u00e1tico ao cliente"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-09-24 14:46:15.298011",
+ "modified": "2025-12-04 11:32:45.769063",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",

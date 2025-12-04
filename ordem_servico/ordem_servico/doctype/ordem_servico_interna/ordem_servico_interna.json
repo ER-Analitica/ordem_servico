@@ -9,6 +9,8 @@
   "company",
   "tab_status",
   "status_order_service",
+  "id_criador_de_ordens_de_servico_em_lote",
+  "email_automatico",
   "column_break_5",
   "status_faturamento",
   "column_break_6",
@@ -16,6 +18,7 @@
   "column_break_8",
   "aguardando_peca",
   "em_terceiro",
+  "aguardando_informacao",
   "customer_section",
   "customer",
   "contact_link",
@@ -57,6 +60,7 @@
   "equipamento_tab",
   "equipment_details_section",
   "equipment",
+  "informe_numero_serie",
   "serie_number",
   "equipment_description",
   "tipo_equipamento",
@@ -103,6 +107,7 @@
   "tecnico_finalizou",
   "tempo_orcamento",
   "problem_observation",
+  "ticket_andamento",
   "sem_conserto",
   "technical_person",
   "created_by",
@@ -137,6 +142,9 @@
   "data_cal",
   "data_cal_recomendada",
   "anexo_certificado",
+  "lacre_retirado",
+  "lacre_afixado",
+  "observacoes_ipem",
   "cb_5",
   "serv_realizado",
   "cal_rbc",
@@ -364,27 +372,28 @@
    "options": "Equipamentos do Cliente"
   },
   {
+   "fetch_from": "informe_numero_serie.numero_serie",
    "fieldname": "serie_number",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "N\u00famero de S\u00e9rie",
    "options": "Equipamentos"
   },
   {
    "bold": 1,
-   "fetch_from": "serie_number.modelo_equipamento",
+   "fetch_from": "informe_numero_serie.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
    "label": "Modelo"
   },
   {
    "bold": 1,
-   "fetch_from": "serie_number.tag",
+   "fetch_from": "informe_numero_serie.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
    "label": "Tag"
   },
   {
-   "fetch_from": "serie_number.descricao",
+   "fetch_from": "informe_numero_serie.descricao",
    "fieldname": "equipment_description",
    "fieldtype": "Data",
    "label": "Equipamento"
@@ -1079,7 +1088,7 @@
    "read_only": 1
   },
   {
-   "fetch_from": "serie_number.marca_equipamento",
+   "fetch_from": "informe_numero_serie.marca_equipamento",
    "fieldname": "marca_equipamento",
    "fieldtype": "Data",
    "label": "Marca"
@@ -1104,17 +1113,17 @@
    "label": "Anexar Certificado"
   },
   {
-   "fetch_from": "serie_number.tipo_equipamento",
+   "fetch_from": "informe_numero_serie.tipo_equipamento",
    "fieldname": "tipo_equipamento",
    "fieldtype": "Data",
    "label": "Tipo do Equipamento"
   },
   {
-   "fetch_from": "serie_number.capacidade",
+   "fetch_from": "informe_numero_serie.capacidade",
+   "fetch_if_empty": 1,
    "fieldname": "capacidade_equipamento",
    "fieldtype": "Data",
-   "label": "Capacidade",
-   "read_only": 1
+   "label": "Capacidade"
   },
   {
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
@@ -1136,20 +1145,74 @@
    "label": "Anexar Certificado"
   },
   {
-   "fetch_from": "serie_number.tipo_equipamento",
+   "fetch_from": "informe_numero_serie.tipo_equipamento",
    "fieldname": "tipo_equipamento",
    "fieldtype": "Data",
    "label": "Tipo do Equipamento"
   },
   {
-   "fetch_from": "serie_number.capacidade",
+   "fetch_from": "informe_numero_serie.capacidade",
+   "fetch_if_empty": 1,
    "fieldname": "capacidade_equipamento",
    "fieldtype": "Data",
    "label": "Capacidade"
+  },
+  {
+   "fieldname": "informe_numero_serie",
+   "fieldtype": "Link",
+   "label": "Digite o n\u00famero de s\u00e9rie do equipamento",
+   "options": "Equipamentos"
+  },
+  {
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "lacre_retirado",
+   "fieldtype": "Text",
+   "label": "Lacre(s) retirado(s)",
+   "max_height": "30px"
+  },
+  {
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "lacre_afixado",
+   "fieldtype": "Text",
+   "label": "Lacre(s) afixado(s)",
+   "max_height": "30px"
+  },
+  {
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "observacoes_ipem",
+   "fieldtype": "Text",
+   "label": "Observa\u00e7\u00f5es IPEM"
+  },
+  {
+   "default": "0",
+   "fieldname": "aguardando_informacao",
+   "fieldtype": "Check",
+   "label": "Aguardando Informa\u00e7\u00e3o"
+  },
+  {
+   "default": "0",
+   "fieldname": "ticket_andamento",
+   "fieldtype": "Check",
+   "label": "Ticket em andamento"
+  },
+  {
+   "fieldname": "id_criador_de_ordens_de_servico_em_lote",
+   "fieldtype": "Link",
+   "label": "ID Criador de Ordens de Servico em Lote",
+   "options": "Criador de Ordens de Servico em Lote",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "email_automatico",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Enviar e-mail autom\u00e1tico ao cliente",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2025-10-17 09:51:57.012614",
+ "modified": "2025-12-04 11:49:57.221737",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

@@ -240,7 +240,8 @@ doc_events = {
             #Verifica se o número de série do equipamento é vinculado ao cliente
             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
             #calcular data da calibração recomendada com base da data da calibração na OS
-            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada"
+            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem"
         ]
     },
     #SE SUBIR ALGO PARA A PRODUÇÃO RELACIONADO A OS INTERNA, COMENTAR LINHAS QUE ESTÃO EM DESENVOLVIMENTO
@@ -253,7 +254,8 @@ doc_events = {
             #Obten Pedido de venda e data do pedido quando tiver um pré orçamento
             "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
              #calcular data da calibração recomendada com base da data da calibração na OS
-            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada"
+            "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem"
         ],
         "before_save":[
             "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"

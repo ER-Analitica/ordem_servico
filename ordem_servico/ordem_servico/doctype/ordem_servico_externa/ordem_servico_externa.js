@@ -9,6 +9,21 @@ frappe.ui.form.on('Ordem Servico Externa', {
 		  frm.set_value("repair_observation", frm.doc.repair_observation.replaceAll("img src=", 'img style="max-width:300px !important; max-height:300px !important; width: auto; height: auto;" src='));
 		}
 	  },
+	  refresh: function(frm) {
+
+		let equipamento_field = frm.get_docfield("informe_numero_serie");
+	
+		// Substitui o comportamento de criação de novo documento
+		equipamento_field.get_route_options_for_new_doc = function(row) {
+			if (frm.is_new()) return; // não faz nada se a OS ainda não estiver salva
+	
+			// Preenche o campo customer do novo Equipamento com o valor da OS
+			return {
+				"customer": frm.doc.customer,
+				"contact_link": frm.doc.contact_link
+			};
+		};
+	},
 	create_quotation(frm) {
 		const { __unsaved } = cur_frm.doc
 		if (__unsaved) {

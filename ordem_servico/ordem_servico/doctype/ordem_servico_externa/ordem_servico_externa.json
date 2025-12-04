@@ -20,6 +20,7 @@
   "sales_order_reference",
   "equipment_details_section",
   "equipment",
+  "informe_numero_serie",
   "serie_number",
   "equipment_description",
   "tipo_equipamento",
@@ -53,6 +54,9 @@
   "data_cal",
   "data_cal_recomendada",
   "anexo_certificado",
+  "lacre_retirado",
+  "lacre_afixado",
+  "observacoes_ipem",
   "repair_description",
   "cb_4",
   "serv_realizado",
@@ -83,6 +87,13 @@
   "invoice_date"
  ],
  "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
   {
    "bold": 1,
    "default": "OS-",
@@ -172,30 +183,56 @@
    "options": "Equipamentos do Cliente"
   },
   {
-   "fieldname": "serie_number",
+   "fieldname": "informe_numero_serie",
    "fieldtype": "Link",
+   "label": "Digite o n\u00famero de s\u00e9rie do equipamento",
+   "options": "Equipamentos"
+  },
+  {
+   "fetch_from": "informe_numero_serie.numero_serie",
+   "fieldname": "serie_number",
+   "fieldtype": "Data",
    "label": "N\u00famero de S\u00e9rie",
    "options": "Equipamentos"
   },
   {
+   "fetch_from": "informe_numero_serie.descricao",
+   "fieldname": "equipment_description",
+   "fieldtype": "Data",
+   "label": "Equipamento"
+  },
+  {
+   "fetch_from": "informe_numero_serie.tipo_equipamento",
+   "fieldname": "tipo_equipamento",
+   "fieldtype": "Data",
+   "label": "Tipo do Equipamento"
+  },
+  {
    "bold": 1,
-   "fetch_from": "serie_number.modelo_equipamento",
+   "fetch_from": "informe_numero_serie.modelo_equipamento",
    "fieldname": "equipment_model",
    "fieldtype": "Data",
    "label": "Modelo"
   },
   {
+   "fetch_from": "informe_numero_serie.marca_equipamento",
+   "fieldname": "marca_equipamento",
+   "fieldtype": "Data",
+   "label": "Marca"
+  },
+  {
    "bold": 1,
-   "fetch_from": "serie_number.tag",
+   "fetch_from": "informe_numero_serie.tag",
    "fieldname": "equipment_tag",
    "fieldtype": "Data",
    "label": "Tag"
   },
   {
-   "fetch_from": "serie_number.descricao",
-   "fieldname": "equipment_description",
+   "fetch_from": "informe_numero_serie.capacidade",
+   "fetch_if_empty": 1,
+   "fieldname": "capacidade_equipamento",
    "fieldtype": "Data",
-   "label": "Equipamento"
+   "label": "Capacidade"
   },
   {
    "fieldname": "cb_1",
@@ -334,6 +371,24 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o"
+  },
+  {
+   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
+   "fieldname": "data_cal_recomendada",
+   "fieldtype": "Date",
+   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "read_only": 1
+  },
+  {
+   "fieldname": "anexo_certificado",
+   "fieldtype": "Attach",
+   "label": "Anexar Certificado"
+  },
+  {
    "fieldname": "repair_description",
    "fieldtype": "Small Text",
    "hidden": 1,
@@ -446,13 +501,6 @@
    "hidden": 1
   },
   {
-   "fieldname": "company",
-   "fieldtype": "Link",
-   "label": "Company",
-   "options": "Company",
-   "reqd": 1
-  },
-  {
    "default": "Laudo T\u00e9cnico",
    "fieldname": "select_print_heading",
    "fieldtype": "Link",
@@ -460,12 +508,6 @@
    "label": "T\u00edtulo do Documento",
    "options": "Print Heading",
    "read_only": 1
-  },
-  {
-   "fetch_from": "serie_number.marca_equipamento",
-   "fieldname": "marca_equipamento",
-   "fieldtype": "Data",
-   "label": "Marca"
   },
   {
    "fieldname": "historico_tab",
@@ -476,6 +518,13 @@
    "fieldname": "qh1",
    "fieldtype": "Section Break",
    "label": "Hist\u00f3rico"
+  },
+  {
+   "fieldname": "quotation_name",
+   "fieldtype": "Link",
+   "label": "Or\u00e7amento",
+   "options": "Quotation",
+   "read_only": 1
   },
   {
    "fieldname": "sales_order_name",
@@ -511,49 +560,28 @@
    "label": "Data da Fatura"
   },
   {
-   "fieldname": "quotation_name",
-   "fieldtype": "Link",
-   "label": "Or\u00e7amento",
-   "options": "Quotation",
-   "read_only": 1
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "lacre_retirado",
+   "fieldtype": "Text",
+   "label": "Lacre(s) retirado(s)",
+   "max_height": "30px"
+  },
+  {
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "lacre_afixado",
+   "fieldtype": "Text",
+   "label": "Lacre(s) afixado(s)",
+   "max_height": "30px"
+  },
+  {
+   "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
+   "fieldname": "observacoes_ipem",
+   "fieldtype": "Text",
+   "label": "Observa\u00e7\u00f5es IPEM"
   }
  ],
  "links": [],
- "modified": "2025-04-28 15:31:28.602165",
-  },
-  {
-   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
-   "fieldname": "data_cal",
-   "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o"
-  },
-  {
-   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
-   "fieldname": "data_cal_recomendada",
-   "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
-   "read_only": 1
-  },
-  {
-   "fieldname": "anexo_certificado",
-   "fieldtype": "Attach",
-   "label": "Anexar Certificado"
-  },
-  {
-   "fetch_from": "serie_number.tipo_equipamento",
-   "fieldname": "tipo_equipamento",
-   "fieldtype": "Data",
-   "label": "Tipo do Equipamento"
-  },
-  {
-   "fetch_from": "serie_number.capacidade",
-   "fieldname": "capacidade_equipamento",
-   "fieldtype": "Data",
-   "label": "Capacidade"
-  }
- ],
- "links": [],
- "modified": "2025-08-21 11:43:25.375394",
+ "modified": "2025-12-04 09:00:07.443762",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",

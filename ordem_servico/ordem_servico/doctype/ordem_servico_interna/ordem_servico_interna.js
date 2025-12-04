@@ -16,6 +16,22 @@ frappe.ui.form.on('Ordem Servico Interna', {
 		});
 	},
 
+  refresh: function(frm) {
+
+    let equipamento_field = frm.get_docfield("informe_numero_serie");
+
+    // Substitui o comportamento de criação de novo documento
+    equipamento_field.get_route_options_for_new_doc = function(row) {
+        if (frm.is_new()) return; // não faz nada se a OS ainda não estiver salva
+
+        // Preenche o campo customer do novo Equipamento com o valor da OS
+        return {
+            "customer": frm.doc.customer,
+            "contact_link": frm.doc.contact_link
+        };
+    };
+},
+  
   /*address_os: function(frm) {
     erpnext.utils.get_address_display(frm, "address_os", "address_display");
   },*/
