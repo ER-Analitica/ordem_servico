@@ -51,6 +51,7 @@ def before_submit(doc, method):
                     os.customer = doc.cliente
                     os.contact_link = doc.contato
                     os.status_order_service = doc.status_order_service
+                    os.id_criador_de_ordens_de_servico_em_lote = doc.name
                     os.sales_order_reference = doc.sales_order_reference
                     os.quotation_name = frappe.db.get_value("Sales Order", doc.sales_order_reference, "quotation_name")
                     os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
@@ -84,6 +85,7 @@ def before_submit(doc, method):
                 os.customer = doc.cliente
                 os.contact_link = doc.contato
                 os.status_order_service = doc.status_order_service
+                os.id_criador_de_ordens_de_servico_em_lote = doc.name
                 os.sales_order_reference = doc.sales_order_reference
                 os.quotation_name = frappe.db.get_value("Sales Order", doc.sales_order_reference, "quotation_name")
                 os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
