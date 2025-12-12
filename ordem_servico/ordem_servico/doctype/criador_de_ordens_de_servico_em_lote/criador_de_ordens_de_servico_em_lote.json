@@ -20,6 +20,7 @@
   "data_integracao",
   "hora_integracao",
   "endereco_empresa",
+  "id_cliente",
   "qs1",
   "observacoes_visita",
   "pontos_calibracao",
@@ -572,12 +573,18 @@
    "fieldname": "email_automatico",
    "fieldtype": "Check",
    "label": "Enviar e-mail autom\u00e1tico ao cliente"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "id_cliente",
+   "fieldtype": "Data",
+   "label": "ID do Cliente"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-04 11:32:45.769063",
+ "modified": "2025-12-12 08:16:02.376967",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
