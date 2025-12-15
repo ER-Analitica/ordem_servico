@@ -1,8 +1,21 @@
 from __future__ import unicode_literals
 import frappe
+import re
 
 def validacao_ipem(self, method):
+
+    nome = (self.equipment_description or "").lower()
+
+    # Regex mais forte para variações de "balança"
+    regex_balanca = re.compile(r"\bb+a+l+a*n*[çc]a+\b")
+
+    eh_balanca = bool(regex_balanca.search(nome))
+
+    if not eh_balanca:
+        return
+
     if self.manutencao_preventiva or self.manutencao_corretiva:
+
         campos_faltantes = []
 
         if not self.lacre_retirado:
