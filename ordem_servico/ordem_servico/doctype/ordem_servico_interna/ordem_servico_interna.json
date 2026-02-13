@@ -91,6 +91,7 @@
   "quotation_schedule_time",
   "quotation_time",
   "schedule_quotation_event",
+  "link_agendamento_tecnico",
   "quotation_event_link",
   "section_break_46",
   "have_quotation",
@@ -465,9 +466,8 @@
   {
    "bold": 1,
    "fieldname": "quotation_event_link",
-   "fieldtype": "Link",
+   "fieldtype": "Small Text",
    "label": "Agenda de Or\u00e7amento",
-   "options": "Event",
    "read_only": 1
   },
   {
@@ -1217,10 +1217,17 @@
    "fieldname": "pontos_calibracao",
    "fieldtype": "Text",
    "label": "Pontos de Calibra\u00e7\u00e3o"
+  },
+  {
+   "fieldname": "link_agendamento_tecnico",
+   "fieldtype": "Link",
+   "label": "Link Agendamento T\u00e9cnico",
+   "options": "Agendamento Tecnico",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2025-12-05 13:49:54.756578",
+ "modified": "2026-02-06 17:11:00.512627",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

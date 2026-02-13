@@ -1,0 +1,112 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:titulo_agendamento",
+ "creation": "2026-02-03 09:15:06.269857",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "titulo_agendamento",
+  "customer",
+  "status_agendamento",
+  "tipo_servico",
+  "ordem_servico_interna",
+  "doc_referencia",
+  "data_inicio",
+  "data_fim",
+  "tecnico_responsavel",
+  "tecnicos_participantes",
+  "color"
+ ],
+ "fields": [
+  {
+   "fieldname": "tipo_servico",
+   "fieldtype": "Select",
+   "label": "Tipo Servi\u00e7o",
+   "options": "\nOr\u00e7amento\nConserto"
+  },
+  {
+   "fieldname": "ordem_servico_interna",
+   "fieldtype": "Link",
+   "label": "Ordem de Servi\u00e7o Interna",
+   "options": "Ordem Servico Interna"
+  },
+  {
+   "fieldname": "doc_referencia",
+   "fieldtype": "Select",
+   "label": "Documento de Refer\u00eancia",
+   "options": "Ordem Servico Interna\nOrdem Servico Externa"
+  },
+  {
+   "fieldname": "data_inicio",
+   "fieldtype": "Datetime",
+   "label": "Inicia em"
+  },
+  {
+   "fieldname": "data_fim",
+   "fieldtype": "Datetime",
+   "label": "Termina em"
+  },
+  {
+   "fieldname": "tecnico_responsavel",
+   "fieldtype": "Link",
+   "label": "T\u00e9cnico Respons\u00e1vel",
+   "options": "Configuracoes Tecnicos Para Agendamento"
+  },
+  {
+   "fieldname": "titulo_agendamento",
+   "fieldtype": "Data",
+   "label": "T\u00edtulo",
+   "unique": 1
+  },
+  {
+   "fetch_from": "tecnico_responsavel.color",
+   "fieldname": "color",
+   "fieldtype": "Color",
+   "label": "Cor"
+  },
+  {
+   "fieldname": "status_agendamento",
+   "fieldtype": "Select",
+   "label": "Status Agendamento",
+   "options": "\nAgendado\nEm execu\u00e7\u00e3o\nFinalizado"
+  },
+  {
+   "fieldname": "tecnicos_participantes",
+   "fieldtype": "Table",
+   "label": "T\u00e9cnicos Participantes",
+   "options": "Agendamento Tecnico Item"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Cliente",
+   "options": "Customer"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-05 09:46:34.622013",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Agendamento Tecnico",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

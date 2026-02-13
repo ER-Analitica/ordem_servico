@@ -30,14 +30,27 @@ def get_repair_and_quotation_times(equipment):
 
 @frappe.whitelist()
 def make_event(doctype, docname, start_date, start_time, work_time, trigger):
+    os = frappe.get_doc(doctype, docname)
     event = frappe.new_doc("Event")
     event.subject = docname
     event.starts_on = "{} {}".format(start_date, start_time)
     event.ends_on = "{} {}".format(start_date, sum_time(start_time, work_time))
     event.ref_type = doctype
     event.ref_name = docname
+    agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
+    agenda_tecnica.titulo_agendamento = "Orçamento - "+os.name+" - "+os.initial_scheduled_to_name
+    #event.customer = os.customer
+    #event.status_agendamento = "Agendado"
+    #event.tipo_servico = "Orçamento"
+    #event.ordem_servico_interna = os.name
+    #event.doc_referencia = "Ordem Servico Interna"
+    #event.data_inicio = os.quotation_schedule_date
+    #event.data_fim = os.quotation_schedule_date
+    event.tecnico_responsavel = os.initial_scheduled_to
     event.save()
     os = frappe.get_doc(doctype, docname)
+    #os.save()
+    #os = frappe.get_doc(doctype, docname)
     if trigger == "quotation":
         os.quotation_event_link = event.name
         os.initial_scheduled_by_name = frappe.get_user().doc.full_name 
