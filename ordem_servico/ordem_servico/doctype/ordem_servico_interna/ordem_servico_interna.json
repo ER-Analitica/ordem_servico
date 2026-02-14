@@ -59,7 +59,6 @@
   "peso_saida",
   "equipamento_tab",
   "equipment_details_section",
-  "equipment",
   "informe_numero_serie",
   "serie_number",
   "equipment_description",
@@ -68,8 +67,6 @@
   "marca_equipamento",
   "equipment_tag",
   "capacidade_equipamento",
-  "tipo_servico",
-  "nome_equip",
   "descricao_item",
   "column_break_29",
   "accessories",
@@ -144,6 +141,8 @@
   "data_cal",
   "data_cal_recomendada",
   "anexo_certificado",
+  "custom_identificacao_dos_equipamentos",
+  "custom_quantidade_certificados",
   "lacre_retirado",
   "lacre_afixado",
   "observacoes_ipem",
@@ -194,8 +193,9 @@
   },
   {
    "fieldname": "equipment_location",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Localiza\u00e7\u00e3o Equipamento",
+   "max_height": "30px",
    "reqd": 1
   },
   {
@@ -224,14 +224,16 @@
   {
    "depends_on": "eval: doc.modalidade_entrada == 'TRANSPORTADORA'",
    "fieldname": "nome_transportadora_entrada",
-   "fieldtype": "Data",
-   "label": "Nome da Transportadora"
+   "fieldtype": "Text",
+   "label": "Nome da Transportadora",
+   "max_height": "30px"
   },
   {
    "depends_on": "eval: doc.modalidade_entrada == 'OUTRO'",
    "fieldname": "outro",
-   "fieldtype": "Data",
-   "label": "Outro"
+   "fieldtype": "Text",
+   "label": "Outro",
+   "max_height": "30px"
   },
   {
    "depends_on": "eval: doc.modalidade_entrada == 'CORREIOS'",
@@ -251,8 +253,9 @@
   },
   {
    "fieldname": "entry_sales_invoice",
-   "fieldtype": "Data",
-   "label": "N\u00famero da NF"
+   "fieldtype": "Text",
+   "label": "N\u00famero da NF",
+   "max_height": "30px"
   },
   {
    "fieldname": "valor",
@@ -262,8 +265,9 @@
   },
   {
    "fieldname": "peso",
-   "fieldtype": "Data",
-   "label": "Peso"
+   "fieldtype": "Text",
+   "label": "Peso",
+   "max_height": "30px"
   },
   {
    "fieldname": "info_documento",
@@ -312,8 +316,9 @@
    "depends_on": "eval: doc.contact_link",
    "fetch_from": "contact_link.mobile_no",
    "fieldname": "contact_mobile",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Celular",
+   "max_height": "30px",
    "options": "contact_person_mobile_no",
    "read_only": 1
   },
@@ -367,17 +372,11 @@
    "label": "Garantia"
   },
   {
-   "fieldname": "equipment",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Equipamento do Cliente",
-   "options": "Equipamentos do Cliente"
-  },
-  {
    "fetch_from": "informe_numero_serie.numero_serie",
    "fieldname": "serie_number",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "N\u00famero de S\u00e9rie",
+   "max_height": "30px",
    "options": "Equipamentos"
   },
   {
@@ -391,8 +390,9 @@
    "bold": 1,
    "fetch_from": "informe_numero_serie.tag",
    "fieldname": "equipment_tag",
-   "fieldtype": "Data",
-   "label": "Tag"
+   "fieldtype": "Text",
+   "label": "Tag",
+   "max_height": "30px"
   },
   {
    "fetch_from": "informe_numero_serie.descricao",
@@ -844,8 +844,9 @@
   },
   {
    "fieldname": "peso_saida",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "label": "Peso",
+   "max_height": "30px",
    "read_only": 1
   },
   {
@@ -996,25 +997,11 @@
    "read_only": 1
   },
   {
-   "fieldname": "tipo_servico",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Tipo de Servi\u00e7o",
-   "options": "Calibra\u00e7\u00e3o\nManuten\u00e7\u00e3o"
-  },
-  {
    "fetch_from": "equipment_description.description",
    "fieldname": "descricao_item",
    "fieldtype": "Small Text",
    "label": "Escopo",
    "read_only": 1
-  },
-  {
-   "fetch_from": "equipment_description.item_name",
-   "fieldname": "nome_equip",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Servi\u00e7o"
   },
   {
    "fieldname": "informa\u00e7\u00f5es_nota_fiscal_section",
@@ -1023,20 +1010,23 @@
   },
   {
    "fieldname": "nat_operacao",
-   "fieldtype": "Data",
+   "fieldtype": "Text",
    "hidden": 1,
    "label": "Natureza da Opera\u00e7\u00e3o",
+   "max_height": "30px",
    "options": "teste"
   },
   {
    "fieldname": "ncm",
-   "fieldtype": "Data",
-   "label": "NCM"
+   "fieldtype": "Text",
+   "label": "NCM",
+   "max_height": "30px"
   },
   {
    "fieldname": "cfop",
-   "fieldtype": "Data",
-   "label": "CFOP"
+   "fieldtype": "Text",
+   "label": "CFOP",
+   "max_height": "30px"
   },
   {
    "fieldname": "column_break_4",
@@ -1048,13 +1038,15 @@
   },
   {
    "fieldname": "desc_item_nf",
-   "fieldtype": "Data",
-   "label": "Descri\u00e7\u00e3o do Item Nota Fiscal"
+   "fieldtype": "Text",
+   "label": "Descri\u00e7\u00e3o do Item Nota Fiscal",
+   "max_height": "30px"
   },
   {
    "fieldname": "qtd_nf",
-   "fieldtype": "Data",
-   "label": "Quantidade Nota Fiscal"
+   "fieldtype": "Text",
+   "label": "Quantidade Nota Fiscal",
+   "max_height": "30px"
   },
   {
    "fieldname": "column_break_7",
@@ -1123,8 +1115,9 @@
    "fetch_from": "informe_numero_serie.capacidade",
    "fetch_if_empty": 1,
    "fieldname": "capacidade_equipamento",
-   "fieldtype": "Data",
-   "label": "Capacidade"
+   "fieldtype": "Text",
+   "label": "Capacidade",
+   "max_height": "30px"
   },
   {
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
@@ -1155,8 +1148,9 @@
    "fetch_from": "informe_numero_serie.capacidade",
    "fetch_if_empty": 1,
    "fieldname": "capacidade_equipamento",
-   "fieldtype": "Data",
-   "label": "Capacidade"
+   "fieldtype": "Text",
+   "label": "Capacidade",
+   "max_height": "30px"
   },
   {
    "fieldname": "informe_numero_serie",
@@ -1224,10 +1218,22 @@
    "label": "Link Agendamento T\u00e9cnico",
    "options": "Agendamento Tecnico",
    "read_only": 1
+  },
+  {
+   "fieldname": "custom_identificacao_dos_equipamentos",
+   "fieldtype": "Select",
+   "label": "Identifica\u00e7\u00e3o do cliente",
+   "options": "N\u00famero de s\u00e9rie\nTag"
+  },
+  {
+   "fieldname": "custom_quantidade_certificados",
+   "fieldtype": "Select",
+   "label": "Quantidade Certificados",
+   "options": "_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
   }
  ],
  "links": [],
- "modified": "2026-02-06 17:11:00.512627",
+ "modified": "2026-02-14 11:33:00.269570",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
