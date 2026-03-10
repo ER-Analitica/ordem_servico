@@ -18,7 +18,8 @@
   "tag",
   "naming_series",
   "pontos_calibracao",
-  "criterios_aceitacao"
+  "criterios_aceitacao",
+  "pontos_cal_criterios"
  ],
  "fields": [
   {
@@ -113,6 +114,12 @@
    "fieldtype": "Data",
    "label": "E-mail",
    "read_only": 1
+  },
+  {
+   "fieldname": "pontos_cal_criterios",
+   "fieldtype": "Table",
+   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios",
+   "options": "Pontos de Calibracao e Criterios"
   }
  ],
  "links": [
@@ -133,7 +140,7 @@
    "link_fieldname": "serie_number"
   }
  ],
- "modified": "2025-11-26 17:03:43.329105",
+ "modified": "2026-03-03 11:54:30.984634",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Equipamentos",
@@ -154,6 +161,7 @@
   }
  ],
  "quick_entry": 1,
+ "row_format": "Dynamic",
  "search_fields": "numero_serie",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -74,24 +74,5 @@
   "reference_doctype": null,
   "script": "# Obtém a data atual como string no formato \"YYYY-MM-DD\"\ndata_atual = frappe.utils.nowdate()\n\n# Filtra colaboradores ativos\nfor dn in frappe.get_all(\"Employee\", filters={\"status\": \"Active\"}):\n    employee = frappe.get_doc(\"Employee\", dn.name)\n    \n    # Verifica se há linhas na tabela filha \"documentos_internos\" com status \"Em dia\"\n    documentos_em_dia = [doc for doc in employee.get(\"documentos_internos\") if doc.status == \"Em dia\"]\n    \n    if documentos_em_dia:\n        # Percorre a tabela filha \"documentos_internos\"\n        for doc in documentos_em_dia:\n            # Verifica se a data de validade é menor que a data atual\n            if frappe.utils.get_datetime(doc.data_validade) < frappe.utils.get_datetime(data_atual):\n                # Atualiza o campo \"status\" para \"Vencido\"\n                doc.status = \"Vencido\"\n        \n        # Ignora campos obrigatórios e salva o colaborador\n        employee.flags.ignore_mandatory = True\n        employee.save()\n \n        # Confirma as alterações no banco de dados\n        frappe.db.commit()\n",
   "script_type": "Scheduler Event"
- },
- {
-  "allow_guest": 0,
-  "api_method": null,
-  "cron_format": null,
-  "disabled": 0,
-  "docstatus": 0,
-  "doctype": "Server Script",
-  "doctype_event": "Before Insert",
-  "enable_rate_limit": 0,
-  "event_frequency": "Daily",
-  "modified": "2025-06-04 09:27:16.628131",
-  "module": "Ordem Servico",
-  "name": "Executar envio de notificacoes faturas vencidas",
-  "rate_limit_count": 5,
-  "rate_limit_seconds": 86400,
-  "reference_doctype": null,
-  "script": "hoje = frappe.utils.nowdate()  # formato 'YYYY-MM-DD'\n\nfaturas = frappe.get_all(\n    \"Sales Invoice\",\n    filters={\n        \"docstatus\": 1,\n        \"outstanding_amount\": [\">\", 0],\n        \"due_date\": [\"<\", hoje]\n    },\n    fields=[\"name\"]\n)\n\nfor fatura_data in faturas:\n    fatura = frappe.get_doc(\"Sales Invoice\", fatura_data.name)\n\n    for linha in fatura.custom_notificacao_de_fatura_vencida:\n        email = linha.email_notificacao_fatura  # pega o campo de e-mail\n        if email:\n            # Envia um e-mail de teste\n            frappe.sendmail(\n                recipients=email,\n                subject=f\"Teste de notificação - Fatura {fatura.name}\",\n                message=f\"Esta é uma notificação de teste referente à fatura {fatura.name}, com vencimento em {fatura.due_date}.\",\n                reference_doctype=\"Sales Invoice\",\n                reference_name=fatura.name\n            )\n            \n        linha.enviado = \"9999999\"  # ou 1, se o campo for tipo Check\n\n    fatura.save()\n    frappe.db.commit()\n",
-  "script_type": "Scheduler Event"
  }
 ]

@@ -30,41 +30,70 @@ def get_repair_and_quotation_times(equipment):
 
 @frappe.whitelist()
 def make_event(doctype, docname, start_date, start_time, work_time, trigger):
+
     os = frappe.get_doc(doctype, docname)
+
+    #Criar Event sempre
     event = frappe.new_doc("Event")
     event.subject = docname
-    event.starts_on = "{} {}".format(start_date, start_time)
-    event.ends_on = "{} {}".format(start_date, sum_time(start_time, work_time))
+    event.starts_on = f"{start_date} {start_time}"
+    event.ends_on = f"{start_date} {sum_time(start_time, work_time)}"
     event.ref_type = doctype
     event.ref_name = docname
-    agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
-    agenda_tecnica.titulo_agendamento = "Orçamento - "+os.name+" - "+os.initial_scheduled_to_name
-    #event.customer = os.customer
-    #event.status_agendamento = "Agendado"
-    #event.tipo_servico = "Orçamento"
-    #event.ordem_servico_interna = os.name
-    #event.doc_referencia = "Ordem Servico Interna"
-    #event.data_inicio = os.quotation_schedule_date
-    #event.data_fim = os.quotation_schedule_date
-    event.tecnico_responsavel = os.initial_scheduled_to
     event.save()
-    os = frappe.get_doc(doctype, docname)
-    #os.save()
-    #os = frappe.get_doc(doctype, docname)
-    if trigger == "quotation":
-        os.quotation_event_link = event.name
-        os.initial_scheduled_by_name = frappe.get_user().doc.full_name 
-        if os.valor and os.peso != "":
+
+    agenda_tecnica = None
+
+    is_ordem_servico_interna = doctype == "Ordem Servico Interna"
+
+    if trigger == "quotation" and is_ordem_servico_interna:
+
+        agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
+        agenda_tecnica.titulo_agendamento = (
+            f"Orçamento - {os.name} - {os.initial_scheduled_to_name or ''}"
+        )
+        agenda_tecnica.customer = (
+            getattr(os, "customer", None)
+            or getattr(os, "cliente", None)
+        )
+        agenda_tecnica.status_agendamento = "Agendado"
+        agenda_tecnica.tipo_servico = "Orçamento"
+        agenda_tecnica.ordem_servico_interna = os.name
+        agenda_tecnica.doc_referencia = doctype
+        agenda_tecnica.data_inicio = os.quotation_schedule_date
+        agenda_tecnica.data_fim = os.quotation_schedule_date
+        agenda_tecnica.tecnico_responsavel = os.initial_scheduled_to
+        agenda_tecnica.save()
+
+        os.quotation_event_link = agenda_tecnica.name
+        os.initial_scheduled_by_name = frappe.get_user().doc.full_name
+
+        if os.valor and os.peso:
             os.valorsaida = os.valor
             os.peso_saida = os.peso
-    elif trigger == "repair":
-        os.repair_event_link = event.name
+
+
+    if trigger == "repair" and is_ordem_servico_interna:
+
+        agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
+        agenda_tecnica.titulo_agendamento = (
+            f"Conserto - {os.name} - {os.final_scheduled_to_name or ''}"
+        )
+        agenda_tecnica.customer = os.customer
+        agenda_tecnica.status_agendamento = "Agendado"
+        agenda_tecnica.tipo_servico = "Conserto"
+        agenda_tecnica.ordem_servico_interna = os.name
+        agenda_tecnica.doc_referencia = doctype
+        agenda_tecnica.data_inicio = os.repair_schedule_date
+        agenda_tecnica.data_fim = os.repair_schedule_date
+        agenda_tecnica.tecnico_responsavel = os.final_scheduled_to
+        agenda_tecnica.save()
+
+        os.repair_event_link = agenda_tecnica.name
         os.final_scheduled_by_name = frappe.get_user().doc.full_name
         os.status_order_service = "Em Conserto"
-  
-    
-    os.save()
 
+    os.save()
 
 @frappe.whitelist()
 def get_time_now(doctype, docname, trigger):
@@ -73,6 +102,10 @@ def get_time_now(doctype, docname, trigger):
         os.start_quotation_time = time_now()
         os.technical_person_name = frappe.get_user().doc.full_name
         os.status_orcamento = "Iniciado"
+        if os.quotation_event_link:
+            agenda = frappe.get_doc("Agendamento Tecnico", os.quotation_event_link)
+            agenda.status_agendamento = "Em execução"
+            agenda.save()
     #elif trigger == "schedule_quotation_event":
     elif trigger == "end_quotation":
         os.end_quotation_time = time_now()
@@ -83,10 +116,19 @@ def get_time_now(doctype, docname, trigger):
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_orcamento = "{}".format(time_diff)
         os.status_orcamento = "Finalizado"
+        if os.quotation_event_link:
+            agenda = frappe.get_doc("Agendamento Tecnico", os.quotation_event_link)
+            agenda.status_agendamento = "Finalizado"
+            agenda.color = "#28A745"
+            agenda.save()
     elif trigger == "start_repair":
         os.start_repair_time = time_now()
         os.repaired_by_name = frappe.get_user().doc.full_name
         os.status_conserto = "Iniciado"
+        if os.repair_event_link:
+            agenda = frappe.get_doc("Agendamento Tecnico", os.repair_event_link)
+            agenda.status_agendamento = "Em execução"
+            agenda.save()
     elif trigger == "end_repair":
         os.end_repair_time = time_now()
         os.repaired_by_name2 = frappe.get_user().doc.full_name
@@ -96,6 +138,11 @@ def get_time_now(doctype, docname, trigger):
         time_diff = datetime.strptime(t2, format) - datetime.strptime(t1, format)
         os.tempo_conserto = "{}".format(time_diff)
         os.status_conserto = "Finalizado"
+        if os.repair_event_link:
+            agenda = frappe.get_doc("Agendamento Tecnico", os.repair_event_link)
+            agenda.status_agendamento = "Finalizado"
+            agenda.color = "#28A745"
+            agenda.save()
         if os.doctype == "Ordem Servico Interna":
              os.status_order_service = "Embalar"
              os.status_faturamento = "Entregar"

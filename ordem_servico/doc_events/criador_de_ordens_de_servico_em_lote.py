@@ -102,7 +102,23 @@ def before_submit(doc, method):
 
                 
         elif doc.ordem_servico == "Ordem Servico Interna":
+            agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
+            agenda_tecnica.titulo_agendamento = (
+                f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
+            )
+            agenda_tecnica.customer = (
+            getattr(doc, "customer", None)
+            or getattr(doc, "cliente", None)
+        )
+            agenda_tecnica.status_agendamento = "Agendado"
+            agenda_tecnica.tipo_servico = "Orçamento"
+            agenda_tecnica.doc_referencia = "Ordem Servico Interna"
+            agenda_tecnica.data_inicio = doc.quotation_schedule_date
+            agenda_tecnica.data_fim = doc.quotation_schedule_date
+            agenda_tecnica.tecnico_responsavel = doc.initial_scheduled_to
+            agenda_tecnica.save()
             count = 0
+            lista_links_os = []
             while count < int(doc.quantidade):
                 os = frappe.new_doc(doc.ordem_servico)
                 os.customer = doc.cliente
@@ -123,11 +139,15 @@ def before_submit(doc, method):
                 os.peso = doc.peso
                 os.initial_scheduled_to = doc.initial_scheduled_to
                 os.initial_scheduled_to_name = doc.initial_scheduled_to_name
+                doc.initial_scheduled_by_name = frappe.get_user().doc.full_name
                 os.initial_scheduled_by_name = doc.initial_scheduled_by_name
                 os.quotation_schedule_date = doc.quotation_schedule_date
                 os.quotation_schedule_time = doc.quotation_schedule_time
                 os.quotation_time = doc.quotation_time
-                os.quotation_event_link = doc.quotation_event_link   
+                doc.quotation_event_link = agenda_tecnica.titulo_agendamento = (
+                f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
+                )
+                os.quotation_event_link = doc.quotation_event_link
                 os.os_items = doc.os_items
                 os.pontos_cal_criterios_aceitacao = doc.pontos_cal_criterios_aceitacao
                 os.final_scheduled_to = doc.final_scheduled_to
@@ -137,8 +157,16 @@ def before_submit(doc, method):
                 os.repair_schedule_time = doc.repair_schedule_time
                 os.repair_time = doc.repair_time
                 os.repair_event_link = doc.repair_event_link
+                
+                
+                
                 os.save()
+                link = f'<a href="/app/ordem-servico-interna/{os.name}" target="_blank">{os.name}</a>'
+                lista_links_os.append(link)
+                agenda_tecnica.os_criador_em_lote = "<br>".join(lista_links_os)
+                agenda_tecnica.save(ignore_permissions=True)
                 count += 1
+                
         
     except:
         frappe.throw("Ocorreu algum erro durante a criação em lote")

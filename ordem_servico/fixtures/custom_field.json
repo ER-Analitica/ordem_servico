@@ -7286,7 +7286,7 @@
   "dt": "Designation",
   "fetch_from": null,
   "fetch_if_empty": 0,
-  "fieldname": "valores",
+  "fieldname": "visao",
   "fieldtype": "Text Editor",
   "hidden": 0,
   "hide_border": 0,
@@ -7457,13 +7457,8 @@
   "dt": "Designation",
   "fetch_from": null,
   "fetch_if_empty": 0,
-<<<<<<< HEAD
-  "fieldname": "appraisal_template",
-  "fieldtype": "Link",
-=======
   "fieldname": "valores",
   "fieldtype": "Text Editor",
->>>>>>> 90088e5444779b5ff6d1b9b949ecef79cfd4718c
   "hidden": 0,
   "hide_border": 0,
   "hide_days": 0,
