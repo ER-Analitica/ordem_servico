@@ -5,46 +5,45 @@ import json
 
 from frappe.model.document import Document
 
+ASAAS_TOKEN = "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmEwZDhkY2UzLWYwYjEtNDY1Zi1iMDc2LTY3NDEwOTAzZTkwNTo6JGFhY2hfM2M3ZmRmYzktM2EzOS00NWNjLTgwMjgtZmU3ZjU0Y2JlMTZl"
+ASAAS_SANDBOX = True  # Alterar para False ao ir para produção
+ASAAS_BASE_URL = "https://api-sandbox.asaas.com/v3" if ASAAS_SANDBOX else "https://api.asaas.com/v3"
 
-def on_submit(self, method):
-            url = "https://api.asaas.com/v3/customers?cpfCnpj="+str(frappe.db.get_value("Customer", self.customer, "cnpj"))
-            payload={}
-            headers = {
-                'Content-Type': 'application/json',
-                'access_token': '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAyNjA5NzM6OiRhYWNoXzQ0YWMzZDRmLTE4NDEtNDY3Ny04NGFkLTQ0NzVjMDEwYTk4Mg==',
-                'Cookie': 'AWSALB=ItIk5WPDi/zCe99PKb7U3/JALkwcWUTDRS6y58f5vI9NQYp6JgMmvmBvLXmZ+zrCQpCWYCPArXawoUFiQEpuOkQZgovQq1mq6eeArzTzBLjn+1TT1yk9A4mkaJ6i; AWSALBCORS=ItIk5WPDi/zCe99PKb7U3/JALkwcWUTDRS6y58f5vI9NQYp6JgMmvmBvLXmZ+zrCQpCWYCPArXawoUFiQEpuOkQZgovQq1mq6eeArzTzBLjn+1TT1yk9A4mkaJ6i; AWSALBTG=CQ41WfveC9deQP0Biq0vaPilPfOhsn+yCt5X8YsqztdFm2TlPMa/9GkfXsP5PmKWxB7UYXZoBME3y9aPcTiJUTI3SbSYMRbdOEioO9lr5CXDq50w028jEvRYGt/axwp0VJ8Bz4dWE1RmFHYGVNDvJzeIn9deKqvLryoWxGpc2Nf/; AWSALBTGCORS=CQ41WfveC9deQP0Biq0vaPilPfOhsn+yCt5X8YsqztdFm2TlPMa/9GkfXsP5PmKWxB7UYXZoBME3y9aPcTiJUTI3SbSYMRbdOEioO9lr5CXDq50w028jEvRYGt/axwp0VJ8Bz4dWE1RmFHYGVNDvJzeIn9deKqvLryoWxGpc2Nf/; JSESSIONID=8728B03FD2C0905324D8BB3AC2EBA48BA60307F616A5655CB8DCD23281D6FA3FCB1873C3D15F5B0DB19FFA284A4538196265212522502A348940AEC0BEB10BC2.n2'
-            }
 
-            response = requests.request("GET", url, headers=headers, data=payload)
-                
-            print(response.text)
-            datajson = json.loads(response.text)
-            total = datajson.get("totalCount")
-            if total != 0:
+def on_submit(self, _method):
+    headers = {
+        'Content-Type': 'application/json',
+        'access_token': ASAAS_TOKEN,
+    }
 
-                id_customer = datajson['data'][0]
-                self.id_cliente_asaas = id_customer['id']
+    cnpj = frappe.db.get_value("Customer", self.customer, "cnpj")
+    url = f"{ASAAS_BASE_URL}/customers?cpfCnpj={cnpj}"
 
-                url = "https://api.asaas.com/v3/customers/"+str(self.id_cliente_asaas)
+    response = requests.request("GET", url, headers=headers)
+    datajson = json.loads(response.text)
 
-                payload = json.dumps({
-							"name": frappe.db.get_value("Customer", self.customer, "customer_name"),
-							"email": frappe.db.get_value("Contact", self.contact_person, "email_id"),
-							"phone": frappe.db.get_value("Contact", self.contact_person, "phone"),
-							"mobilePhone": frappe.db.get_value("Contact", self.contact_person, "mobile_no"),
-							"postalCode": frappe.db.get_value("Address", self.customer_address, "cep"),
-							"address": frappe.db.get_value("Address", self.customer_address, "address_line1"),
-							"addressNumber": frappe.db.get_value("Address", self.customer_address, "numero"),
-							"complement": frappe.db.get_value("Address", self.customer_address, "address_line2"),
-							"province": frappe.db.get_value("Address", self.customer_address, "bairro"),
-							
-                })
-                headers = {
-                'Content-Type': 'application/json',
-                'access_token': '$aact_YTU5YTE0M2M2N2I4MTliNzk0YTI5N2U5MzdjNWZmNDQ6OjAwMDAwMDAwMDAwMDAyNjA5NzM6OiRhYWNoXzQ0YWMzZDRmLTE4NDEtNDY3Ny04NGFkLTQ0NzVjMDEwYTk4Mg==',
-                'Cookie': 'AWSALB=zH4TGblJ8duV0rbahXrwUOm4U6Xu0IaoCiBu8lHyIuCbtFmEO95ojigs3sSTaNB5GWNdNXvDirtcBJB9b4vJdelytonj+3CFOBF19DJLS7HpyCAXXXKttOVUGY5E; AWSALBCORS=zH4TGblJ8duV0rbahXrwUOm4U6Xu0IaoCiBu8lHyIuCbtFmEO95ojigs3sSTaNB5GWNdNXvDirtcBJB9b4vJdelytonj+3CFOBF19DJLS7HpyCAXXXKttOVUGY5E; AWSALBTG=1cVi9QSdmm4+hru8tqck99zVxWsf+kglmejDeaoIvLpa5fkw5jT8M5tXLafTFkE6pWzxJDNi4RqvO500AIkG6WDpS1ljbcQcp/pA3IlMHYck46HsCaEjg5iCD2QGlDfNrDFwHTpR97+dZ/7iFs3lsaUrGebcY8+rlHMHsnl4hg/y; AWSALBTGCORS=1cVi9QSdmm4+hru8tqck99zVxWsf+kglmejDeaoIvLpa5fkw5jT8M5tXLafTFkE6pWzxJDNi4RqvO500AIkG6WDpS1ljbcQcp/pA3IlMHYck46HsCaEjg5iCD2QGlDfNrDFwHTpR97+dZ/7iFs3lsaUrGebcY8+rlHMHsnl4hg/y'
-                }
+    if not datajson.get("data"):
+        return
 
-                response = requests.request("POST", url, headers=headers, data=payload)
+    id_cliente = datajson['data'][0]['id']
+    self.id_cliente_asaas = id_cliente
 
-                print(response.text)
+    url_update = f"{ASAAS_BASE_URL}/customers/{id_cliente}"
+    payload = json.dumps({
+        "name": frappe.db.get_value("Customer", self.customer, "customer_name"),
+        "email": frappe.db.get_value("Contact", self.contact_person, "email_id"),
+        "phone": frappe.db.get_value("Contact", self.contact_person, "phone"),
+        "mobilePhone": frappe.db.get_value("Contact", self.contact_person, "mobile_no"),
+        "postalCode": frappe.db.get_value("Address", self.customer_address, "cep"),
+        "address": frappe.db.get_value("Address", self.customer_address, "address_line1"),
+        "addressNumber": frappe.db.get_value("Address", self.customer_address, "numero"),
+        "complement": frappe.db.get_value("Address", self.customer_address, "address_line2"),
+        "province": frappe.db.get_value("Address", self.customer_address, "bairro"),
+    })
+
+    response_update = requests.request("POST", url_update, headers=headers, data=payload)
+    datajson_update = json.loads(response_update.text)
+
+    if datajson_update.get("errors"):
+        frappe.log_error(title="Asaas Update Customer Error", message=response_update.text)
+        frappe.throw(f"Erro ao atualizar cliente no Asaas: {response_update.text}")
