@@ -13,7 +13,8 @@
   "retornos_asaas_section",
   "numero_nfs",
   "pdf_nota",
-  "informa\u00e7\u00f5es_do_asaas_section",
+  "xml_nota",
+  "informações_do_asaas_section",
   "cnpj",
   "client_exist",
   "id_nfs",
@@ -40,8 +41,14 @@
   "po_no",
   "descricao_do_servico",
   "observacoes_adicionais",
-  "informa\u00e7\u00f5es_fiscais_section",
+  "informações_fiscais_section",
   "cod_do_servico",
+  "nbs_code",
+  "tax_situation_code",
+  "tax_classification_code",
+  "operation_indicator_code",
+  "pis_cofins_retention_type",
+  "pis_cofins_tax_status",
   "imposto_retido",
   "irrf",
   "pis",
@@ -81,14 +88,14 @@
   {
    "fieldname": "equipment",
    "fieldtype": "Link",
-   "label": "Fatura de Venda Refer\u00eancia",
+   "label": "Fatura de Venda Referência",
    "options": "Sales Invoice",
    "read_only": 1
   },
   {
    "fieldname": "situacao_nota",
    "fieldtype": "Select",
-   "label": "Situa\u00e7\u00e3o da Nota Fiscal",
+   "label": "Situação da Nota Fiscal",
    "options": "Agendada\nCancelada"
   },
   {
@@ -98,9 +105,9 @@
    "read_only": 1
   },
   {
-   "fieldname": "informa\u00e7\u00f5es_do_asaas_section",
+   "fieldname": "informações_do_asaas_section",
    "fieldtype": "Section Break",
-   "label": "Informa\u00e7\u00f5es do Asaas"
+   "label": "Informações do Asaas"
   },
   {
    "fieldname": "cnpj",
@@ -150,14 +157,14 @@
    "fieldname": "company_address",
    "fieldtype": "Link",
    "hidden": 1,
-   "label": "Endere\u00e7o Link",
+   "label": "Endereço Link",
    "options": "Address"
   },
   {
    "fieldname": "endereco",
    "fieldtype": "Small Text",
    "hidden": 1,
-   "label": "Endere\u00e7o",
+   "label": "Endereço",
    "read_only": 1
   },
   {
@@ -186,7 +193,7 @@
   {
    "fieldname": "customer_address",
    "fieldtype": "Link",
-   "label": "Endere\u00e7o",
+   "label": "Endereço",
    "options": "Address"
   },
   {
@@ -198,13 +205,13 @@
    "fieldname": "numero",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "N\u00famero"
+   "label": "Número"
   },
   {
    "fieldname": "serie",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "S\u00e9rie"
+   "label": "Série"
   },
   {
    "fieldname": "tipo",
@@ -218,7 +225,7 @@
    "fieldname": "data_emissao",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Data da Emiss\u00e3o",
+   "label": "Data da Emissão",
    "reqd": 1
   },
   {
@@ -237,41 +244,73 @@
   {
    "fieldname": "dados_servico",
    "fieldtype": "Section Break",
-   "label": "Dados do Servi\u00e7o"
+   "label": "Dados do Serviço"
   },
   {
    "fieldname": "observacoes_adicionais",
    "fieldtype": "Small Text",
-   "label": "Observa\u00e7\u00f5es Adicionais"
+   "label": "Observações Adicionais"
   },
   {
-   "fieldname": "informa\u00e7\u00f5es_fiscais_section",
+   "fieldname": "informações_fiscais_section",
    "fieldtype": "Section Break",
-   "label": "INFORMA\u00c7\u00d5ES FISCAIS"
+   "label": "INFORMAÇÕES FISCAIS"
   },
   {
    "fieldname": "cod_do_servico",
    "fieldtype": "Link",
-   "label": "C\u00f3digo de Servi\u00e7o",
+   "label": "Código de Serviço",
    "options": "Codigo de Servico"
+  },
+  {
+   "fieldname": "nbs_code",
+   "fieldtype": "Data",
+   "label": "Código NBS"
+  },
+  {
+   "fieldname": "tax_situation_code",
+   "fieldtype": "Data",
+   "label": "Código de Situação Tributária"
+  },
+  {
+   "fieldname": "tax_classification_code",
+   "fieldtype": "Data",
+   "label": "Código de Classificação Tributária"
+  },
+  {
+   "fieldname": "operation_indicator_code",
+   "fieldtype": "Data",
+   "label": "Código do Indicador de Operação"
+  },
+  {
+   "fieldname": "pis_cofins_retention_type",
+   "fieldtype": "Select",
+   "label": "Tipo de Retenção PIS/COFINS",
+   "options": "\nNão Retido\nRetido"
+  },
+  {
+   "fieldname": "pis_cofins_tax_status",
+   "fieldtype": "Select",
+   "label": "Situação Tributária PIS/COFINS",
+   "options": "\n00 - Nenhum\n01 - Operação Tributável com Alíquota Básica\n02 - Operação Tributável com Alíquota Diferenciada\n03 - Operação Tributável com Alíquota por Unidade de Medida de Produto\n04 - Operação Tributável monofásica - Revenda a Alíquota Zero\n05 - Operação Tributável por Substituição Tributária\n06 - Operação Tributável a Alíquota Zero\n07 - Operação Isenta da Contribuição\n08 - Operação sem Incidência da Contribuição\n09 - Operação com Suspensão da Contribuição\n49 - Outras Operações de Saída\n50 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n51 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno\n52 - Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação\n53 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n54 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n55 - Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação\n56 - Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação\n60 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno\n61 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno\n62 - Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação\n63 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno\n64 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação\n65 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação\n66 - Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação\n67 - Crédito Presumido - Outras Operações\n70 - Operação de Aquisição sem Direito a Crédito\n71 - Operação de Aquisição com Isenção\n72 - Operação de Aquisição com Suspensão\n73 - Operação de Aquisição a Alíquota Zero\n74 - Operação de Aquisição sem Incidência da Contribuição\n75 - Operação de Aquisição por Substituição Tributária\n98 - Outras Operações de Entrada\n99 - Outras Operações"
   },
   {
    "fieldname": "imposto_retido",
    "fieldtype": "Select",
-   "label": "Imposto Retido?",
-   "options": "N\u00c3O\nSIM"
+   "label": "Tipo de Recolhimento do ISS",
+   "options": "Prestador de serviço - Eu recolho o ISS\nTomador de serviço - Meu cliente retém o ISS"
   },
   {
    "fieldname": "irrf",
-   "fieldtype": "Select",
-   "label": "IRRF",
-   "options": "0\n1\n1.5\n4.8"
+   "fieldtype": "Float",
+   "label": "IRRF (%)",
+   "precision": "2"
   },
   {
    "fieldname": "pis",
-   "fieldtype": "Select",
-   "label": "PIS",
-   "options": "0\n0.65"
+   "fieldtype": "Float",
+   "label": "PIS (%)",
+   "precision": "2"
   },
   {
    "fieldname": "totalliquido",
@@ -300,7 +339,7 @@
    "fieldname": "totaldeducoes",
    "fieldtype": "Currency",
    "hidden": 1,
-   "label": "TOTAL OUTRAS DEDU\u00c7\u00d5ES",
+   "label": "TOTAL OUTRAS DEDUÇÕES",
    "options": "Company:company:default_currency",
    "read_only": 1
   },
@@ -310,26 +349,26 @@
   },
   {
    "fieldname": "cofins",
-   "fieldtype": "Select",
-   "label": "COFINS",
-   "options": "0\n3"
+   "fieldtype": "Float",
+   "label": "COFINS (%)",
+   "precision": "2"
   },
   {
    "fieldname": "csll",
-   "fieldtype": "Select",
-   "label": "CSLL",
-   "options": "0\n1"
+   "fieldtype": "Float",
+   "label": "CSLL (%)",
+   "precision": "2"
   },
   {
    "fieldname": "inss",
-   "fieldtype": "Select",
-   "label": "INSS",
-   "options": "0\n11"
+   "fieldtype": "Float",
+   "label": "INSS (%)",
+   "precision": "2"
   },
   {
    "fieldname": "deducoes",
    "fieldtype": "Currency",
-   "label": "Outras Dedu\u00e7\u00f5es",
+   "label": "Outras Deduções",
    "options": "Company:company:default_currency"
   },
   {
@@ -360,7 +399,7 @@
   {
    "fieldname": "totalliquidoboleto",
    "fieldtype": "Currency",
-   "label": "TOTAL L\u00cdQUIDO ",
+   "label": "TOTAL LÍQUIDO ",
    "options": "Company:company:default_currency",
    "read_only": 1
   },
@@ -393,7 +432,7 @@
   {
    "fieldname": "numero_nfs",
    "fieldtype": "Data",
-   "label": "N\u00famero da NFS",
+   "label": "Número da NFS",
    "read_only": 1
   },
   {
@@ -403,9 +442,15 @@
    "read_only": 1
   },
   {
+   "fieldname": "xml_nota",
+   "fieldtype": "Data",
+   "label": "XML da Nota Fiscal",
+   "read_only": 1
+  },
+  {
    "fieldname": "net_total",
    "fieldtype": "Currency",
-   "label": "Valor do Servi\u00e7o",
+   "label": "Valor do Serviço",
    "options": "Company:company:default_currency",
    "read_only": 1
   },
@@ -418,7 +463,7 @@
   {
    "fieldname": "descricao_do_servico",
    "fieldtype": "Long Text",
-   "label": "Descri\u00e7\u00e3o do Servi\u00e7o"
+   "label": "Descrição do Serviço"
   }
  ],
  "is_submittable": 1,

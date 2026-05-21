@@ -9,8 +9,21 @@ frappe.ui.form.on('NFS', {
 			'<i class="fa fa-barcode"></i>  Gerar Boleto',
 			() => frm.events.make_gerar_boleto(frm, DocTypes.boleto),
 			'Criar'
-		  )
-	
+		)
+
+		if (frm.doc.id_nfs && frm.doc.docstatus === 1) {
+			frm.add_custom_button('Atualizar Status da Nota', () => {
+				frappe.call({
+					method: 'ordem_servico.ordem_servico.doctype.nfs.nfs.atualizar_status_nota',
+					args: { docname: frm.doc.name },
+					callback(r) {
+						frappe.show_alert({ message: `Status: ${r.message}`, indicator: 'green' })
+						frm.reload_doc()
+					}
+				})
+			})
+		}
+
 	},
 
 
