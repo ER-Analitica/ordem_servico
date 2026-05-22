@@ -21,6 +21,9 @@ def _extract_code(value):
         return value.split(" - ")[0].strip()
     return value or ""
 
+def _format_description(text):
+    return text or ""
+
 ASAAS_TOKEN = "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmEwZDhkY2UzLWYwYjEtNDY1Zi1iMDc2LTY3NDEwOTAzZTkwNTo6JGFhY2hfM2M3ZmRmYzktM2EzOS00NWNjLTgwMjgtZmU3ZjU0Y2JlMTZl"
 ASAAS_SANDBOX = True  # Alterar para False ao ir para produção
 ASAAS_BASE_URL = "https://api-sandbox.asaas.com/v3" if ASAAS_SANDBOX else "https://api.asaas.com/v3"
@@ -139,7 +142,7 @@ class NFS(Document):
 				payload = json.dumps({
 						"customer": self.id_client,
 						"installment": None,
-						"serviceDescription": self.descricao_do_servico,
+						"serviceDescription": _format_description(self.descricao_do_servico),
 						"observations": self.observacoes_adicionais,
 						"value": self.net_total,
 						"deductions": self.deducoes,
@@ -223,7 +226,7 @@ class NFS(Document):
 				payload = json.dumps({
 						"customer": self.id_client,
 						"installment": None,
-						"serviceDescription": self.descricao_do_servico,
+						"serviceDescription": _format_description(self.descricao_do_servico),
 						"observations": self.observacoes_adicionais,
 						"value": self.net_total,
 						"deductions": self.deducoes,

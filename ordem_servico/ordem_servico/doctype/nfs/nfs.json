@@ -263,24 +263,31 @@
    "options": "Codigo de Servico"
   },
   {
+   "default": "1.2001.89.00",
    "fieldname": "nbs_code",
-   "fieldtype": "Data",
-   "label": "Código NBS"
+   "fieldtype": "Select",
+   "label": "Código NBS",
+   "options": "1.2001.89.00"
   },
   {
+   "default": "000",
    "fieldname": "tax_situation_code",
-   "fieldtype": "Data",
-   "label": "Código de Situação Tributária"
+   "fieldtype": "Select",
+   "label": "Código de Situação Tributária",
+   "options": "000"
   },
   {
+   "default": "000001",
    "fieldname": "tax_classification_code",
-   "fieldtype": "Data",
-   "label": "Código de Classificação Tributária"
+   "fieldtype": "Select",
+   "label": "Código de Classificação Tributária",
+   "options": "000001"
   },
   {
    "fieldname": "operation_indicator_code",
-   "fieldtype": "Data",
-   "label": "Código do Indicador de Operação"
+   "fieldtype": "Select",
+   "label": "Código do Indicador de Operação",
+   "options": "050101\n050102"
   },
   {
    "fieldname": "pis_cofins_retention_type",
