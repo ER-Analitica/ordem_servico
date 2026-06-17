@@ -71,6 +71,38 @@ class OrdemServicoInterna(Document):
 			self.quotation_status = "Concluído"
 		#if self.status_order_service == "Embalar":
 			#self.status_faturamento = "Entregar"
+
+	def on_update(self):
+		self.sync_grandeza_para_equipamento()
+
+	def sync_grandeza_para_equipamento(self):
+		# Grava a grandeza informada na OS de volta no cadastro do Equipamento,
+		# APENAS quando o técnico preencheu/alterou a grandeza e o equipamento
+		# vinculado ainda não tem grandeza cadastrada (o cadastro prevalece quando
+		# já tem valor). Usa db.set_value (update direto, sem validação/bloqueio),
+		# então não interfere em nenhuma cascata de save de outros documentos.
+		if not (self.grandeza and self.informe_numero_serie):
+			return
+		if not self.has_value_changed("grandeza"):
+			return
+		try:
+			grandeza_equip = frappe.db.get_value(
+				"Equipamentos", self.informe_numero_serie, "grandeza"
+			)
+			if not grandeza_equip:
+				frappe.db.set_value(
+					"Equipamentos", self.informe_numero_serie, "grandeza", self.grandeza
+				)
+		except Exception:
+			frappe.log_error(
+				frappe.get_traceback(), "Falha ao gravar grandeza no Equipamento"
+			)
+			frappe.msgprint(
+				"Não foi possível gravar a grandeza no cadastro do equipamento. "
+				"Verifique e tente novamente.",
+				title="Erro ao atualizar equipamento",
+				indicator="red",
+			)
 	
 	
 

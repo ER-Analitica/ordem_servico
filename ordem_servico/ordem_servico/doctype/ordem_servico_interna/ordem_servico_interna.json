@@ -59,8 +59,8 @@
   "peso_saida",
   "equipamento_tab",
   "equipment_details_section",
-  "grandeza",
   "informe_numero_serie",
+  "grandeza",
   "serie_number",
   "equipment_description",
   "tipo_equipamento",
@@ -402,11 +402,12 @@
    "label": "Equipamento"
   },
   {
+   "fetch_from": "informe_numero_serie.grandeza",
+   "fetch_if_empty": 1,
    "fieldname": "grandeza",
    "fieldtype": "Link",
    "label": "Grandeza",
-   "options": "Grandeza",
-   "reqd": 1
+   "options": "Grandeza"
   },
   {
    "fieldname": "created_by_observation",

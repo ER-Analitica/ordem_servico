@@ -8,6 +8,14 @@ frappe.ui.form.on('Ordem Servico Interna', {
     if (frm.doc.problem_description && frm.doc.problem_description.length){
       frm.set_value("problem_description", frm.doc.problem_description.replaceAll("img src=", 'img style="max-width:300px !important; max-height:300px !important; width: auto; height: auto;" src='));
     }
+    if (frm.doc.informe_numero_serie && !frm.doc.grandeza){
+      frappe.msgprint({
+        title: "Campo obrigatório",
+        message: "O campo <b>Grandeza</b> é obrigatório quando um equipamento está selecionado.",
+        indicator: "red"
+      });
+      frappe.validated = false;
+    }
   },
   customer(frm) {
 		var me = this;
@@ -229,6 +237,18 @@ frappe.ui.form.on('Ordem Servico Interna', {
   })
   })
 },
+  informe_numero_serie(frm){
+    // Protege a grandeza ao trocar de equipamento. O fetch_from limpa o campo
+    // quando o equipamento não tem grandeza cadastrada; aqui restauramos o
+    // valor anterior (vindo do Criador em Lote ou de preenchimento manual).
+    // Prioridade: 1º grandeza do equipamento (fetch) / 2º grandeza já na OS / 3º vazio.
+    let grandeza_anterior = frm.doc.grandeza;
+    setTimeout(function(){
+      if (!frm.doc.grandeza && grandeza_anterior){
+        frm.set_value("grandeza", grandeza_anterior);
+      }
+    }, 500);
+  },
 
 
 
