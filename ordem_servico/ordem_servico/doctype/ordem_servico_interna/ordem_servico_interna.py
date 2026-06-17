@@ -76,14 +76,14 @@ class OrdemServicoInterna(Document):
 		self.sync_grandeza_para_equipamento()
 
 	def sync_grandeza_para_equipamento(self):
-		# Grava a grandeza informada na OS de volta no cadastro do Equipamento,
-		# APENAS quando o técnico preencheu/alterou a grandeza e o equipamento
-		# vinculado ainda não tem grandeza cadastrada (o cadastro prevalece quando
-		# já tem valor). Usa db.set_value (update direto, sem validação/bloqueio),
-		# então não interfere em nenhuma cascata de save de outros documentos.
+		# Grava a grandeza informada na OS de volta no cadastro do Equipamento
+		# sempre que a OS tem grandeza, há equipamento vinculado e o equipamento
+		# ainda NÃO tem grandeza (o cadastro prevalece quando já tem valor).
+		# Sem has_value_changed: no fluxo do Criador em Lote a grandeza já vem
+		# preenchida e não "muda" ao selecionar o equipamento. Usa db.set_value
+		# (update direto, sem validação/bloqueio) e só dispara quando o equipamento
+		# está sem grandeza, então é seguro em cascatas (fatura etc.).
 		if not (self.grandeza and self.informe_numero_serie):
-			return
-		if not self.has_value_changed("grandeza"):
 			return
 		try:
 			grandeza_equip = frappe.db.get_value(
