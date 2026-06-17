@@ -25,6 +25,8 @@
   "observacoes_visita",
   "pontos_calibracao",
   "os_interna_table",
+  "grandezas_section",
+  "grandezas",
   "ordem_servico_interna",
   "status_order_service_interna",
   "loc_equip",
@@ -89,7 +91,7 @@
    "fieldname": "ordem_servico",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Tipo da Ordem de Servi\u00e7o",
+   "label": "Tipo da Ordem de Serviço",
    "options": "\nOrdem Servico Interna\nOrdem Servico Externa",
    "reqd": 1
   },
@@ -112,13 +114,27 @@
   {
    "fieldname": "loc_equip",
    "fieldtype": "Data",
-   "label": "Localiza\u00e7\u00e3o do Equipamento"
+   "label": "Localização do Equipamento"
   },
   {
-   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' || doc.escolher_como_criar_osexterna == 'Quantidade'",
+   "depends_on": "eval: doc.escolher_como_criar_osexterna == 'Quantidade'",
    "fieldname": "quantidade",
    "fieldtype": "Data",
    "label": "Quantidade"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "fieldname": "grandezas_section",
+   "fieldtype": "Section Break",
+   "label": "Grandezas e Quantidades"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "fieldname": "grandezas",
+   "fieldtype": "Table",
+   "label": "Grandezas",
+   "mandatory_depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "options": "Criador OS Grandeza Item"
   },
   {
    "fieldname": "amended_from",
@@ -133,7 +149,7 @@
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_orcamento == 1",
    "fieldname": "orcamento",
    "fieldtype": "Link",
-   "label": "Or\u00e7amento",
+   "label": "Orçamento",
    "options": "Quotation"
   },
   {
@@ -141,46 +157,46 @@
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
    "fieldname": "possui_orcamento",
    "fieldtype": "Check",
-   "label": "Possui Or\u00e7amento?"
+   "label": "Possui Orçamento?"
   },
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
    "fieldname": "ordem_servico_interna",
    "fieldtype": "Tab Break",
-   "label": "Ordem de Servi\u00e7o Interna"
+   "label": "Ordem de Serviço Interna"
   },
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
    "fieldname": "ordem_servico_externa",
    "fieldtype": "Tab Break",
-   "label": "Ordem de Servi\u00e7o Externa"
+   "label": "Ordem de Serviço Externa"
   },
   {
    "bold": 1,
-   "default": "Em Or\u00e7amento",
+   "default": "Em Orçamento",
    "fieldname": "status_order_service",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Status Ordem de Servi\u00e7o",
-   "options": "\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada",
+   "label": "Status Ordem de Serviço",
+   "options": "\nEm Orçamento\nEm Aprovação\nEm Conserto\nEncerrada",
    "reqd": 1
   },
   {
    "allow_on_submit": 1,
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
-   "description": "O n\u00famero do pedido de venda deve ser informado corretamente <b>(exemplo: SO-99999)</b>, pois \u00e9 com base nele que as informa\u00e7\u00f5es ser\u00e3o preenchidas de forma autom\u00e1tica e correta nos documentos <b>Formul\u00e1rio de Visita</b> e <b>Relat\u00f3rio de Servi\u00e7o.</b>",
+   "description": "O número do pedido de venda deve ser informado corretamente <b>(exemplo: SO-99999)</b>, pois é com base nele que as informações serão preenchidas de forma automática e correta nos documentos <b>Formulário de Visita</b> e <b>Relatório de Serviço.</b>",
    "fieldname": "sales_order_reference",
    "fieldtype": "Data",
-   "label": "Pedido de Venda Refer\u00eancia",
-   "placeholder": "Informe o n\u00famero do pedido (exemplo: SO-99999)"
+   "label": "Pedido de Venda Referência",
+   "placeholder": "Informe o número do pedido (exemplo: SO-99999)"
   },
   {
    "bold": 1,
    "fieldname": "status_order_service_interna",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Status Ordem de Servi\u00e7o",
-   "options": "Em Recebimento\nAguardando Or\u00e7amento\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nSem Conserto\nEmbalar",
+   "label": "Status Ordem de Serviço",
+   "options": "Em Recebimento\nAguardando Orçamento\nEm Orçamento\nEm Aprovação\nEm Conserto\nEncerrada\nReprovado\nAguardando Retirada\nSem Conserto\nEmbalar",
    "reqd": 1
   },
   {
@@ -225,7 +241,7 @@
   {
    "fieldname": "entry_sales_invoice",
    "fieldtype": "Data",
-   "label": "N\u00famero da NF"
+   "label": "Número da NF"
   },
   {
    "fieldname": "valor",
@@ -239,7 +255,7 @@
    "label": "Peso"
   },
   {
-   "depends_on": "eval: doc.situacao_equipamento != 'N\u00c3O CONFORME'",
+   "depends_on": "eval: doc.situacao_equipamento != 'NÃO CONFORME'",
    "fieldname": "initial_schedule_section",
    "fieldtype": "Section Break",
    "label": "Agendamento Inicial"
@@ -269,33 +285,32 @@
   {
    "fieldname": "quotation_schedule_date",
    "fieldtype": "Date",
-   "label": "Data de Agendamento - Or\u00e7amento"
+   "label": "Data de Agendamento - Orçamento"
   },
   {
    "default": "00:00:00",
    "fieldname": "quotation_schedule_time",
    "fieldtype": "Time",
-   "label": "Hora de Agendamento - Or\u00e7amento"
+   "label": "Hora de Agendamento - Orçamento"
   },
   {
    "default": "00:00:00",
    "fieldname": "quotation_time",
    "fieldtype": "Time",
-   "label": "Tempo de Or\u00e7amento"
+   "label": "Tempo de Orçamento"
   },
   {
    "depends_on": "eval: !(doc.quotation_event_link)",
    "fieldname": "schedule_quotation_event",
    "fieldtype": "Button",
-   "hidden": 1,
-   "label": "Agendar Or\u00e7amento",
+   "label": "Agendar Orçamento",
    "read_only": 1
   },
   {
    "bold": 1,
    "fieldname": "quotation_event_link",
    "fieldtype": "Link",
-   "label": "Agenda de Or\u00e7amento",
+   "label": "Agenda de Orçamento",
    "options": "Event",
    "read_only": 1
   },
@@ -306,7 +321,7 @@
   {
    "fieldname": "os_items",
    "fieldtype": "Table",
-   "label": "Itens para Or\u00e7amento",
+   "label": "Itens para Orçamento",
    "options": "Ordem Servico Items"
   },
   {
@@ -388,7 +403,7 @@
    "fetch_from": "orcamento.pontos_de_calibracao",
    "fieldname": "pontos_cal_criterios_aceitacao",
    "fieldtype": "Text Editor",
-   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios de Aceita\u00e7\u00e3o"
+   "label": "Pontos de Calibração e Critérios de Aceitação"
   },
   {
    "allow_bulk_edit": 1,
@@ -397,7 +412,7 @@
    "fieldname": "os_interna_table",
    "fieldtype": "Table",
    "in_filter": 1,
-   "label": "Itens Formul\u00e1rio de Visita",
+   "label": "Itens Formulário de Visita",
    "options": "Ordem Servico Interna Tabela"
   },
   {
@@ -411,7 +426,7 @@
    "fetch_if_empty": 1,
    "fieldname": "data_do_servico",
    "fieldtype": "Date",
-   "label": "Data do Servi\u00e7o"
+   "label": "Data do Serviço"
   },
   {
    "allow_on_submit": 1,
@@ -420,8 +435,8 @@
    "fetch_if_empty": 1,
    "fieldname": "integracao",
    "fieldtype": "Select",
-   "label": "Integra\u00e7\u00e3o",
-   "options": "\nSIM\nN\u00c3O"
+   "label": "Integração",
+   "options": "\nSIM\nNÃO"
   },
   {
    "allow_on_submit": 1,
@@ -430,7 +445,7 @@
    "fetch_if_empty": 1,
    "fieldname": "observacoes_visita",
    "fieldtype": "Text Editor",
-   "label": "Observa\u00e7\u00f5es da Visita"
+   "label": "Observações da Visita"
   },
   {
    "fieldname": "qs1",
@@ -443,7 +458,7 @@
    "fetch_if_empty": 1,
    "fieldname": "data_integracao",
    "fieldtype": "Date",
-   "label": "Data Integra\u00e7\u00e3o"
+   "label": "Data Integração"
   },
   {
    "allow_on_submit": 1,
@@ -452,7 +467,7 @@
    "fetch_if_empty": 1,
    "fieldname": "hora_integracao",
    "fieldtype": "Data",
-   "label": "Hora Integra\u00e7\u00e3o"
+   "label": "Hora Integração"
   },
   {
    "allow_on_submit": 1,
@@ -461,7 +476,7 @@
    "fetch_if_empty": 1,
    "fieldname": "endereco_empresa",
    "fieldtype": "Data",
-   "label": "Endere\u00e7o / Empresa"
+   "label": "Endereço / Empresa"
   },
   {
    "allow_on_submit": 1,
@@ -470,47 +485,47 @@
    "fetch_if_empty": 1,
    "fieldname": "pontos_calibracao",
    "fieldtype": "Text Editor",
-   "label": "Pontos de Calibra\u00e7\u00e3o"
+   "label": "Pontos de Calibração"
   },
   {
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
    "fieldname": "escolher_como_criar_osexterna",
    "fieldtype": "Select",
-   "label": "Como deseja criar as Ordens de Servi\u00e7o Externa?",
+   "label": "Como deseja criar as Ordens de Serviço Externa?",
    "mandatory_depends_on": "eval: doc.ordem_servico == 'Ordem Servico Externa'",
-   "options": "\nQuantidade\nRefer\u00eancia do Pedido de Venda"
+   "options": "\nQuantidade\nReferência do Pedido de Venda"
   },
   {
    "fieldname": "rel_servico",
    "fieldtype": "Tab Break",
-   "label": "Relat\u00f3rio de Servi\u00e7o"
+   "label": "Relatório de Serviço"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "equipamentos_relatorio_servico",
    "fieldtype": "Table",
    "in_filter": 1,
-   "label": "Equipamentos Relat\u00f3rio de Servi\u00e7o",
+   "label": "Equipamentos Relatório de Serviço",
    "options": "Equipamentos Rel Servico"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "emitir_rel_servico",
    "fieldtype": "Select",
-   "label": "Emitir Relat\u00f3rio de Servi\u00e7o",
-   "options": "\nEMITIR RELAT\u00d3RIO\nRELAT\u00d3RIO EMITIDO"
+   "label": "Emitir Relatório de Serviço",
+   "options": "\nEMITIR RELATÓRIO\nRELATÓRIO EMITIDO"
   },
   {
    "fieldname": "responsavel_tecnico_e_contratante",
    "fieldtype": "Section Break",
-   "label": "Respons\u00e1vel T\u00e9cnico e Contratante Respons\u00e1vel"
+   "label": "Responsável Técnico e Contratante Responsável"
   },
   {
    "allow_on_submit": 1,
    "fetch_from": "responsavel_tecnico_user.full_name",
    "fieldname": "responsavel_tecnico",
    "fieldtype": "Data",
-   "label": "Nome do Respons\u00e1vel T\u00e9cnico"
+   "label": "Nome do Responsável Técnico"
   },
   {
    "fieldname": "q5",
@@ -521,7 +536,7 @@
    "fieldname": "termino",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "T\u00e9rmino PDF"
+   "label": "Término PDF"
   },
   {
    "fieldname": "qs5",
@@ -531,7 +546,7 @@
    "allow_on_submit": 1,
    "fieldname": "contratante_responsavel",
    "fieldtype": "Data",
-   "label": "Contratante respons\u00e1vel"
+   "label": "Contratante responsável"
   },
   {
    "fieldname": "q6",
@@ -557,23 +572,23 @@
    "allow_on_submit": 1,
    "fieldname": "termino_tipo_data",
    "fieldtype": "Date",
-   "label": "T\u00e9rmino",
+   "label": "Término",
    "read_only": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "responsavel_tecnico_user",
    "fieldtype": "Link",
-   "label": "Respons\u00e1vel T\u00e9cnico",
+   "label": "Responsável Técnico",
    "options": "User"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
-   "description": "Ao marcar esta op\u00e7\u00e3o, o sistema enviar\u00e1 automaticamente ao cliente os e-mails referentes ao evento \u201cEquipamento enviado para embalagem e aguardando retirada\u201d. Use esta configura\u00e7\u00e3o caso deseje automatizar essa notifica\u00e7\u00e3o no fluxo da Ordem de Servi\u00e7o.",
+   "description": "Ao marcar esta opção, o sistema enviará automaticamente ao cliente os e-mails referentes ao evento “Equipamento enviado para embalagem e aguardando retirada”. Use esta configuração caso deseje automatizar essa notificação no fluxo da Ordem de Serviço.",
    "fieldname": "email_automatico",
    "fieldtype": "Check",
-   "label": "Enviar e-mail autom\u00e1tico ao cliente"
+   "label": "Enviar e-mail automático ao cliente"
   },
   {
    "allow_on_submit": 1,
@@ -585,7 +600,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-02-25 09:39:06.351037",
+ "modified": "2025-12-12 08:16:02.376967",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",
@@ -604,7 +619,6 @@
    "write": 1
   }
  ],
- "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

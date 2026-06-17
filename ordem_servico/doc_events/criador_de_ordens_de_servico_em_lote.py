@@ -4,7 +4,25 @@ import frappe
 
 
 def before_submit(doc, method):
-     
+
+    # Validações da geração em lote de OS Internas por grandeza (TAREFA 4)
+    # Ficam fora do try abaixo para que as mensagens em português apareçam
+    # de forma clara, sem serem mascaradas pelo except genérico.
+    if doc.ordem_servico == "Ordem Servico Interna":
+        if not doc.grandezas:
+            frappe.throw(
+                "Informe pelo menos uma linha na tabela 'Grandezas' para gerar as Ordens de Serviço Internas."
+            )
+        for linha in doc.grandezas:
+            if not linha.grandeza:
+                frappe.throw(
+                    "Há uma linha na tabela 'Grandezas' sem a grandeza preenchida."
+                )
+            if not linha.quantidade_equipamentos or int(linha.quantidade_equipamentos) <= 0:
+                frappe.throw(
+                    f"A quantidade de equipamentos da grandeza '{linha.grandeza}' deve ser maior que zero."
+                )
+
     try:
         if doc.ordem_servico == "Ordem Servico Externa" and doc.escolher_como_criar_osexterna == 'Referência do Pedido de Venda':
             
@@ -102,71 +120,73 @@ def before_submit(doc, method):
 
                 
         elif doc.ordem_servico == "Ordem Servico Interna":
-            agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
-            agenda_tecnica.titulo_agendamento = (
-                f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
-            )
-            agenda_tecnica.customer = (
-            getattr(doc, "customer", None)
-            or getattr(doc, "cliente", None)
-        )
-            agenda_tecnica.status_agendamento = "Agendado"
-            agenda_tecnica.tipo_servico = "Orçamento"
-            agenda_tecnica.doc_referencia = "Ordem Servico Interna"
-            agenda_tecnica.data_inicio = doc.quotation_schedule_date
-            agenda_tecnica.data_fim = doc.quotation_schedule_date
-            agenda_tecnica.tecnico_responsavel = doc.initial_scheduled_to
-            agenda_tecnica.save()
-            count = 0
-            lista_links_os = []
-            while count < int(doc.quantidade):
-                os = frappe.new_doc(doc.ordem_servico)
-                os.customer = doc.cliente
-                os.id_criador_de_ordens_de_servico_em_lote = doc.name
-                os.email_automatico = doc.email_automatico
-                os.equipment_location = doc.loc_equip
-                os.contact_link = doc.contato
-                os.has_quotation_link = doc.orcamento
-                os.have_quotation = doc.possui_orcamento
-                os.status_order_service = doc.status_order_service_interna
-                os.modalidade_entrada = doc.modalidade_entrada
-                os.nome_transportadora_entrada = doc.nome_transportadora_entrada
-                os.outro = doc.outro
-                os.base_total = doc.base_total
-                os.entry_date = doc.entry_date
-                os.entry_sales_invoice = doc.entry_sales_invoice
-                os.valor = doc.valor
-                os.peso = doc.peso
-                os.initial_scheduled_to = doc.initial_scheduled_to
-                os.initial_scheduled_to_name = doc.initial_scheduled_to_name
-                doc.initial_scheduled_by_name = frappe.get_user().doc.full_name
-                os.initial_scheduled_by_name = doc.initial_scheduled_by_name
-                os.quotation_schedule_date = doc.quotation_schedule_date
-                os.quotation_schedule_time = doc.quotation_schedule_time
-                os.quotation_time = doc.quotation_time
-                doc.quotation_event_link = agenda_tecnica.titulo_agendamento = (
-                f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
-                )
-                os.quotation_event_link = doc.quotation_event_link
-                os.os_items = doc.os_items
-                os.pontos_cal_criterios_aceitacao = doc.pontos_cal_criterios_aceitacao
-                os.final_scheduled_to = doc.final_scheduled_to
-                os.final_scheduled_to_name = doc.final_scheduled_to_name
-                os.final_scheduled_by_name = doc.final_scheduled_by_name
-                os.repair_schedule_date = doc.repair_schedule_date
-                os.repair_schedule_time = doc.repair_schedule_time
-                os.repair_time = doc.repair_time
-                os.repair_event_link = doc.repair_event_link
-                
-                
-                
-                os.save()
-                link = f'<a href="/app/ordem-servico-interna/{os.name}" target="_blank">{os.name}</a>'
-                lista_links_os.append(link)
-                agenda_tecnica.os_criador_em_lote = "<br>".join(lista_links_os)
-                agenda_tecnica.save(ignore_permissions=True)
-                count += 1
-                
+            # --- AGENDAMENTO TÉCNICO (comentado - recurso não utilizado) ---
+            # agenda_tecnica = frappe.new_doc("Agendamento Tecnico")
+            # agenda_tecnica.titulo_agendamento = (
+            #     f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
+            # )
+            # agenda_tecnica.customer = (
+            #     getattr(doc, "customer", None)
+            #     or getattr(doc, "cliente", None)
+            # )
+            # agenda_tecnica.status_agendamento = "Agendado"
+            # agenda_tecnica.tipo_servico = "Orçamento"
+            # agenda_tecnica.doc_referencia = "Ordem Servico Interna"
+            # agenda_tecnica.data_inicio = doc.quotation_schedule_date
+            # agenda_tecnica.data_fim = doc.quotation_schedule_date
+            # agenda_tecnica.tecnico_responsavel = doc.initial_scheduled_to
+            # agenda_tecnica.save()
+            # lista_links_os = []
+            # --- FIM AGENDAMENTO TÉCNICO ---
+
+            # Distribuição por grandeza: 1 OS Interna por equipamento (TAREFA 4)
+            for linha in doc.grandezas:
+                for _ in range(int(linha.quantidade_equipamentos)):
+                    os = frappe.new_doc(doc.ordem_servico)
+                    os.grandeza = linha.grandeza
+                    os.customer = doc.cliente
+                    os.id_criador_de_ordens_de_servico_em_lote = doc.name
+                    os.email_automatico = doc.email_automatico
+                    os.equipment_location = doc.loc_equip
+                    os.contact_link = doc.contato
+                    os.has_quotation_link = doc.orcamento
+                    os.have_quotation = doc.possui_orcamento
+                    os.status_order_service = doc.status_order_service_interna
+                    os.modalidade_entrada = doc.modalidade_entrada
+                    os.nome_transportadora_entrada = doc.nome_transportadora_entrada
+                    os.outro = doc.outro
+                    os.base_total = doc.base_total
+                    os.entry_date = doc.entry_date
+                    os.entry_sales_invoice = doc.entry_sales_invoice
+                    os.valor = doc.valor
+                    os.peso = doc.peso
+                    os.initial_scheduled_to = doc.initial_scheduled_to
+                    os.initial_scheduled_to_name = doc.initial_scheduled_to_name
+                    doc.initial_scheduled_by_name = frappe.get_user().doc.full_name
+                    os.initial_scheduled_by_name = doc.initial_scheduled_by_name
+                    os.quotation_schedule_date = doc.quotation_schedule_date
+                    os.quotation_schedule_time = doc.quotation_schedule_time
+                    os.quotation_time = doc.quotation_time
+                    doc.quotation_event_link = f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
+                    os.quotation_event_link = doc.quotation_event_link
+                    os.os_items = doc.os_items
+                    os.pontos_cal_criterios_aceitacao = doc.pontos_cal_criterios_aceitacao
+                    os.final_scheduled_to = doc.final_scheduled_to
+                    os.final_scheduled_to_name = doc.final_scheduled_to_name
+                    os.final_scheduled_by_name = doc.final_scheduled_by_name
+                    os.repair_schedule_date = doc.repair_schedule_date
+                    os.repair_schedule_time = doc.repair_schedule_time
+                    os.repair_time = doc.repair_time
+                    os.repair_event_link = doc.repair_event_link
+
+                    os.save()
+                    # --- AGENDAMENTO TÉCNICO (comentado - recurso não utilizado) ---
+                    # link = f'<a href="/app/ordem-servico-interna/{os.name}" target="_blank">{os.name}</a>'
+                    # lista_links_os.append(link)
+                    # agenda_tecnica.os_criador_em_lote = "<br>".join(lista_links_os)
+                    # agenda_tecnica.save(ignore_permissions=True)
+                    # --- FIM AGENDAMENTO TÉCNICO ---
+
         
     except:
         frappe.throw("Ocorreu algum erro durante a criação em lote")

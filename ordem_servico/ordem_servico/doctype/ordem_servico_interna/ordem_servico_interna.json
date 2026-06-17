@@ -1,7 +1,7 @@
 {
  "actions": [],
  "autoname": "naming_series:",
- "creation": "2025-05-22 09:31:48.887356",
+ "creation": "2026-06-17 10:22:33.654568",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -59,6 +59,7 @@
   "peso_saida",
   "equipamento_tab",
   "equipment_details_section",
+  "grandeza",
   "informe_numero_serie",
   "serie_number",
   "equipment_description",
@@ -74,7 +75,6 @@
   "warranty",
   "pontos_calibracao",
   "section_break_30",
-  "pontos_cal_criterios",
   "created_by_observation",
   "agendamentolaudo_inicial_tab",
   "info_documento",
@@ -141,7 +141,6 @@
   "tempo_conserto",
   "data_cal",
   "data_cal_recomendada",
-  "data_emissao",
   "anexo_certificado",
   "custom_identificacao_dos_equipamentos",
   "custom_quantidade_certificados",
@@ -401,6 +400,13 @@
    "fieldname": "equipment_description",
    "fieldtype": "Data",
    "label": "Equipamento"
+  },
+  {
+   "fieldname": "grandeza",
+   "fieldtype": "Link",
+   "label": "Grandeza",
+   "options": "Grandeza",
+   "reqd": 1
   },
   {
    "fieldname": "created_by_observation",
@@ -1121,39 +1127,6 @@
    "max_height": "30px"
   },
   {
-   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
-   "fieldname": "data_cal",
-   "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o",
-   "length": 50
-  },
-  {
-   "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
-   "fieldname": "data_cal_recomendada",
-   "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
-   "read_only": 1
-  },
-  {
-   "fieldname": "anexo_certificado",
-   "fieldtype": "Attach",
-   "label": "Anexar Certificado"
-  },
-  {
-   "fetch_from": "informe_numero_serie.tipo_equipamento",
-   "fieldname": "tipo_equipamento",
-   "fieldtype": "Data",
-   "label": "Tipo do Equipamento"
-  },
-  {
-   "fetch_from": "informe_numero_serie.capacidade",
-   "fetch_if_empty": 1,
-   "fieldname": "capacidade_equipamento",
-   "fieldtype": "Text",
-   "label": "Capacidade",
-   "max_height": "30px"
-  },
-  {
    "fieldname": "informe_numero_serie",
    "fieldtype": "Link",
    "label": "Digite o n\u00famero de s\u00e9rie do equipamento",
@@ -1224,28 +1197,17 @@
    "fieldname": "custom_identificacao_dos_equipamentos",
    "fieldtype": "Select",
    "label": "Identifica\u00e7\u00e3o do cliente",
-   "options": "N\u00famero de s\u00e9rie\nTag"
+   "options": "N\u00famero de s\u00e9rie\nTag\nOS"
   },
   {
    "fieldname": "custom_quantidade_certificados",
    "fieldtype": "Select",
    "label": "Quantidade Certificados",
    "options": "_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
-  },
-  {
-   "fieldname": "pontos_cal_criterios",
-   "fieldtype": "Table",
-   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios",
-   "options": "Pontos de Calibracao e Criterios"
-  },
-  {
-   "fieldname": "data_emissao",
-   "fieldtype": "Date",
-   "label": "Data da Emiss\u00e3o"
   }
  ],
  "links": [],
- "modified": "2026-03-04 15:07:00.000260",
+ "modified": "2026-06-17 11:25:53.850407",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
