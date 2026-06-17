@@ -402,8 +402,6 @@
    "label": "Equipamento"
   },
   {
-   "fetch_from": "informe_numero_serie.grandeza",
-   "fetch_if_empty": 1,
    "fieldname": "grandeza",
    "fieldtype": "Link",
    "label": "Grandeza",

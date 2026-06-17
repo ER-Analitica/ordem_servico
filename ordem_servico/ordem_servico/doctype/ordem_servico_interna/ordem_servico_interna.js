@@ -237,17 +237,21 @@ frappe.ui.form.on('Ordem Servico Interna', {
   })
   })
 },
-  informe_numero_serie(frm){
-    // Protege a grandeza ao trocar de equipamento. O fetch_from limpa o campo
-    // quando o equipamento não tem grandeza cadastrada; aqui restauramos o
-    // valor anterior (vindo do Criador em Lote ou de preenchimento manual).
-    // Prioridade: 1º grandeza do equipamento (fetch) / 2º grandeza já na OS / 3º vazio.
-    let grandeza_anterior = frm.doc.grandeza;
-    setTimeout(function(){
-      if (!frm.doc.grandeza && grandeza_anterior){
-        frm.set_value("grandeza", grandeza_anterior);
-      }
-    }, 500);
+  informe_numero_serie(frm) {
+    if (!frm.doc.informe_numero_serie) {
+        // Equipamento removido — não limpa grandeza, mantém o valor
+        return;
+    }
+    // Busca a grandeza do equipamento selecionado
+    frappe.db.get_value("Equipamentos", frm.doc.informe_numero_serie, "grandeza", function(r) {
+        if (r && r.grandeza) {
+            // Equipamento TEM grandeza cadastrada → usa a do equipamento
+            frm.set_value("grandeza", r.grandeza);
+        }
+        // Equipamento NÃO tem grandeza → mantém o valor anterior
+        // (veio do Criador em Lote ou preenchimento manual)
+        // Não faz nada — o campo preserva o que já tinha
+    });
   },
 
 
