@@ -76,20 +76,27 @@ class OrdemServicoInterna(Document):
 		self.sync_grandeza_para_equipamento()
 
 	def sync_grandeza_para_equipamento(self):
-		# Grava a grandeza informada na OS de volta no cadastro do Equipamento
-		# sempre que a OS tem grandeza, há equipamento vinculado e o equipamento
-		# ainda NÃO tem grandeza (o cadastro prevalece quando já tem valor).
-		# Sem has_value_changed: no fluxo do Criador em Lote a grandeza já vem
-		# preenchida e não "muda" ao selecionar o equipamento. Usa db.set_value
-		# (update direto, sem validação/bloqueio) e só dispara quando o equipamento
-		# está sem grandeza, então é seguro em cascatas (fatura etc.).
+		# Grava a grandeza informada na OS de volta no cadastro do Equipamento:
+		# - Grandeza ALTERADA na OS  -> atualiza o equipamento sempre (reclassificação).
+		# - Grandeza não alterada + equipamento sem grandeza -> backfill (Criador em Lote).
+		# - Grandeza não alterada + equipamento já tem grandeza -> não faz nada.
+		# Em cascatas (fatura etc.) a grandeza não muda e o equipamento já tem valor,
+		# então nada acontece. Usa db.set_value (update direto, sem validação/bloqueio).
 		if not (self.grandeza and self.informe_numero_serie):
 			return
 		try:
 			grandeza_equip = frappe.db.get_value(
 				"Equipamentos", self.informe_numero_serie, "grandeza"
 			)
-			if not grandeza_equip:
+			if self.has_value_changed("grandeza"):
+				# Técnico alterou a grandeza na OS -> atualiza o equipamento
+				# SEMPRE, mesmo que o equipamento já tenha grandeza.
+				frappe.db.set_value(
+					"Equipamentos", self.informe_numero_serie, "grandeza", self.grandeza
+				)
+			elif not grandeza_equip:
+				# Grandeza não mudou neste save, mas o equipamento está sem
+				# grandeza -> backfill (cenário do Criador em Lote).
 				frappe.db.set_value(
 					"Equipamentos", self.informe_numero_serie, "grandeza", self.grandeza
 				)
