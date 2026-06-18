@@ -19,8 +19,7 @@
   "tag",
   "naming_series",
   "pontos_calibracao",
-  "criterios_aceitacao",
-  "pontos_cal_criterios"
+  "criterios_aceitacao"
  ],
  "fields": [
   {
@@ -122,12 +121,6 @@
    "fieldtype": "Data",
    "label": "E-mail",
    "read_only": 1
-  },
-  {
-   "fieldname": "pontos_cal_criterios",
-   "fieldtype": "Table",
-   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios",
-   "options": "Pontos de Calibracao e Criterios"
   }
  ],
  "links": [
