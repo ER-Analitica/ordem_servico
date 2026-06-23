@@ -167,7 +167,7 @@ def before_submit(doc, method):
                     os.quotation_schedule_date = doc.quotation_schedule_date
                     os.quotation_schedule_time = doc.quotation_schedule_time
                     os.quotation_time = doc.quotation_time
-                    doc.quotation_event_link = f"Orçamento - {doc.name} - {doc.initial_scheduled_to_name or ''}"
+                    # linha removida — quotation_event_link já vem preenchido pelo botão schedule_quotation_event
                     os.quotation_event_link = doc.quotation_event_link
                     os.os_items = doc.os_items
                     os.pontos_cal_criterios_aceitacao = doc.pontos_cal_criterios_aceitacao
