@@ -95,3 +95,39 @@ def on_update_after_submit(doc, method):
         # Lança um erro se houver alguma OS sem início, sem finalização ou sem serviço marcado
         if mensagem_erro:
             frappe.throw(mensagem_erro)
+
+
+@frappe.whitelist()
+def criar_task_oportunidade(cliente, docname):
+    oportunidades = frappe.get_all(
+        "Opportunity",
+        filters={"opportunity_from": "Customer", "party_name": cliente},
+        fields=["name"],
+        order_by="creation desc",
+        limit=1
+    )
+    if not oportunidades:
+        frappe.throw(f"Nenhuma oportunidade encontrada para o cliente {cliente}.")
+
+    opportunity_name = oportunidades[0].name
+
+    existente = frappe.get_all(
+        "ToDo",
+        filters={
+            "reference_type": "Opportunity",
+            "reference_name": opportunity_name,
+            "description": ["like", f"%Lote {docname}%"]
+        },
+        limit=1
+    )
+    if existente:
+        return
+
+    todo = frappe.new_doc("ToDo")
+    todo.description = "RECORRÊNCIA"
+    todo.date = frappe.utils.add_months(frappe.utils.today(), 9)
+    todo.reference_type = "Opportunity"
+    todo.reference_name = opportunity_name
+    todo.status = "Open"
+    todo.assigned_by = frappe.session.user
+    todo.save(ignore_permissions=True)

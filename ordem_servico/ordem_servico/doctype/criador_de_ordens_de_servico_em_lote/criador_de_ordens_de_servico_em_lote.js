@@ -17,7 +17,7 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
 			}
 		}
     },
-	
+
 	schedule_quotation_event(frm) {
 		const { __unsaved } = cur_frm.doc
 		if (__unsaved) {
@@ -44,7 +44,7 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
 			show_alert('Orçamento agendado.')
 			frm.reload_doc()
 		  }
-		  
+
 		})
 	  },
 
@@ -80,14 +80,14 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
 	  orcamento: function(frm) {
 		// Obter o valor do campo "has_quotation_link"
 		const quotation = frm.doc.orcamento;
-	
+
 		// Limpar a tabela se o campo "has_quotation_link" estiver vazio
 		if (!quotation) {
 		  frm.clear_table('os_items');
 		  frm.refresh_field('os_items');
 		  return;
 		}
-	
+
 		// Consultar a tabela de orçamento usando o valor do campo "has_quotation_link"
 		frappe.call({
 		  method: 'frappe.client.get',
@@ -97,10 +97,10 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
 		  },
 		  callback: function(response) {
 			const quotation_doc = response.message;
-	
+
 			// Limpar a tabela antes de adicionar novos itens
 			frm.clear_table('os_items');
-	
+
 			// Iterar sobre os itens do orçamento e adicionar à tabela em Ordem Servico Interna
 			if (quotation_doc && quotation_doc.items) {
 			  for (const item of quotation_doc.items) {
@@ -115,5 +115,17 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
 		  },
 		});
 	  },
-	
+
+	emitir_rel_servico(frm) {
+		if (frm.doc.emitir_rel_servico !== "EMITIR RELATÓRIO") return;
+		if (!frm.doc.cliente) {
+			frappe.throw("Preencha o campo Cliente antes de emitir o relatório.");
+			return;
+		}
+		frappe.call({
+			method: "ordem_servico.doc_events.emitir_rel_servico.criar_task_oportunidade",
+			args: { cliente: frm.doc.cliente, docname: frm.doc.name }
+		});
+	},
+
 });
