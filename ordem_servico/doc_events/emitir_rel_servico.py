@@ -99,35 +99,96 @@ def on_update_after_submit(doc, method):
 
 @frappe.whitelist()
 def criar_task_oportunidade(cliente, docname):
-    oportunidades = frappe.get_all(
-        "Opportunity",
-        filters={"opportunity_from": "Customer", "party_name": cliente},
-        fields=["name"],
-        order_by="creation desc",
-        limit=1
-    )
-    if not oportunidades:
-        frappe.throw(f"Nenhuma oportunidade encontrada para o cliente {cliente}.")
+    criador = frappe.get_doc("Criador de Ordens de Servico em Lote", docname)
 
-    opportunity_name = oportunidades[0].name
+    # 1. Verifica opportunity_name no cadastro do Cliente
+    opportunity_name = frappe.db.get_value("Customer", cliente, "opportunity_name")
 
+    # 2. Busca por contact_person na Opportunity
+    if not opportunity_name and criador.contato:
+        ops = frappe.get_all(
+            "Opportunity",
+            filters={"contact_person": criador.contato},
+            fields=["name"],
+            order_by="creation desc",
+            limit=1
+        )
+        if ops:
+            opportunity_name = ops[0].name
+            frappe.db.set_value("Customer", cliente, "opportunity_name", opportunity_name)
+
+    # 3. Busca por cliente (party_name) na Opportunity
+    if not opportunity_name:
+        ops = frappe.get_all(
+            "Opportunity",
+            filters={"opportunity_from": "Customer", "party_name": cliente},
+            fields=["name"],
+            order_by="creation desc",
+            limit=1
+        )
+        if ops:
+            opportunity_name = ops[0].name
+            frappe.db.set_value("Customer", cliente, "opportunity_name", opportunity_name)
+
+    # Busca vendedor no Pedido de Venda
+    email_vendedor = None
+    nome_vendedor = None
+    if criador.sales_order_reference:
+        sales_team = frappe.get_all(
+            "Sales Team",
+            filters={"parent": criador.sales_order_reference, "parenttype": "Sales Order"},
+            fields=["sales_person"],
+            limit=1
+        )
+        if sales_team:
+            sales_person = sales_team[0].sales_person
+            email_vendedor = frappe.db.get_value("Sales Person", sales_person, "email_do_vendedor")
+            nome_vendedor = sales_person
+
+    # 4. Sem oportunidade — avisa vendedor e encerra
+    if not opportunity_name:
+        if email_vendedor:
+            frappe.sendmail(
+                recipients=[email_vendedor],
+                subject=f"Oportunidade não encontrada — Cliente {cliente}",
+                message=f"""<p>Olá {nome_vendedor},</p>
+                    <p>Ao emitir o Relatório de Serviço do lote <b>{docname}</b>,
+                    nenhuma oportunidade foi encontrada para o cliente <b>{cliente}</b>.</p>
+                    <p>Por favor, crie a oportunidade e vincule no cadastro do cliente.</p>"""
+            )
+        return
+
+    # Checagem de duplicata — evita criar task repetida para o mesmo lote
     existente = frappe.get_all(
         "ToDo",
         filters={
             "reference_type": "Opportunity",
             "reference_name": opportunity_name,
-            "description": ["like", f"%Lote {docname}%"]
+            "description": ["like", f"%{docname}%"]
         },
         limit=1
     )
     if existente:
         return
 
+    # Cria a task
     todo = frappe.new_doc("ToDo")
-    todo.description = "RECORRÊNCIA"
+    todo.description = f"RECORRÊNCIA — Lote {docname}"
     todo.date = frappe.utils.add_months(frappe.utils.today(), 9)
     todo.reference_type = "Opportunity"
     todo.reference_name = opportunity_name
     todo.status = "Open"
     todo.assigned_by = frappe.session.user
     todo.save(ignore_permissions=True)
+
+    # E-mail ao vendedor — recorrência criada
+    if email_vendedor:
+        frappe.sendmail(
+            recipients=[email_vendedor],
+            subject=f"Recorrência criada — Cliente {cliente}",
+            message=f"""<p>Olá {nome_vendedor},</p>
+                <p>Uma tarefa de <b>RECORRÊNCIA</b> foi criada na oportunidade
+                <b>{opportunity_name}</b> para o cliente <b>{cliente}</b>,
+                com vencimento em 9 meses.</p>
+                <p>Lote de referência: <b>{docname}</b></p>"""
+        )

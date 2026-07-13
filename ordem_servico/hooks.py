@@ -193,14 +193,16 @@ doc_events = {
         "on_update": "ordem_servico.doc_events.update_data_vencimento.update_data_vencimento",
     },
     "Quotation":{
-        "validate": [ 
+        "validate": [
             "ordem_servico.doc_events.limpar_hash.validate",
+            "ordem_servico.doc_events.calcular_total_tempo_execucao_servico.calcular_total_tempo_execucao",
         ],
         "on_update_after_submit":[
              "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_update_after_submit"
         ],
         "on_submit": [
             "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
+            "ordem_servico.doc_events.vincular_oportunidade_quotation.on_submit",
         ]
     },
     
