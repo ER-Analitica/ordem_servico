@@ -19,7 +19,7 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ordem_servico/css/ordem_servico.css"
-# app_include_js = "/assets/ordem_servico/js/ordem_servico.js"
+app_include_js = "/assets/ordem_servico/js/email_template_handler.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ordem_servico/css/ordem_servico.css"
@@ -212,7 +212,11 @@ doc_events = {
         #é necessário comentar a linha 164
         "before_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.before_submit",
         "on_update_after_submit": "ordem_servico.doc_events.emitir_rel_servico.on_update_after_submit",
-        "validate": "ordem_servico.doc_events.obter_informacoes_da_so_no_criador_em_lote.validate",
+        "before_update_after_submit": "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.sincronizar_rel_servico",
+        "validate": [
+            "ordem_servico.doc_events.obter_informacoes_da_so_no_criador_em_lote.validate",
+            "ordem_servico.doc_events.criador_de_ordens_de_servico_em_lote.sincronizar_rel_servico",
+        ],
     },
     "Employee":{
         "validate": [

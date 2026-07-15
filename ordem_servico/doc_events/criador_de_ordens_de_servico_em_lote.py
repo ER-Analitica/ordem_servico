@@ -3,6 +3,26 @@ from __future__ import unicode_literals
 import frappe
 
 
+def sincronizar_rel_servico(doc, method=None):
+    # Roda em before_update_after_submit (e validate para rascunhos), pois as
+    # tabelas filhas são persistidas ANTES do on_update_after_submit.
+    os_na_visita = {linha.os for linha in doc.os_interna_table if linha.os}
+    os_no_rel = {linha.os_rel_servico for linha in doc.equipamentos_relatorio_servico if linha.os_rel_servico}
+
+    for os_name in os_na_visita - os_no_rel:
+        doc.append("equipamentos_relatorio_servico", {"os_rel_servico": os_name})
+
+    linhas = [
+        linha for linha in doc.equipamentos_relatorio_servico
+        if linha.os_rel_servico in os_na_visita
+    ]
+    linhas.sort(key=lambda l: l.os_rel_servico or "")
+    for i, linha in enumerate(linhas, start=1):
+        linha.idx = i
+
+    doc.equipamentos_relatorio_servico = linhas
+
+
 def before_submit(doc, method):
 
     # Validações da geração em lote de OS Internas por grandeza (TAREFA 4)
