@@ -15,12 +15,11 @@ frappe.ui.form.on('Ordem Servico Externa', {
 	
 		// Substitui o comportamento de criação de novo documento
 		equipamento_field.get_route_options_for_new_doc = function(row) {
-			if (frm.is_new()) return; // não faz nada se a OS ainda não estiver salva
-	
-			// Preenche o campo customer do novo Equipamento com o valor da OS
+			// Sempre retorna um objeto — retornar undefined quebra o popup de
+			// criação rápida (frappe.route_options.name_field)
 			return {
-				"customer": frm.doc.customer,
-				"contact_link": frm.doc.contact_link
+				"customer": frm.doc.customer || "",
+				"contact_link": frm.doc.contact_link || ""
 			};
 		};
 	},

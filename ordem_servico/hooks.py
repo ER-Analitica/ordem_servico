@@ -19,7 +19,10 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/ordem_servico/css/ordem_servico.css"
-app_include_js = "/assets/ordem_servico/js/email_template_handler.js"
+app_include_js = [
+    "/assets/ordem_servico/js/email_template_handler.js",
+    "/assets/ordem_servico/js/equipamentos_quick_entry.js",
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/ordem_servico/css/ordem_servico.css"
@@ -247,7 +250,15 @@ doc_events = {
             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
             #calcular data da calibração recomendada com base da data da calibração na OS
             "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
-            "ordem_servico.doc_events.validacao_ipem.validacao_ipem"
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
+            #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
+            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
+        ]
+    },
+    "Equipamentos": {
+        "validate": [
+            #Bloqueia duplicata exata e avisa em cadastros parecidos
+            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_duplicidade_equipamento",
         ]
     },
     #SE SUBIR ALGO PARA A PRODUÇÃO RELACIONADO A OS INTERNA, COMENTAR LINHAS QUE ESTÃO EM DESENVOLVIMENTO
@@ -261,7 +272,9 @@ doc_events = {
             "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
              #calcular data da calibração recomendada com base da data da calibração na OS
             "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
-            "ordem_servico.doc_events.validacao_ipem.validacao_ipem"
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
+            #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
+            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
         ],
         "before_save":[
             "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"
