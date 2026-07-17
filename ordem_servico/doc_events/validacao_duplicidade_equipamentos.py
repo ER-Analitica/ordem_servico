@@ -136,6 +136,7 @@ def verificar_duplicidade(customer, numero_serie="", tag="", descricao="",
 CAMPOS_EDITAVEIS_EQUIPAMENTO = (
     "numero_serie", "descricao", "modelo_equipamento",
     "marca_equipamento", "tipo_equipamento", "tag", "capacidade",
+    "grandeza", "pontos_calibracao", "criterios_aceitacao",
 )
 
 

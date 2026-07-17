@@ -106,6 +106,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 	},
 	refresh(frm) {
 		travar_campos_equipamento_os(frm);
+		ocultar_campos_ipem(frm);
 
 		if (frm.fields_dict.informe_numero_serie) {
 			frm.set_df_property(
@@ -121,6 +122,9 @@ frappe.ui.form.on(cur_frm.doctype, {
 				abrir_atualizacao_equipamento(frm);
 			});
 		}
+	},
+	informe_numero_serie(frm) {
+		espelhar_dados_equipamento(frm);
 	},
 	start_repair(frm) {
 		const { __unsaved } = cur_frm.doc
@@ -174,9 +178,46 @@ function travar_campos_equipamento_os(frm) {
 		"capacidade_equipamento"
 	];
 	campos.forEach(function (campo) {
+		var f = frm.fields_dict[campo];
+		if (!f || !f.$wrapper) return;
+		// Não usar read_only: campo somente-leitura VAZIO fica oculto no Frappe.
+		// Desabilitar o input mantém o campo sempre visível (mesmo vazio),
+		// porém bloqueado para digitação.
+		frm.set_df_property(campo, "read_only", 0);
+		f.$wrapper.find("input, textarea").prop("disabled", true);
+	});
+}
+
+function ocultar_campos_ipem(frm) {
+	["lacre_retirado", "lacre_afixado", "observacoes_ipem"].forEach(function (campo) {
 		if (frm.fields_dict[campo]) {
-			frm.set_df_property(campo, "read_only", 1);
+			frm.set_df_property(campo, "hidden", 1);
 		}
+	});
+}
+
+function espelhar_dados_equipamento(frm) {
+	// Traz TODOS os dados do cadastro, inclusive vazios — assim o técnico
+	// percebe na hora quando falta informação no cadastro do equipamento.
+	var equipamento = frm.doc.informe_numero_serie;
+	if (!equipamento) return;
+
+	frappe.db.get_doc("Equipamentos", equipamento).then(function (eq) {
+		var mapa = {
+			serie_number: eq.numero_serie,
+			equipment_description: eq.descricao,
+			tipo_equipamento: eq.tipo_equipamento,
+			equipment_model: eq.modelo_equipamento,
+			marca_equipamento: eq.marca_equipamento,
+			equipment_tag: eq.tag,
+			capacidade_equipamento: eq.capacidade,
+			pontos_calibracao: eq.pontos_calibracao
+		};
+		Object.keys(mapa).forEach(function (campo) {
+			if (frm.fields_dict[campo]) {
+				frm.set_value(campo, mapa[campo] || "");
+			}
+		});
 	});
 }
 
@@ -192,9 +233,12 @@ function abrir_atualizacao_equipamento(frm) {
 				{ fieldname: "descricao", fieldtype: "Link", options: "Nome Equipamento", label: "Equipamento", default: eq.descricao, reqd: 1 },
 				{ fieldname: "modelo_equipamento", fieldtype: "Link", options: "Modelo do Equipamento", label: "Modelo", default: eq.modelo_equipamento, reqd: 1 },
 				{ fieldname: "marca_equipamento", fieldtype: "Link", options: "Marca do Equipamento", label: "Marca", default: eq.marca_equipamento, reqd: 1 },
+				{ fieldname: "grandeza", fieldtype: "Link", options: "Grandeza", label: "Grandeza", default: eq.grandeza, reqd: 1 },
 				{ fieldname: "tipo_equipamento", fieldtype: "Link", options: "Tipo do Equipamento", label: "Tipo", default: eq.tipo_equipamento },
 				{ fieldname: "tag", fieldtype: "Data", label: "Tag", default: eq.tag },
-				{ fieldname: "capacidade", fieldtype: "Data", label: "Capacidade", default: eq.capacidade }
+				{ fieldname: "capacidade", fieldtype: "Data", label: "Capacidade", default: eq.capacidade },
+				{ fieldname: "pontos_calibracao", fieldtype: "Small Text", label: "Pontos de Calibração", default: eq.pontos_calibracao },
+				{ fieldname: "criterios_aceitacao", fieldtype: "Small Text", label: "Critérios de Aceitação", default: eq.criterios_aceitacao }
 			],
 			primary_action_label: "Atualizar",
 			primary_action: function (values) {
@@ -204,14 +248,23 @@ function abrir_atualizacao_equipamento(frm) {
 					callback: function (r) {
 						d.hide();
 						var novo = r.message || values;
-						// Reflete os novos dados nos campos da OS
-						frm.set_value("serie_number", novo.numero_serie);
-						frm.set_value("equipment_description", novo.descricao);
-						frm.set_value("equipment_model", novo.modelo_equipamento);
-						frm.set_value("marca_equipamento", novo.marca_equipamento);
-						frm.set_value("equipment_tag", novo.tag);
-						frm.set_value("tipo_equipamento", novo.tipo_equipamento);
-						frm.set_value("capacidade_equipamento", novo.capacidade);
+						// Reflete os novos dados nos campos da OS (mesmo vazios)
+						var mapa = {
+							serie_number: novo.numero_serie,
+							equipment_description: novo.descricao,
+							equipment_model: novo.modelo_equipamento,
+							marca_equipamento: novo.marca_equipamento,
+							equipment_tag: novo.tag,
+							tipo_equipamento: novo.tipo_equipamento,
+							capacidade_equipamento: novo.capacidade,
+							pontos_calibracao: novo.pontos_calibracao,
+							grandeza: novo.grandeza
+						};
+						Object.keys(mapa).forEach(function (campo) {
+							if (frm.fields_dict[campo]) {
+								frm.set_value(campo, mapa[campo] || "");
+							}
+						});
 						frappe.show_alert("Equipamento atualizado. Salve a OS para gravar.");
 					}
 				});
