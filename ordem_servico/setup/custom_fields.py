@@ -13,6 +13,19 @@ CUSTOM_FIELDS = {
             "insert_after": "is_transporter",
         },
     ],
+    "Employee": [
+        {
+            "fieldname": "custom_escolaridade",
+            "fieldtype": "Select",
+            "label": "Escolaridade",
+            "options": (
+                "\nEnsino fundamental incompleto\nEnsino fundamental completo"
+                "\nEnsino médio incompleto\nEnsino médio completo"
+                "\nEnsino superior incompleto\nEnsino superior completo"
+            ),
+            "insert_after": "date_of_birth",
+        },
+    ],
 }
 
 
