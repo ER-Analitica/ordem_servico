@@ -396,7 +396,7 @@
    "fieldname": "custom_identificacao_dos_equipamentos",
    "fieldtype": "Select",
    "label": "Identificação do cliente",
-   "options": "Número de série\nTag\nMODELO"
+   "options": "Número de série\nTag\nModelo"
   },
   {
    "fieldname": "custom_quantidade_certificados",
@@ -611,7 +611,7 @@
   }
  ],
  "links": [],
- "modified": "2026-07-21 08:07:48.206893",
+ "modified": "2026-07-21 08:12:08.978783",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
