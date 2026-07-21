@@ -32,8 +32,6 @@
   "pontos_calibracao",
   "cb_1",
   "created_by",
-  "section1",
-  "pontos_cal_criterios",
   "final_schedule_section",
   "final_scheduled_to",
   "final_scheduled_to_name",
@@ -57,8 +55,9 @@
   "tempo_conserto",
   "data_cal",
   "data_cal_recomendada",
-  "data_emissao_certificado",
   "anexo_certificado",
+  "custom_identificacao_dos_equipamentos",
+  "custom_quantidade_certificados",
   "lacre_retirado",
   "lacre_afixado",
   "observacoes_ipem",
@@ -153,16 +152,16 @@
   {
    "fieldname": "identification_section",
    "fieldtype": "Section Break",
-   "label": "Identifica\u00e7\u00e3o"
+   "label": "Identificação"
   },
   {
    "bold": 1,
-   "default": "Em Or\u00e7amento",
+   "default": "Em Orçamento",
    "fieldname": "status_order_service",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Status Ordem de Servi\u00e7o",
-   "options": "\nEm Or\u00e7amento\nEm Aprova\u00e7\u00e3o\nEm Conserto\nEncerrada",
+   "label": "Status Ordem de Serviço",
+   "options": "\nEm Orçamento\nEm Aprovação\nEm Conserto\nEncerrada",
    "reqd": 1
   },
   {
@@ -172,7 +171,7 @@
   {
    "fieldname": "sales_order_reference",
    "fieldtype": "Link",
-   "label": "Pedido de Venda Refer\u00eancia",
+   "label": "Pedido de Venda Referência",
    "options": "Sales Order"
   },
   {
@@ -190,14 +189,14 @@
   {
    "fieldname": "informe_numero_serie",
    "fieldtype": "Link",
-   "label": "Digite o n\u00famero de s\u00e9rie do equipamento",
+   "label": "Digite o número de série do equipamento",
    "options": "Equipamentos"
   },
   {
    "fetch_from": "informe_numero_serie.numero_serie",
    "fieldname": "serie_number",
    "fieldtype": "Data",
-   "label": "N\u00famero de S\u00e9rie",
+   "label": "Número de Série",
    "options": "Equipamentos"
   },
   {
@@ -247,7 +246,7 @@
    "default": "user",
    "fieldname": "created_by",
    "fieldtype": "Read Only",
-   "label": "Respons\u00e1vel",
+   "label": "Responsável",
    "reqd": 1
   },
   {
@@ -308,7 +307,7 @@
   {
    "fieldname": "repair_time",
    "fieldtype": "Read Only",
-   "label": "Tempo de Servi\u00e7o"
+   "label": "Tempo de Serviço"
   },
   {
    "depends_on": "eval: !doc.repair_event_link",
@@ -319,7 +318,7 @@
   {
    "fieldname": "final_technical_report",
    "fieldtype": "Section Break",
-   "label": "Laudo T\u00e9cnico"
+   "label": "Laudo Técnico"
   },
   {
    "fieldname": "start_repair_time",
@@ -330,7 +329,7 @@
    "depends_on": "eval: !(doc.start_repair_time)",
    "fieldname": "start_repair",
    "fieldtype": "Button",
-   "label": "Iniciar Manuten\u00e7\u00e3o"
+   "label": "Iniciar Manutenção"
   },
   {
    "fieldname": "repaired_date",
@@ -342,7 +341,7 @@
    "fieldname": "repaired_by",
    "fieldtype": "Link",
    "hidden": 1,
-   "label": "Respons\u00e1vel T\u00e9cnico",
+   "label": "Responsável Técnico",
    "options": "Employee"
   },
   {
@@ -361,31 +360,31 @@
    "depends_on": "eval: (doc.start_repair_time && !doc.end_repair_time)",
    "fieldname": "end_repair",
    "fieldtype": "Button",
-   "label": "Finalizar Manuten\u00e7\u00e3o"
+   "label": "Finalizar Manutenção"
   },
   {
    "fieldname": "repaired_by_name2",
    "fieldtype": "Data",
-   "label": "Respons\u00e1vel T\u00e9cnico",
+   "label": "Responsável Técnico",
    "read_only": 1
   },
   {
    "fieldname": "tempo_conserto",
    "fieldtype": "Data",
-   "label": "Tempo para T\u00e9rmino de Conserto",
+   "label": "Tempo para Término de Conserto",
    "read_only": 1
   },
   {
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
    "fieldname": "data_cal",
    "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o"
+   "label": "Data da Calibração"
   },
   {
    "depends_on": "eval: doc.cal_rbc == 1 || doc.cal_rastreavel == 1",
    "fieldname": "data_cal_recomendada",
    "fieldtype": "Date",
-   "label": "Data da Calibra\u00e7\u00e3o Recomendada",
+   "label": "Data da Calibração Recomendada",
    "read_only": 1
   },
   {
@@ -394,10 +393,22 @@
    "label": "Anexar Certificado"
   },
   {
+   "fieldname": "custom_identificacao_dos_equipamentos",
+   "fieldtype": "Select",
+   "label": "Identificação do cliente",
+   "options": "Número de série\nTag\nMODELO"
+  },
+  {
+   "fieldname": "custom_quantidade_certificados",
+   "fieldtype": "Select",
+   "label": "Quantidade Certificados",
+   "options": "_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
+  },
+  {
    "fieldname": "repair_description",
    "fieldtype": "Small Text",
    "hidden": 1,
-   "label": "Servi\u00e7o Realizado"
+   "label": "Serviço Realizado"
   },
   {
    "fieldname": "cb_4",
@@ -407,74 +418,74 @@
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "serv_realizado",
    "fieldtype": "Heading",
-   "label": "Servi\u00e7o Realizado"
+   "label": "Serviço Realizado"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "cal_rbc",
    "fieldtype": "Check",
-   "label": "CALIBRA\u00c7\u00c3O RBC"
+   "label": "CALIBRAÇÃO RBC"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "cal_rastreavel",
    "fieldtype": "Check",
-   "label": "CALIBRA\u00c7\u00c3O RASTRE\u00c1VEL"
+   "label": "CALIBRAÇÃO RASTREÁVEL"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "manutencao_preventiva",
    "fieldtype": "Check",
-   "label": "MANUTEN\u00c7\u00c3O PREVENTIVA"
+   "label": "MANUTENÇÃO PREVENTIVA"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "manutencao_corretiva",
    "fieldtype": "Check",
-   "label": "MANUTEN\u00c7\u00c3O CORRETIVA"
+   "label": "MANUTENÇÃO CORRETIVA"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "troca_pecas",
    "fieldtype": "Check",
-   "label": "TROCA DE PE\u00c7AS"
+   "label": "TROCA DE PEÇAS"
   },
   {
    "depends_on": "eval: doc.troca_pecas",
    "fieldname": "quais_pecas",
    "fieldtype": "Small Text",
-   "label": "Quais pe\u00e7as?"
+   "label": "Quais peças?"
   },
   {
    "default": "0",
    "depends_on": "eval: doc.repaired_by_name",
    "fieldname": "qualificacao_temperatura",
    "fieldtype": "Check",
-   "label": "QUALIFICA\u00c7\u00c3O RBC EM TEMPERATURA"
+   "label": "QUALIFICAÇÃO RBC EM TEMPERATURA"
   },
   {
    "fieldname": "repair_observation",
    "fieldtype": "Text Editor",
-   "label": "Observa\u00e7\u00e3o"
+   "label": "Observação"
   },
   {
    "fieldname": "quotation_status",
    "fieldtype": "Select",
    "hidden": 1,
-   "label": "Status do Or\u00e7amento",
-   "options": "\nEm teste\nAguardando pe\u00e7a\nEnviado para Terceiros\nAguardando informa\u00e7\u00f5es do Fabricante\nConclu\u00eddo"
+   "label": "Status do Orçamento",
+   "options": "\nEm teste\nAguardando peça\nEnviado para Terceiros\nAguardando informações do Fabricante\nConcluído"
   },
   {
    "bold": 1,
    "fieldname": "repair_status",
    "fieldtype": "Select",
    "label": "Status do Conserto",
-   "options": "\nLiberado\nLiberado com Restri\u00e7\u00e3o\nN\u00e3o Liberado"
+   "options": "\nLiberado\nLiberado com Restrição\nNão Liberado"
   },
   {
    "fieldname": "defeito_constatado",
@@ -486,12 +497,12 @@
    "fieldname": "quotation_section",
    "fieldtype": "Section Break",
    "hidden": 1,
-   "label": "Or\u00e7amento"
+   "label": "Orçamento"
   },
   {
    "fieldname": "quotation_link",
    "fieldtype": "Link",
-   "label": "Documento de Or\u00e7amento",
+   "label": "Documento de Orçamento",
    "options": "Quotation"
   },
   {
@@ -506,28 +517,28 @@
    "hidden": 1
   },
   {
-   "default": "Laudo T\u00e9cnico",
+   "default": "Laudo Técnico",
    "fieldname": "select_print_heading",
    "fieldtype": "Link",
    "hidden": 1,
-   "label": "T\u00edtulo do Documento",
+   "label": "Título do Documento",
    "options": "Print Heading",
    "read_only": 1
   },
   {
    "fieldname": "historico_tab",
    "fieldtype": "Tab Break",
-   "label": "Hist\u00f3rico"
+   "label": "Histórico"
   },
   {
    "fieldname": "qh1",
    "fieldtype": "Section Break",
-   "label": "Hist\u00f3rico"
+   "label": "Histórico"
   },
   {
    "fieldname": "quotation_name",
    "fieldtype": "Link",
-   "label": "Or\u00e7amento",
+   "label": "Orçamento",
    "options": "Quotation",
    "read_only": 1
   },
@@ -552,7 +563,7 @@
   {
    "fieldname": "quotation_date",
    "fieldtype": "Read Only",
-   "label": "Data do Or\u00e7amento"
+   "label": "Data do Orçamento"
   },
   {
    "fieldname": "sales_order_date",
@@ -582,14 +593,14 @@
    "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
    "fieldname": "observacoes_ipem",
    "fieldtype": "Text",
-   "label": "Observa\u00e7\u00f5es IPEM"
+   "label": "Observações IPEM"
   },
   {
    "fetch_from": "informe_numero_serie.pontos_calibracao",
    "fetch_if_empty": 1,
    "fieldname": "pontos_calibracao",
    "fieldtype": "Text",
-   "label": "Pontos de Calibra\u00e7\u00e3o"
+   "label": "Pontos de Calibração"
   },
   {
    "fieldname": "id_criador_de_ordens_de_servico_em_lote",
@@ -597,25 +608,10 @@
    "label": "ID Criador de Ordens de Servico em Lote",
    "options": "Criador de Ordens de Servico em Lote",
    "read_only": 1
-  },
-  {
-   "fieldname": "pontos_cal_criterios",
-   "fieldtype": "Table",
-   "label": "Pontos de Calibra\u00e7\u00e3o e Crit\u00e9rios",
-   "options": "Pontos de Calibracao e Criterios"
-  },
-  {
-   "fieldname": "section1",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "data_emissao_certificado",
-   "fieldtype": "Date",
-   "label": "Data da Emiss\u00e3o do Certificado"
   }
  ],
  "links": [],
- "modified": "2026-03-04 15:18:48.315060",
+ "modified": "2026-07-21 08:07:48.206893",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
@@ -635,7 +631,6 @@
    "write": 1
   }
  ],
- "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
