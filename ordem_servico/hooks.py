@@ -252,7 +252,8 @@ doc_events = {
             "ordem_servico.doc_events.validacao_equipamento_ordem_servico.validacao_equipamento_ordem_servico",
             #calcular data da calibração recomendada com base da data da calibração na OS
             "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
-            #validacao_ipem removida — campos de lacre/IPEM ocultados
+            #valida lacre retirado/afixado quando balança com preventiva/corretiva
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
             "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
         ]
@@ -274,7 +275,8 @@ doc_events = {
             "ordem_servico.doc_events.obter_pedido_os_interna.obter_pedido_os_interna",
              #calcular data da calibração recomendada com base da data da calibração na OS
             "ordem_servico.doc_events.calcular_dt_cal_recomendada.calcular_dt_cal_recomendada",
-            #validacao_ipem removida — campos de lacre/IPEM ocultados
+            #valida lacre retirado/afixado quando balança com preventiva/corretiva
+            "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
             "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
         ],

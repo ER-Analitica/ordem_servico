@@ -24,9 +24,6 @@ def validacao_ipem(self, method):
         if not self.lacre_afixado:
             campos_faltantes.append("Lacre Afixado")
 
-        if not self.observacoes_ipem:
-            campos_faltantes.append("Observações IPEM")
-
         if campos_faltantes:
             mensagem = (
                 "Para prosseguir, preencha os seguintes campos obrigatórios relacionados ao IPEM:<br><br>"

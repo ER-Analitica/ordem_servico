@@ -189,7 +189,7 @@ function travar_campos_equipamento_os(frm) {
 }
 
 function ocultar_campos_ipem(frm) {
-	["lacre_retirado", "lacre_afixado", "observacoes_ipem"].forEach(function (campo) {
+	["observacoes_ipem"].forEach(function (campo) {
 		if (frm.fields_dict[campo]) {
 			frm.set_df_property(campo, "hidden", 1);
 		}
