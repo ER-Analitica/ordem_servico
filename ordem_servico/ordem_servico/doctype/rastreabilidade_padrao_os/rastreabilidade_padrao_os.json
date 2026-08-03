@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "creation": "2026-07-28 08:43:10.331210",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "codigo",
+  "descricao",
+  "certificado_padrao",
+  "validade",
+  "padrao",
+  "arquivo_padrao",
+  "status"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "codigo",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Código do Padrão",
+   "read_only": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "descricao",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Descrição",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "certificado_padrao",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Certificado do Padrão",
+   "read_only": 1
+  },
+  {
+   "fieldname": "validade",
+   "fieldtype": "Data",
+   "label": "Validade",
+   "read_only": 1
+  },
+  {
+   "fieldname": "padrao",
+   "fieldtype": "Link",
+   "label": "Registro do Padrão",
+   "options": "Padrao de Calibracao",
+   "read_only": 1
+  },
+  {
+   "fieldname": "arquivo_padrao",
+   "fieldtype": "Data",
+   "label": "Arquivo",
+   "options": "URL",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Vinculado\nValidade divergente\nValidade não lida\nValidade não cobre a data\nNão cadastrado",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-07-28 08:43:10.331210",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Rastreabilidade Padrao OS",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

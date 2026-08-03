@@ -122,6 +122,21 @@ frappe.ui.form.on(cur_frm.doctype, {
 				abrir_atualizacao_equipamento(frm);
 			});
 		}
+
+		if (frm.doc.anexo_certificado) {
+			frm.add_custom_button('Revincular padrões', () => {
+				revincular_padroes(frm);
+			});
+		}
+
+		var pendentes = (frm.doc.rastreabilidade_padroes || []).filter(function (r) {
+			return r.status !== "Vinculado" && r.status !== "Validade não cobre a data";
+		});
+		if (pendentes.length) {
+			frm.add_custom_button(`Cadastrar padrões pendentes (${pendentes.length})`, () => {
+				cadastrar_padroes_pendentes(frm);
+			});
+		}
 	},
 	informe_numero_serie(frm) {
 		espelhar_dados_equipamento(frm);
@@ -272,4 +287,116 @@ function abrir_atualizacao_equipamento(frm) {
 		});
 		d.show();
 	});
+}
+
+function revincular_padroes(frm) {
+	frappe.call({
+		method: "ordem_servico.doc_events.rastreabilidade_padroes.extrair_rastreabilidade",
+		args: { doctype: frm.doc.doctype, name: frm.doc.name },
+		freeze: true,
+		freeze_message: "Extraindo e revinculando padrões...",
+		callback: function (r) {
+			var res = r.message || {};
+			if (!res.ok) {
+				var motivos = {
+					sem_certificado: "Nenhum certificado anexado nesta OS.",
+					pdf_sem_texto: "O PDF do certificado não tem texto (parece escaneado). Reenvie a versão gerada do Excel."
+				};
+				frappe.msgprint({
+					title: "Não foi possível extrair",
+					indicator: "orange",
+					message: motivos[res.motivo] || "Não foi possível processar o certificado."
+				});
+				return;
+			}
+			var cor = res.alerta ? "orange" : "green";
+			var msg = `${res.padroes} padrão(ões) processado(s).`;
+			if (res.suspeitas > 0) {
+				msg += `<br>⚠️ ${res.suspeitas} linha(s) com cara de padrão mas sem código detectado.`;
+			}
+
+			var pendentes = res.pendentes || [];
+			if (pendentes.length) {
+				var lista = pendentes.map(function (p) {
+					return `• <b>${p.codigo}</b> (validade ${frappe.datetime.str_to_user(p.validade) || '—'}) — ${p.status}`;
+				}).join("<br>");
+				msg += "<br><br>⚠️ <b>Padrões pendentes de cadastro:</b><br>" + lista +
+					"<br><br>Use o botão <b>Cadastrar padrões pendentes</b> no topo da OS.";
+			}
+
+			frappe.msgprint({ title: "Rastreabilidade dos padrões", indicator: cor, message: msg });
+			frm.reload_doc();
+		}
+	});
+}
+
+function cadastrar_padroes_pendentes(frm) {
+	var pendentes = (frm.doc.rastreabilidade_padroes || []).filter(function (r) {
+		return r.status !== "Vinculado" && r.status !== "Validade não cobre a data";
+	});
+
+	if (!pendentes.length) {
+		frappe.msgprint("Nenhum padrão pendente de cadastro nesta OS.");
+		return;
+	}
+
+	_abrir_cadastro_pendente(frm, pendentes, 0);
+}
+
+function _abrir_cadastro_pendente(frm, pendentes, indice) {
+    if (indice >= pendentes.length) {
+        frappe.show_alert({ message: "Padrões pendentes processados.", indicator: "green" });
+        frm.reload_doc();
+        return;
+    }
+
+    var p = pendentes[indice];
+    var restantes = pendentes.length - indice;
+
+    var d = new frappe.ui.Dialog({
+        title: `Cadastrar padrão ${p.codigo} (${restantes} pendente(s))`,
+        fields: [
+            {
+                fieldtype: "HTML",
+                options: `<div style="margin-bottom:10px;color:#6c757d;">
+                    Dados extraídos do certificado — confira e anexe o arquivo do padrão.
+                    <br>Motivo: <b>${p.status}</b></div>`
+            },
+            { fieldname: "codigo", fieldtype: "Data", label: "Código do Padrão", default: p.codigo, reqd: 1 },
+            { fieldname: "descricao", fieldtype: "Data", label: "Descrição", default: p.descricao || "" },
+            { fieldname: "validade", fieldtype: "Date", label: "Validade da Calibração", default: p.validade, reqd: 1 },
+            { fieldname: "arquivo", fieldtype: "Attach", label: "Arquivo do Padrão (PDF)", reqd: 1 }
+        ],
+        primary_action_label: "Cadastrar e vincular",
+        primary_action: function (values) {
+            frappe.call({
+                method: "ordem_servico.doc_events.rastreabilidade_padroes.cadastrar_padrao_e_revincular",
+                args: {
+                    doctype: frm.doc.doctype,
+                    name: frm.doc.name,
+                    codigo: values.codigo,
+                    descricao: values.descricao,
+                    validade: values.validade,
+                    arquivo: values.arquivo
+                },
+                freeze: true,
+                freeze_message: "Cadastrando padrão e revinculando...",
+                callback: function (r) {
+                    var res = r.message || {};
+                    frappe.show_alert({
+                        message: `✅ ${values.codigo} cadastrado como ${res.padrao}`,
+                        indicator: "green"
+                    });
+                    d.hide();
+                    _abrir_cadastro_pendente(frm, pendentes, indice + 1);
+                }
+            });
+        },
+        secondary_action_label: "Pular",
+        secondary_action: function () {
+            d.hide();
+            _abrir_cadastro_pendente(frm, pendentes, indice + 1);
+        }
+    });
+    d.show();
 }

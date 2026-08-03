@@ -22,6 +22,7 @@ app_license = "MIT"
 app_include_js = [
     "/assets/ordem_servico/js/email_template_handler.js",
     "/assets/ordem_servico/js/equipamentos_quick_entry.js",
+    "/assets/ordem_servico/js/alerta_rastreabilidade.js",
 ]
 
 # include js, css files in header of web template
@@ -51,8 +52,20 @@ doctype_js = {
     "Sales Order": "public/js/sales_order.js",
     "Delivery Note": "public/js/delivery_note.js"
 }
+# Nome amigável para o PDF anexado nos e-mails (em vez do ID do documento)
+override_doctype_class = {
+    "Communication": "ordem_servico.overrides.communication.OrdemServicoCommunication",
+}
+
+# Mesmo nome amigável no download do PDF
+override_whitelisted_methods = {
+    "frappe.utils.print_format.download_pdf": "ordem_servico.overrides.print_format.download_pdf",
+}
+
 doctype_list_js = {
-    "Ordem Servico Externa": "public/js/importar_certificados_os_externa.js",
+    "Ordem Servico Externa": "public/js/importar_certificados.js",
+    "Ordem Servico Interna": "public/js/importar_certificados.js",
+    "Padrao de Calibracao": "public/js/importar_padroes.js",
 }
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -208,6 +221,10 @@ doc_events = {
         "on_submit": [
             "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
             "ordem_servico.doc_events.vincular_oportunidade_quotation.on_submit",
+        ],
+        "on_cancel": [
+            #Reprovar o orçamento leva a OS de origem para "Reprovado"
+            "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_cancel",
         ]
     },
     
@@ -255,7 +272,13 @@ doc_events = {
             #valida lacre retirado/afixado quando balança com preventiva/corretiva
             "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
-            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
+            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os",
+            #Grava o e-mail do técnico ao finalizar o conserto
+            "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
+        ],
+        "on_update": [
+            #Repovoa a rastreabilidade dos padrões se a tabela ficou vazia
+            "ordem_servico.doc_events.rastreabilidade_padroes.on_update"
         ]
     },
     "Equipamentos": {
@@ -278,10 +301,16 @@ doc_events = {
             #valida lacre retirado/afixado quando balança com preventiva/corretiva
             "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
-            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os"
+            "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os",
+            #Grava o e-mail do técnico ao finalizar o conserto
+            "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],
         "before_save":[
             "ordem_servico.doc_events.pre_orcamento_status_em_conserto.before_save"
+        ],
+        "on_update": [
+            #Repovoa a rastreabilidade dos padrões se a tabela ficou vazia
+            "ordem_servico.doc_events.rastreabilidade_padroes.on_update"
         ]
    },
 

@@ -1,0 +1,92 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-07-29 09:34:20.249978",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "codigo",
+  "descricao",
+  "column_break_dados",
+  "validade",
+  "section_arquivo",
+  "arquivo"
+ ],
+ "fields": [
+  {
+   "default": "PAD-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "PAD-"
+  },
+  {
+   "bold": 1,
+   "fieldname": "codigo",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Código do Padrão",
+   "reqd": 1
+  },
+  {
+   "fieldname": "descricao",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Descrição"
+  },
+  {
+   "fieldname": "column_break_dados",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "validade",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Validade da Calibração",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_arquivo",
+   "fieldtype": "Section Break",
+   "label": "Arquivo"
+  },
+  {
+   "fieldname": "arquivo",
+   "fieldtype": "Attach",
+   "label": "Arquivo (PDF)",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-29 09:34:20.249978",
+ "modified_by": "Administrator",
+ "module": "Ordem Servico",
+ "name": "Padrao de Calibracao",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

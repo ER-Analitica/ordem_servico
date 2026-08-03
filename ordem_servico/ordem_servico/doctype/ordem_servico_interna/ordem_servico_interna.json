@@ -138,6 +138,7 @@
   "end_repair_time",
   "end_repair",
   "repaired_by_name2",
+  "repaired_by_email",
   "tempo_conserto",
   "data_cal",
   "data_cal_recomendada",
@@ -158,6 +159,9 @@
   "qualificacao_temperatura",
   "repair_observation",
   "repair_status",
+  "section_rastreabilidade",
+  "rastreabilidade_alerta",
+  "rastreabilidade_padroes",
   "hist\u00f3rico_tab",
   "history_section",
   "tempo_inicio_recebimento",
@@ -722,6 +726,13 @@
    "read_only": 1
   },
   {
+   "fieldname": "repaired_by_email",
+   "fieldtype": "Data",
+   "label": "E-mail do Respons\u00e1vel T\u00e9cnico",
+   "options": "Email",
+   "read_only": 1
+  },
+  {
    "fieldname": "tempo_conserto",
    "fieldtype": "Data",
    "label": "Tempo para T\u00e9rmino de Conserto",
@@ -1203,10 +1214,27 @@
    "fieldtype": "Select",
    "label": "Quantidade Certificados",
    "options": "_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
+  },
+  {
+   "default": "0",
+   "fieldname": "rastreabilidade_alerta",
+   "fieldtype": "Check",
+   "label": "Alerta de Rastreabilidade",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_rastreabilidade",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "rastreabilidade_padroes",
+   "fieldtype": "Table",
+   "label": "Rastreabilidade dos Padrões",
+   "options": "Rastreabilidade Padrao OS"
   }
  ],
  "links": [],
- "modified": "2026-06-17 11:25:53.850407",
+ "modified": "2026-07-28 08:43:10.331210",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
