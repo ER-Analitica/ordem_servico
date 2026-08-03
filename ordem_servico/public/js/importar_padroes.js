@@ -11,6 +11,12 @@ frappe.listview_settings['Padrao de Calibracao'] = {
         return [__('Vigente'), 'green', 'validade,>,Today'];
     },
     onload: function (listview) {
+        listview.page.add_inner_button('Manual', function () {
+            if (ordem_servico && ordem_servico.manual) {
+                ordem_servico.manual.abrir();
+            }
+        });
+
         listview.page.add_inner_button('Padrões vencendo', function () {
             frappe.call({
                 method: 'ordem_servico.ordem_servico.doctype.padrao_de_calibracao.padrao_de_calibracao.padroes_vencendo',

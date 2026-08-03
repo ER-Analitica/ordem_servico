@@ -23,6 +23,7 @@ app_include_js = [
     "/assets/ordem_servico/js/email_template_handler.js",
     "/assets/ordem_servico/js/equipamentos_quick_entry.js",
     "/assets/ordem_servico/js/alerta_rastreabilidade.js",
+    "/assets/ordem_servico/js/manual_rastreabilidade.js",
 ]
 
 # include js, css files in header of web template
