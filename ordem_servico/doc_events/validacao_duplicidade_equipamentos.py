@@ -41,23 +41,33 @@ def serie_e_generica(serie_normalizada):
 def buscar_similares(customer, numero_serie="", tag="", descricao="",
                      modelo="", marca="", ignorar=None):
     """Retorna equipamentos possivelmente duplicados, cada um com:
-    nivel = "bloqueio" (duplicata certa) ou "aviso" (parecido, revisar)."""
+    nivel = "bloqueio" (duplicata certa) ou "aviso" (parecido, revisar).
+
+    Bloqueia quando a série já existe no cliente e o MODELO **ou** a MARCA
+    coincidem — os dois são informações casadas, então um já caracteriza.
+
+    A tag não entra em nenhum momento: as empresas repetem tag com frequência
+    (inclusive preenchendo com "Não Especificado"), então tag repetida é
+    situação normal e nunca deve alterar o resultado.
+
+    O nome do equipamento também fica de fora: seria mais um campo podendo
+    divergir e enfraquecer um bloqueio legítimo.
+    """
     serie = normalizar(numero_serie)
-    tag_n = normalizar(tag)
     serie_real = not serie_e_generica(serie)
 
-    condicao_cliente = "customer = %(customer)s"
-    if serie_real:
-        # Inclui outros clientes com a mesma série real
-        condicao_cliente = "(customer = %(customer)s OR UPPER(TRIM(numero_serie)) = %(serie)s)"
+    # Sem número de série real não há como afirmar nada: nenhum alerta.
+    if not serie_real:
+        return []
 
     candidatos = frappe.db.sql(
         """
         SELECT name, customer, numero_serie, tag, descricao,
                modelo_equipamento, marca_equipamento
         FROM `tabEquipamentos`
-        WHERE name != %(ignorar)s AND {}
-        """.format(condicao_cliente),
+        WHERE name != %(ignorar)s
+          AND (customer = %(customer)s OR UPPER(TRIM(numero_serie)) = %(serie)s)
+        """,
         {"ignorar": ignorar or "", "customer": customer, "serie": serie},
         as_dict=True,
     )
@@ -66,58 +76,47 @@ def buscar_similares(customer, numero_serie="", tag="", descricao="",
 
     for cand in candidatos:
         cand_serie = normalizar(cand.numero_serie)
-        cand_serie_real = not serie_e_generica(cand_serie)
+        if serie_e_generica(cand_serie) or cand_serie != serie:
+            continue  # só interessa quem tem a MESMA série real
+
         mesmo_cliente = cand.customer == customer
-        mesma_serie_real = serie_real and cand_serie_real and cand_serie == serie
-        mesmo_conjunto = (
-            cand.descricao == descricao
-            and cand.modelo_equipamento == modelo
-            and cand.marca_equipamento == marca
-        )
+        # Modelo e marca são informações casadas (um modelo pertence a uma
+        # marca), então basta UM deles bater junto com a série para
+        # caracterizar o mesmo equipamento. Campo vazio nunca conta como
+        # coincidência.
+        mesmo_modelo = bool(modelo) and cand.modelo_equipamento == modelo
+        mesma_marca = bool(marca) and cand.marca_equipamento == marca
+        modelo_ou_marca = mesmo_modelo or mesma_marca
 
-        mesma_tag = normalizar(cand.tag) == tag_n
-
-        nivel = None
-        motivo = ""
-
-        if mesmo_cliente and mesma_serie_real and mesmo_conjunto and mesma_tag:
-            nivel = "bloqueio"
-            motivo = "Mesma série, mesmo equipamento, modelo, marca e tag — é o mesmo equipamento."
-        elif mesmo_cliente and mesma_serie_real and mesmo_conjunto:
-            nivel = "aviso"
-            motivo = ("Mesma série, equipamento, modelo e marca, porém tag diferente. "
-                      "Verifique se é o mesmo equipamento antes de salvar.")
-        elif mesmo_cliente and mesma_serie_real:
-            nivel = "aviso"
-            motivo = ("Mesma série neste cliente, porém equipamento/modelo/marca diferentes. "
-                      "Confirme se são equipamentos distintos de fabricantes diferentes.")
-        elif (mesmo_cliente and not serie_real and not cand_serie_real
-              and mesmo_conjunto and normalizar(cand.tag) == tag_n):
-            nivel = "bloqueio"
-            motivo = "Idêntico em tudo (equipamento, modelo, marca e tag), ambos sem série real."
-        elif mesmo_cliente and mesmo_conjunto and not (serie_real and cand_serie_real):
-            nivel = "aviso"
-            motivo = "Mesmo equipamento, modelo e marca — sem série para diferenciar."
-        elif mesmo_cliente and tag_n and normalizar(cand.tag) == tag_n:
-            nivel = "aviso"
-            motivo = "A tag já está em uso em outro equipamento deste cliente."
-        elif not mesmo_cliente and mesma_serie_real:
+        if not mesmo_cliente:
             nivel = "aviso"
             motivo = ("Mesma série cadastrada para o cliente <b>{}</b>. "
                       "Verifique se o cliente selecionado está correto.".format(cand.customer))
+        elif modelo_ou_marca:
+            nivel = "bloqueio"
+            if mesmo_modelo and mesma_marca:
+                coincidencia = "mesmo modelo e mesma marca"
+            elif mesmo_modelo:
+                coincidencia = "mesmo modelo"
+            else:
+                coincidencia = "mesma marca"
+            motivo = "Mesma série e {} — é o mesmo equipamento.".format(coincidencia)
+        else:
+            nivel = "aviso"
+            motivo = ("Mesma série neste cliente, porém modelo e marca diferentes. "
+                      "Confirme se são equipamentos distintos de fabricantes diferentes.")
 
-        if nivel:
-            resultados.append({
-                "name": cand.name,
-                "customer": cand.customer,
-                "numero_serie": cand.numero_serie,
-                "tag": cand.tag,
-                "descricao": cand.descricao,
-                "modelo_equipamento": cand.modelo_equipamento,
-                "marca_equipamento": cand.marca_equipamento,
-                "nivel": nivel,
-                "motivo": motivo,
-            })
+        resultados.append({
+            "name": cand.name,
+            "customer": cand.customer,
+            "numero_serie": cand.numero_serie,
+            "tag": cand.tag,
+            "descricao": cand.descricao,
+            "modelo_equipamento": cand.modelo_equipamento,
+            "marca_equipamento": cand.marca_equipamento,
+            "nivel": nivel,
+            "motivo": motivo,
+        })
 
     # Bloqueios primeiro, limita avisos para não poluir a tela
     resultados.sort(key=lambda r: 0 if r["nivel"] == "bloqueio" else 1)
@@ -206,16 +205,15 @@ def validar_equipamento_os(doc, method=None):
         return
 
     serie = normalizar(doc.get("serie_number"))
-    tag = normalizar(doc.get("equipment_tag"))
-    descricao = normalizar(doc.get("equipment_description"))
-    modelo = normalizar(doc.get("equipment_model"))
 
-    if not (serie or tag or (descricao and modelo)):
+    # Mesma regra do cadastro: só o número de série indica duplicidade.
+    # Tag e modelo repetem legitimamente entre equipamentos.
+    if not serie or serie_e_generica(serie):
         return
 
     equipamentos = frappe.db.sql(
         """
-        SELECT name, numero_serie, tag, descricao, modelo_equipamento, marca_equipamento
+        SELECT name, numero_serie
         FROM `tabEquipamentos`
         WHERE customer = %(customer)s
         """,
@@ -226,38 +224,17 @@ def validar_equipamento_os(doc, method=None):
     avisos = []
 
     for eq in equipamentos:
+        if normalizar(eq.numero_serie) != serie:
+            continue
+
         link = get_link_to_form("Equipamentos", eq.name)
-
-        if serie and not serie_e_generica(serie) and normalizar(eq.numero_serie) == serie:
-            avisos.append(
-                "O número de série <b>{}</b> já possui cadastro: {}. "
-                "Vincule o cadastro no campo 'Digite o número de série do "
-                "equipamento' em vez de digitar manualmente.".format(
-                    doc.get("serie_number"), link
-                )
+        avisos.append(
+            "O número de série <b>{}</b> já possui cadastro: {}. "
+            "Vincule o cadastro no campo 'Digite o número de série do "
+            "equipamento' em vez de digitar manualmente.".format(
+                doc.get("serie_number"), link
             )
-            continue
-
-        if tag and normalizar(eq.tag) == tag:
-            avisos.append(
-                "A tag <b>{}</b> já possui cadastro: {} (Série: {}). "
-                "Verifique se não é o mesmo equipamento.".format(
-                    doc.get("equipment_tag"), link, eq.numero_serie or "—"
-                )
-            )
-            continue
-
-        if (
-            descricao and modelo
-            and normalizar(eq.descricao) == descricao
-            and normalizar(eq.modelo_equipamento) == modelo
-        ):
-            avisos.append(
-                "Equipamento parecido já cadastrado para este cliente: {} "
-                "(Série: {} | Tag: {}).".format(
-                    link, eq.numero_serie or "—", eq.tag or "—"
-                )
-            )
+        )
 
     if avisos:
         frappe.msgprint(
