@@ -67,7 +67,9 @@ class OrdemServicoInterna(Document):
 		elif self.sem_conserto == 1:
 			self.quotation_status = "Concluído"
 			self.status_order_service = "Embalar"
-		if self.have_quotation == 1:
+		# Pré-orçamento já fechado: pelo Pedido de Venda (fluxo atual) ou pelo
+		# Orçamento (fluxo antigo, mantido para as OS já existentes).
+		if self.have_quotation == 1 or self.get("possui_pedido_venda") == 1:
 			self.quotation_status = "Concluído"
 		#if self.status_order_service == "Embalar":
 			#self.status_faturamento = "Entregar"

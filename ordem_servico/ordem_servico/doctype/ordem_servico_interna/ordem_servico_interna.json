@@ -92,6 +92,8 @@
   "link_agendamento_tecnico",
   "quotation_event_link",
   "section_break_46",
+  "possui_pedido_venda",
+  "has_sales_order_link",
   "have_quotation",
   "has_quotation_link",
   "quotation_link",
@@ -162,6 +164,15 @@
   "section_rastreabilidade",
   "rastreabilidade_alerta",
   "rastreabilidade_padroes",
+  "analise_comercial_tab",
+  "aviso_analise_comercial",
+  "data_limite_de_faturamento",
+  "tipo_de_faturamento",
+  "faturamento_parcial",
+  "cb_analise_comercial",
+  "confirmacao_do_cliente",
+  "tipo_confirmacao",
+  "confirmacao",
   "hist\u00f3rico_tab",
   "history_section",
   "tempo_inicio_recebimento",
@@ -178,7 +189,9 @@
   "sales_order_date",
   "delivery_note_date",
   "invoice_date",
-  "payment_entry_date"
+  "payment_entry_date",
+  "sec_obs_historico",
+  "obs_historico"
  ],
  "fields": [
   {
@@ -487,16 +500,32 @@
   },
   {
    "default": "0",
+   "fieldname": "possui_pedido_venda",
+   "fieldtype": "Check",
+   "label": "Possui Pedido de Venda"
+  },
+  {
+   "depends_on": "eval: doc.possui_pedido_venda",
+   "fieldname": "has_sales_order_link",
+   "fieldtype": "Link",
+   "label": "Pedido de Venda",
+   "options": "Sales Order"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.have_quotation",
+   "description": "Campo hist\u00f3rico \u2014 as OS criadas a partir de agora usam o Pedido de Venda.",
    "fieldname": "have_quotation",
    "fieldtype": "Check",
    "label": "Possui Or\u00e7amento"
   },
   {
-   "depends_on": "eval: doc.have_quotation",
+   "depends_on": "eval: doc.has_quotation_link",
    "fieldname": "has_quotation_link",
    "fieldtype": "Link",
    "label": "Or\u00e7amento",
-   "options": "Quotation"
+   "options": "Quotation",
+   "read_only": 1
   },
   {
    "fieldname": "quotation_link",
@@ -506,7 +535,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: doc.quotation_event_link && !doc.has_quotation_link && !doc.have_quotation",
+   "depends_on": "eval: doc.quotation_event_link && !doc.has_quotation_link && !doc.have_quotation && !doc.possui_pedido_venda",
    "fieldname": "quotation_technical_report",
    "fieldtype": "Section Break",
    "label": "Laudo T\u00e9cnico Inicial"
@@ -593,7 +622,7 @@
   },
   {
    "bold": 1,
-   "depends_on": "eval: !doc.quotation_name && !doc.have_quotation && doc.sem_conserto == 0",
+   "depends_on": "eval: !doc.quotation_name && !doc.have_quotation && !doc.possui_pedido_venda && doc.sem_conserto == 0",
    "fieldname": "create_quotation",
    "fieldtype": "Button",
    "label": "Gerar Or\u00e7amento"
@@ -605,7 +634,7 @@
    "options": "\nEm teste\nAguardando pe\u00e7a\nEnviado para Terceiros\nAguardando informa\u00e7\u00f5es do Fabricante\nConclu\u00eddo"
   },
   {
-   "depends_on": "eval: doc.quotation_name || doc.tempo_orcamento || doc.have_quotation",
+   "depends_on": "eval: doc.quotation_name || doc.tempo_orcamento || doc.have_quotation || doc.possui_pedido_venda",
    "fieldname": "final_schedule_section",
    "fieldtype": "Section Break",
    "label": "Agendamento Final"
@@ -937,6 +966,16 @@
    "label": "Data do Pagamento"
   },
   {
+   "fieldname": "sec_obs_historico",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "obs_historico",
+   "fieldtype": "Small Text",
+   "label": "Observacao",
+   "read_only": 1
+  },
+  {
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
@@ -1229,12 +1268,70 @@
   {
    "fieldname": "rastreabilidade_padroes",
    "fieldtype": "Table",
-   "label": "Rastreabilidade dos Padrões",
+   "label": "Rastreabilidade dos Padr\u00f5es",
    "options": "Rastreabilidade Padrao OS"
+  },
+  {
+   "fieldname": "analise_comercial_tab",
+   "fieldtype": "Tab Break",
+   "label": "An\u00e1lise Comercial"
+  },
+  {
+   "fieldname": "aviso_analise_comercial",
+   "fieldtype": "HTML",
+   "label": "Aviso Analise Comercial",
+   "options": "<div style=\"padding:8px 12px;border-left:3px solid #b0b4bb;background:#f4f5f6;border-radius:4px;font-size:12px;color:#4c5257\">Estes campos s&atilde;o um espelho do <b>Pedido de Venda do Hist&oacute;rico</b> e n&atilde;o podem ser editados aqui &mdash; para alterar, edite o pedido.<br>Se o pedido for cancelado, o Hist&oacute;rico passa a apontar para a retifica&ccedil;&atilde;o. N&atilde;o havendo retifica&ccedil;&atilde;o, o pedido cancelado &eacute; mantido e uma observa&ccedil;&atilde;o aparece no Hist&oacute;rico.</div>"
+  },
+  {
+   "description": "*A data limite de faturamento refere-se ao \u00faltimo dia do m\u00eas em que o cliente aceita o faturamento de notas de servi\u00e7o e venda. Por padr\u00e3o, ap\u00f3s a data indicada, o faturamento \u00e9 liberado a partir do primeiro dia do m\u00eas subsequente.",
+   "fieldname": "data_limite_de_faturamento",
+   "fieldtype": "Data",
+   "label": "Data Limite de Faturamento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tipo_de_faturamento",
+   "fieldtype": "Select",
+   "label": "Tipo de Faturamento",
+   "options": "\nServi\u00e7o\nVenda\nServi\u00e7o e Venda",
+   "read_only": 1
+  },
+  {
+   "fieldname": "faturamento_parcial",
+   "fieldtype": "Select",
+   "label": "Faturamento Parcial",
+   "options": "\nSIM\nN\u00c3O",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_analise_comercial",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "confirmacao_do_cliente",
+   "fieldtype": "Select",
+   "label": "Confirma\u00e7\u00e3o do Cliente",
+   "options": "\nSIM\nN\u00c3O",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.confirmacao_do_cliente == 'SIM'",
+   "fieldname": "tipo_confirmacao",
+   "fieldtype": "Link",
+   "label": "Tipo",
+   "options": "Tipo de Confirmacao Cliente",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.confirmacao_do_cliente == 'SIM'",
+   "fieldname": "confirmacao",
+   "fieldtype": "Data",
+   "label": "Confirma\u00e7\u00e3o",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2026-07-28 08:43:10.331210",
+ "modified": "2026-08-10 11:00:00.000000",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",

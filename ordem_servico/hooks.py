@@ -24,6 +24,7 @@ app_include_js = [
     "/assets/ordem_servico/js/equipamentos_quick_entry.js",
     "/assets/ordem_servico/js/alerta_rastreabilidade.js",
     "/assets/ordem_servico/js/manual_rastreabilidade.js",
+    "/assets/ordem_servico/js/itens_pedido_venda.js",
 ]
 
 # include js, css files in header of web template
@@ -222,10 +223,14 @@ doc_events = {
         "on_submit": [
             "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
             "ordem_servico.doc_events.vincular_oportunidade_quotation.on_submit",
+            #Retificação: o orçamento novo assume o Histórico das OS da cadeia
+            "ordem_servico.doc_events.historico_pedido.sincronizar_orcamento",
         ],
         "on_cancel": [
             #Reprovar o orçamento leva a OS de origem para "Reprovado"
             "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_cancel",
+            #Sai do Histórico das OS; sem retificação, fica em branco
+            "ordem_servico.doc_events.historico_pedido.sincronizar_orcamento",
         ]
     },
     
@@ -253,17 +258,38 @@ doc_events = {
         "validate":[
              "ordem_servico.doc_events.analise_critica_customer.pegar_valor_cliente",
         ],
+        "on_update": [
+            #Propaga a Análise Comercial para as OS vinculadas ao pedido
+            "ordem_servico.doc_events.analise_comercial_os.propagar_do_pedido",
+        ],
+        #Pedido já enviado dispara update_after_submit, não on_update
+        "on_update_after_submit": [
+            "ordem_servico.doc_events.analise_comercial_os.propagar_do_pedido",
+        ],
+        "before_submit": [
+            #Bloqueia o envio enquanto o orçamento de origem não for aprovado
+            "ordem_servico.doc_events.validar_orcamento_aprovado.exigir_orcamento_aprovado",
+        ],
         "on_submit": [
             "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
             "ordem_servico.doc_events.obter_pedido_os_interna_atraves_da_so.obter_pedido_os_interna_atraves_da_so",
-            "ordem_servico.doc_events.obter_pedido_os_externa_atraves_da_so.obter_pedido_os_externa_atraves_da_so"
+            "ordem_servico.doc_events.obter_pedido_os_externa_atraves_da_so.obter_pedido_os_externa_atraves_da_so",
+            #Retificação: o pedido novo assume o Histórico das OS da cadeia
+            "ordem_servico.doc_events.historico_pedido.sincronizar_pedido",
         ],
-        
+        "on_cancel": [
+            #Sai do Histórico das OS; se não houver retificação, o Histórico
+            #e a Análise Comercial ficam em branco
+            "ordem_servico.doc_events.historico_pedido.sincronizar_pedido",
+        ],
+
     },
     #SE SUBIR ALGO PARA A PRODUÇÃO RELACIONADO A OS INTERNA, COMENTAR LINHAS QUE ESTÃO EM DESENVOLVIMENTO
     "Ordem Servico Externa":{
         "validate":[
-            "ordem_servico.doc_events.criando_os_externa_avulsa.validate",
+            #Histórico (pedido, orçamento e datas) + Análise Comercial, a partir
+            #do Pedido de Venda Referência — seguindo retificações
+            "ordem_servico.doc_events.historico_pedido.aplicar_na_os",
             #verifica se o campo data_cal está preenchido caso a os for uma calibração
             "ordem_servico.doc_events.validacao_data_cal_os_externa.validate",
             #Verifica se o número de série do equipamento é vinculado ao cliente
@@ -303,6 +329,9 @@ doc_events = {
             "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
             "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os",
+            #Histórico (pedido, orçamento e datas) + Análise Comercial, a partir
+            #do Possui Pedido de Venda — seguindo retificações
+            "ordem_servico.doc_events.historico_pedido.aplicar_na_os",
             #Grava o e-mail do técnico ao finalizar o conserto
             "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],

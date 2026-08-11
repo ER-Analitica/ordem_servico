@@ -51,6 +51,8 @@
   "schedule_quotation_event",
   "quotation_event_link",
   "section_break_46",
+  "possui_pedido_venda",
+  "has_sales_order_link",
   "possui_orcamento",
   "orcamento",
   "os_items",
@@ -146,15 +148,17 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_orcamento == 1",
+   "depends_on": "eval: doc.orcamento",
    "fieldname": "orcamento",
    "fieldtype": "Link",
    "label": "Orçamento",
-   "options": "Quotation"
+   "options": "Quotation",
+   "read_only": 1
   },
   {
    "default": "0",
-   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "depends_on": "eval: doc.possui_orcamento",
+   "description": "Campo histórico — os lotes criados a partir de agora usam o Pedido de Venda.",
    "fieldname": "possui_orcamento",
    "fieldtype": "Check",
    "label": "Possui Orçamento?"
@@ -330,7 +334,7 @@
    "label": "Agendamento/Laudo Final"
   },
   {
-   "depends_on": "eval: doc.orcamento || doc.tempo_orcamento || doc.possui_orcamento",
+   "depends_on": "eval: doc.orcamento || doc.tempo_orcamento || doc.possui_orcamento || doc.possui_pedido_venda",
    "fieldname": "final_schedule_section",
    "fieldtype": "Section Break",
    "label": "Agendamento Final"
@@ -595,12 +599,26 @@
    "fieldname": "id_cliente",
    "fieldtype": "Data",
    "label": "ID do Cliente"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna'",
+   "fieldname": "possui_pedido_venda",
+   "fieldtype": "Check",
+   "label": "Possui Pedido de Venda"
+  },
+  {
+   "depends_on": "eval: doc.ordem_servico == 'Ordem Servico Interna' && doc.possui_pedido_venda == 1",
+   "fieldname": "has_sales_order_link",
+   "fieldtype": "Link",
+   "label": "Pedido de Venda",
+   "options": "Sales Order"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-12 08:16:02.376967",
+ "modified": "2026-08-07 10:30:59.559632",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Criador de Ordens de Servico em Lote",

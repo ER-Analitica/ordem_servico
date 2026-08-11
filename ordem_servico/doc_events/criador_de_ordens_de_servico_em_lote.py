@@ -169,6 +169,10 @@ def before_submit(doc, method):
                     os.email_automatico = doc.email_automatico
                     os.equipment_location = doc.loc_equip
                     os.contact_link = doc.contato
+                    # Fluxo atual: Pedido de Venda
+                    os.has_sales_order_link = doc.has_sales_order_link
+                    os.possui_pedido_venda = doc.possui_pedido_venda
+                    # Fluxo antigo: mantido para lotes que ainda usam orçamento
                     os.has_quotation_link = doc.orcamento
                     os.have_quotation = doc.possui_orcamento
                     os.status_order_service = doc.status_order_service_interna

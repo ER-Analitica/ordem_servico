@@ -84,6 +84,15 @@
   "valor",
   "peso",
   "select_print_heading",
+  "analise_comercial_tab",
+  "aviso_analise_comercial",
+  "data_limite_de_faturamento",
+  "tipo_de_faturamento",
+  "faturamento_parcial",
+  "cb_analise_comercial",
+  "confirmacao_do_cliente",
+  "tipo_confirmacao",
+  "confirmacao",
   "historico_tab",
   "qh1",
   "quotation_name",
@@ -92,7 +101,9 @@
   "qc_1",
   "quotation_date",
   "sales_order_date",
-  "invoice_date"
+  "invoice_date",
+  "sec_obs_historico",
+  "obs_historico"
  ],
  "fields": [
   {
@@ -604,6 +615,16 @@
    "label": "Data da Fatura"
   },
   {
+   "fieldname": "sec_obs_historico",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "obs_historico",
+   "fieldtype": "Small Text",
+   "label": "Observacao",
+   "read_only": 1
+  },
+  {
    "depends_on": "eval: doc.manutencao_preventiva == 1 || doc.manutencao_corretiva == 1",
    "fieldname": "lacre_retirado",
    "fieldtype": "Text",
@@ -636,10 +657,68 @@
    "label": "ID Criador de Ordens de Servico em Lote",
    "options": "Criador de Ordens de Servico em Lote",
    "read_only": 1
+  },
+  {
+   "fieldname": "analise_comercial_tab",
+   "fieldtype": "Tab Break",
+   "label": "Análise Comercial"
+  },
+  {
+   "fieldname": "aviso_analise_comercial",
+   "fieldtype": "HTML",
+   "label": "Aviso Analise Comercial",
+   "options": "<div style=\"padding:8px 12px;border-left:3px solid #b0b4bb;background:#f4f5f6;border-radius:4px;font-size:12px;color:#4c5257\">Estes campos s&atilde;o um espelho do <b>Pedido de Venda do Hist&oacute;rico</b> e n&atilde;o podem ser editados aqui &mdash; para alterar, edite o pedido.<br>Se o pedido for cancelado, o Hist&oacute;rico passa a apontar para a retifica&ccedil;&atilde;o. N&atilde;o havendo retifica&ccedil;&atilde;o, o pedido cancelado &eacute; mantido e uma observa&ccedil;&atilde;o aparece no Hist&oacute;rico.</div>"
+  },
+  {
+   "description": "*A data limite de faturamento refere-se ao último dia do mês em que o cliente aceita o faturamento de notas de serviço e venda. Por padrão, após a data indicada, o faturamento é liberado a partir do primeiro dia do mês subsequente.",
+   "fieldname": "data_limite_de_faturamento",
+   "fieldtype": "Data",
+   "label": "Data Limite de Faturamento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tipo_de_faturamento",
+   "fieldtype": "Select",
+   "label": "Tipo de Faturamento",
+   "options": "\nServiço\nVenda\nServiço e Venda",
+   "read_only": 1
+  },
+  {
+   "fieldname": "faturamento_parcial",
+   "fieldtype": "Select",
+   "label": "Faturamento Parcial",
+   "options": "\nSIM\nNÃO",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_analise_comercial",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "confirmacao_do_cliente",
+   "fieldtype": "Select",
+   "label": "Confirmação do Cliente",
+   "options": "\nSIM\nNÃO",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.confirmacao_do_cliente == 'SIM'",
+   "fieldname": "tipo_confirmacao",
+   "fieldtype": "Link",
+   "label": "Tipo",
+   "options": "Tipo de Confirmacao Cliente",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.confirmacao_do_cliente == 'SIM'",
+   "fieldname": "confirmacao",
+   "fieldtype": "Data",
+   "label": "Confirmação",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2026-07-28 08:43:10.331210",
+ "modified": "2026-08-10 11:00:00.000000",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Externa",
