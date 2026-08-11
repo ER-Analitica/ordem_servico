@@ -269,6 +269,8 @@ doc_events = {
         "before_submit": [
             #Bloqueia o envio enquanto o orçamento de origem não for aprovado
             "ordem_servico.doc_events.validar_orcamento_aprovado.exigir_orcamento_aprovado",
+            #Os Pontos de Calibração são a origem dos Critérios de Aceitação das OS
+            "ordem_servico.doc_events.pontos_calibracao_os.exigir_pontos_no_pedido",
         ],
         "on_submit": [
             "ordem_servico.doc_events.analise_critica_campos_vazios.analise_critica_campos_vazios",
@@ -300,6 +302,8 @@ doc_events = {
             "ordem_servico.doc_events.validacao_ipem.validacao_ipem",
             #Avisa quando o equipamento digitado manualmente já possui cadastro em Equipamentos
             "ordem_servico.doc_events.validacao_duplicidade_equipamentos.validar_equipamento_os",
+            #Traz os Pontos de Calibração do pedido (ou do orçamento) quando vazio
+            "ordem_servico.doc_events.pontos_calibracao_os.preencher_pontos",
             #Grava o e-mail do técnico ao finalizar o conserto
             "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],
@@ -332,6 +336,8 @@ doc_events = {
             #Histórico (pedido, orçamento e datas) + Análise Comercial, a partir
             #do Possui Pedido de Venda — seguindo retificações
             "ordem_servico.doc_events.historico_pedido.aplicar_na_os",
+            #Traz os Pontos de Calibração do pedido (ou do orçamento) quando vazio
+            "ordem_servico.doc_events.pontos_calibracao_os.preencher_pontos",
             #Grava o e-mail do técnico ao finalizar o conserto
             "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],

@@ -95,7 +95,13 @@ def before_submit(doc, method):
                     os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
                     os.sales_order_name = doc.sales_order_reference
                     os.sales_order_date = frappe.db.get_value("Sales Order", doc.sales_order_reference, "transaction_date")
-                    
+                    # No criador cada tipo de OS tem o seu campo de pontos: a
+                    # Externa usa "pontos_calibracao", que só aparece quando o
+                    # lote é de OS Externa; o da aba da Interna é outro campo.
+                    # O que for digitado aqui vale, porque o preenchimento a
+                    # partir do pedido só age quando a OS chega com o campo vazio.
+                    os.pontos_cal_criterios_aceitacao = doc.pontos_calibracao
+
                     # Salva a nova OS
                     os.save()
 
@@ -129,6 +135,8 @@ def before_submit(doc, method):
                 os.quotation_date = frappe.db.get_value("Quotation", os.quotation_name, "transaction_date")
                 os.sales_order_name = doc.sales_order_reference
                 os.sales_order_date = frappe.db.get_value("Sales Order", doc.sales_order_reference, "transaction_date")
+                # Mesmo tratamento do ramo por referência do pedido
+                os.pontos_cal_criterios_aceitacao = doc.pontos_calibracao
                 os.save()
                 adiciona_os = doc.append("os_interna_table", {})
                 adiciona_os.os = os.name

@@ -19,6 +19,7 @@ import re
 
 import frappe
 
+from ordem_servico.doc_events import pontos_calibracao_os
 from ordem_servico.doc_events.analise_comercial_os import (
     MAPA_CAMPOS,
     valores_espelhados,
@@ -33,6 +34,10 @@ LINK_USUARIO = {
     "Ordem Servico Interna": "has_sales_order_link",
     "Ordem Servico Externa": "sales_order_reference",
 }
+
+# OS em que uma alteração dos Pontos de Calibração no pedido substitui o que
+# estiver na OS, mesmo que alguém tenha editado ali.
+PEDIDO_TEM_PRIORIDADE = ("Ordem Servico Externa",)
 
 # Campos do Histórico derivados do pedido.
 CAMPOS_HISTORICO = (
@@ -272,6 +277,75 @@ def _regravar(doctype, nomes_os):
             frappe.clear_document_cache(doctype, nome)
 
 
+def _resincronizar_pontos(doctype, nomes_os, nomes_cadeia):
+    """Repassa os Pontos de Calibração após cancelamento ou retificação.
+
+    No save comum o campo só é preenchido quando está vazio, para não desfazer
+    o ajuste do técnico. Aqui é diferente: o documento de origem foi corrigido
+    e os pontos precisam acompanhar.
+
+    Na **OS Interna** ainda protegemos quem escreveu à mão: só substituímos
+    onde o texto atual é o que veio de alguma versão da cadeia.
+
+    Na **OS Externa** o pedido tem prioridade e substitui sempre. Ali os pontos
+    são o que foi contratado e o que o cliente vai auditar — uma correção no
+    pedido precisa chegar à OS sem depender de ninguém.
+    """
+    if not nomes_os or not nomes_cadeia:
+        return
+
+    herdados = {
+        pontos_calibracao_os.normalizar(pontos)
+        for (pontos,) in frappe.db.sql(
+            "SELECT `{}` FROM `tabSales Order` WHERE name IN ({})".format(
+                pontos_calibracao_os.CAMPO_ORIGEM,
+                ", ".join(["%s"] * len(nomes_cadeia)),
+            ),
+            nomes_cadeia,
+        )
+    }
+    herdados.discard("")
+
+    linhas = frappe.db.sql(
+        "SELECT name, `{}` AS pontos, sales_order_name, quotation_name "
+        "FROM `tab{}` WHERE name IN ({})".format(
+            pontos_calibracao_os.CAMPO_OS,
+            doctype,
+            ", ".join(["%s"] * len(nomes_os)),
+        ),
+        nomes_os,
+        as_dict=True,
+    )
+
+    por_valor = {}
+    for linha in linhas:
+        atual = linha.pontos
+        editado_a_mao = (
+            not pontos_calibracao_os.vazio(atual)
+            and pontos_calibracao_os.normalizar(atual) not in herdados
+        )
+        if editado_a_mao and doctype not in PEDIDO_TEM_PRIORIDADE:
+            continue
+
+        novo = pontos_calibracao_os.escolher_pontos(linha.sales_order_name)
+        if pontos_calibracao_os.normalizar(novo) == pontos_calibracao_os.normalizar(atual):
+            continue
+
+        por_valor.setdefault(novo, []).append(linha.name)
+
+    for valor, nomes in por_valor.items():
+        frappe.db.sql(
+            "UPDATE `tab{}` SET `{}` = %s WHERE name IN ({})".format(
+                doctype,
+                pontos_calibracao_os.CAMPO_OS,
+                ", ".join(["%s"] * len(nomes)),
+            ),
+            [valor] + nomes,
+        )
+        for nome in nomes:
+            frappe.clear_document_cache(doctype, nome)
+
+
 def sincronizar_pedido(doc, method=None):
     """Gatilho no Pedido de Venda — cancelamento e retificação.
 
@@ -291,6 +365,7 @@ def sincronizar_pedido(doc, method=None):
                 )
             )
         _regravar(doctype, sorted(nomes_os))
+        _resincronizar_pontos(doctype, sorted(nomes_os), nomes_familia)
 
 
 def sincronizar_orcamento(doc, method=None):

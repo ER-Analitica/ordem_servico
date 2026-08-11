@@ -7,12 +7,56 @@
 // Vale para Ordem Servico Interna e Criador de Ordens de Servico em Lote,
 // que usam o mesmo campo `os_items`.
 
+// Um Text Editor "vazio" guarda sobras de marcação (`<p></p>`, `<p><br></p>`),
+// não string vazia. Mesma checagem que o servidor faz em pontos_calibracao_os.
+function _texto_vazio(html) {
+    if (!html) return true;
+    // \u00a0 e o espaco nao separavel em que o &nbsp; se transforma no texto
+    var texto = $('<div>').html(html).text().replace(/\u00a0/g, ' ');
+    return !texto.trim();
+}
+
+// Os Pontos de Calibração acompanham os itens: quem escolhe o pedido espera ver
+// tudo que vem dele na hora, sem precisar salvar.
+//
+// Aqui o valor é substituído, não completado. Estas funções só rodam quando a
+// pessoa troca o pedido no formulário, e nesse momento o que estava no campo
+// era do pedido anterior — mesma lógica dos itens, que são limpos e recarregados.
+// Se o pedido novo não tiver pontos, o campo fica em branco.
+//
+// A proteção do ajuste do técnico está no servidor: num save comum o campo só é
+// preenchido se estiver vazio, então nada do que ele escrever se perde depois.
+function _aplicar_pontos_do_pedido(frm, pontos) {
+    if (!frm.fields_dict || !frm.fields_dict.pontos_cal_criterios_aceitacao) return;
+
+    var novo = _texto_vazio(pontos) ? '' : pontos;
+    if (novo === frm.doc.pontos_cal_criterios_aceitacao) return;
+
+    frm.set_value('pontos_cal_criterios_aceitacao', novo);
+}
+
+// Busca o pedido só para os pontos — usado onde não há tabela de itens.
+function _buscar_pontos_do_pedido(frm, campo_pedido) {
+    var pedido = frm.doc[campo_pedido];
+
+    if (!pedido) {
+        _aplicar_pontos_do_pedido(frm, '');
+        return;
+    }
+
+    frappe.db.get_value('Sales Order', pedido, 'pontos_de_calibracao')
+        .then(function (r) {
+            _aplicar_pontos_do_pedido(frm, (r && r.message) ? r.message.pontos_de_calibracao : '');
+        });
+}
+
 function _preencher_itens_do_pedido(frm, campo_pedido) {
     var pedido = frm.doc[campo_pedido];
 
     if (!pedido) {
         frm.clear_table('os_items');
         frm.refresh_field('os_items');
+        _aplicar_pontos_do_pedido(frm, '');
         return;
     }
 
@@ -33,6 +77,7 @@ function _preencher_itens_do_pedido(frm, campo_pedido) {
             });
 
             frm.refresh_field('os_items');
+            _aplicar_pontos_do_pedido(frm, pedido_doc.pontos_de_calibracao);
         }
     });
 }
@@ -83,5 +128,13 @@ frappe.ui.form.on('Criador de Ordens de Servico em Lote', {
             frm.set_value('has_sales_order_link', '');
         }
         _ajustar_rotulo_itens(frm, 'orcamento');
+    }
+});
+
+// A OS Externa não tem tabela de itens, mas tem o mesmo campo de pontos e o
+// vínculo com o pedido em outro campo.
+frappe.ui.form.on('Ordem Servico Externa', {
+    sales_order_reference: function (frm) {
+        _buscar_pontos_do_pedido(frm, 'sales_order_reference');
     }
 });

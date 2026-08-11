@@ -32,6 +32,8 @@
   "pontos_calibracao",
   "cb_1",
   "created_by",
+  "sec_pontos_calibracao",
+  "pontos_cal_criterios_aceitacao",
   "final_schedule_section",
   "final_scheduled_to",
   "final_scheduled_to_name",
@@ -263,6 +265,15 @@
    "fieldtype": "Read Only",
    "label": "Responsável",
    "reqd": 1
+  },
+  {
+   "fieldname": "sec_pontos_calibracao",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "pontos_cal_criterios_aceitacao",
+   "fieldtype": "Text Editor",
+   "label": "Pontos de Calibração e Critérios de Aceitação"
   },
   {
    "fieldname": "final_schedule_section",
