@@ -4,6 +4,16 @@
 {% include 'ordem_servico/public/js/ordem_servico.js' %}
 
 frappe.ui.form.on('Ordem Servico Interna', {
+  // Ao criar a partir da lista, o Frappe herda os filtros ativos como valores
+  // iniciais. Nos campos do fluxo antigo isso trazia o orçamento de outra OS
+  // para dentro da nova. Eles são históricos — nenhuma OS criada hoje deve
+  // nascer com eles preenchidos.
+  onload(frm){
+    if (!frm.is_new()) return;
+
+    if (frm.doc.have_quotation) frm.set_value('have_quotation', 0);
+    if (frm.doc.has_quotation_link) frm.set_value('has_quotation_link', '');
+  },
   validate(frm){
     if (frm.doc.problem_description && frm.doc.problem_description.length){
       frm.set_value("problem_description", frm.doc.problem_description.replaceAll("img src=", 'img style="max-width:300px !important; max-height:300px !important; width: auto; height: auto;" src='));

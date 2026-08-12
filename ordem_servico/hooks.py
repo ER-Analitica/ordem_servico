@@ -220,8 +220,14 @@ doc_events = {
         "on_update_after_submit":[
              "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_update_after_submit"
         ],
+        "on_update": [
+            #Marca na OS Interna que o orçamento nasceu dela
+            "ordem_servico.doc_events.marcar_orcamento_gerado.marcar_na_os",
+        ],
         "on_submit": [
             "ordem_servico.doc_events.validacao_uf_quotation.validacao_uf_quotation",
+            #Cobre o orçamento criado e enviado numa tacada só, sem passar por rascunho
+            "ordem_servico.doc_events.marcar_orcamento_gerado.marcar_na_os",
             "ordem_servico.doc_events.vincular_oportunidade_quotation.on_submit",
             #Retificação: o orçamento novo assume o Histórico das OS da cadeia
             "ordem_servico.doc_events.historico_pedido.sincronizar_orcamento",

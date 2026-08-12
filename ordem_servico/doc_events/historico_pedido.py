@@ -260,10 +260,17 @@ def _regravar(doctype, nomes_os):
             doctype, nome, [campo_link, "sales_order_name"], as_dict=True
         )
         origem = (linha.get(campo_link) or linha.get("sales_order_name") or "").strip()
+        if not origem:
+            # OS sem vínculo com pedido nenhum. Ela chega aqui pelo
+            # sincronizar_orcamento, que alcança as OS pelo `quotation_name` —
+            # e nas OS que geraram o próprio orçamento esse campo não é
+            # derivado, é escrito pelo set_quotation_history. Recalcular
+            # apagaria justamente o orçamento que a OS acabou de gerar.
+            continue
         por_origem.setdefault(origem, []).append(nome)
 
     for origem, nomes in por_origem.items():
-        valores = valores_derivados(origem) if origem else dict(VAZIO)
+        valores = valores_derivados(origem)
         marcadores = ", ".join(["%s"] * len(nomes))
 
         frappe.db.sql(
