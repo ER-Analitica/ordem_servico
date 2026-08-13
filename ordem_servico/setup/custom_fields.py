@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+from frappe.custom.doctype.property_setter.property_setter import make_property_setter
+from frappe.model.rename_doc import rename_doc
 
 CUSTOM_FIELDS = {
     "Sales Invoice": [
@@ -91,6 +93,41 @@ CUSTOM_FIELDS = {
             "insert_after": "mes_da_meta",
         },
     ],
+    "Quotation": [
+        {
+            # Campo já existente: ganha o "Buscar De" apontando para o cliente.
+            # Com `fetch_if_empty`, o Frappe preenche quando está vazio e nunca
+            # mais mexe — a edição feita no orçamento é respeitada.
+            "fieldname": "prazo_de_pagamento",
+            "fieldtype": "Data",
+            "label": "Prazo de pagamento",
+            "insert_after": "tc_name",
+            "fetch_from": "party_name.prazo_de_pagamento",
+            "fetch_if_empty": 1,
+        },
+    ],
+    "Customer": [
+        # Condições e prazo padrão do cliente, logo abaixo dos detalhes dos
+        # termos — que já seguem o mesmo caminho para o orçamento.
+        #
+        # Mesmos fieldnames do Quotation de propósito: é o padrão que o
+        # `detalhes_dos_termos_e_condicoes` já usa, e deixa a cópia simétrica.
+        # Aqui valem como sugestão; quem monta o orçamento pode divergir sem
+        # que isso volte para o cadastro.
+        {
+            "fieldname": "tc_name",
+            "fieldtype": "Link",
+            "label": "Condições",
+            "options": "Terms and Conditions",
+            "insert_after": "detalhes_dos_termos_e_condicoes",
+        },
+        {
+            "fieldname": "prazo_de_pagamento",
+            "fieldtype": "Data",
+            "label": "Prazo de pagamento",
+            "insert_after": "tc_name",
+        },
+    ],
     "Supplier": [
         {
             "fieldname": "custom_homologacao",
@@ -116,5 +153,95 @@ CUSTOM_FIELDS = {
 }
 
 
+# Propriedades de campos nativos, que não são Custom Field e por isso não
+# entram no dicionário acima. Cada item é (doctype, campo, propriedade, valor,
+# tipo).
+PROPERTY_SETTERS = (
+    # O "Condições" do Orçamento é o `tc_name` nativo do ERPNext. Aqui ele
+    # ganha o "Buscar De" do cliente, com a mesma regra do prazo: preenche
+    # quando está vazio e respeita o que for digitado depois.
+    ("Quotation", "tc_name", "fetch_from", "party_name.tc_name", "Small Text"),
+    ("Quotation", "tc_name", "fetch_if_empty", "1", "Check"),
+)
+
+
 def setup_custom_fields():
-    create_custom_fields(CUSTOM_FIELDS, update=True)
+    # O bloco do Cliente sai separado por causa de uma inconsistência que já
+    # existe naquele doctype: o campo Tax ID está oculto e obrigatório ao mesmo
+    # tempo, sem valor padrão. O Frappe revalida o doctype inteiro sempre que
+    # um campo personalizado é adicionado, e recusa a operação por causa disso.
+    #
+    # O Tax ID vem de uma integração antiga e não deve ser mexido, então aqui
+    # pulamos apenas essa revalidação — os campos continuam sendo criados e a
+    # coluna, gerada normalmente. O que se perde é a checagem automática de
+    # conflito de nome, conferida à mão: nem `tc_name` nem `prazo_de_pagamento`
+    # existiam no Cliente.
+    campos_cliente = {"Customer": CUSTOM_FIELDS["Customer"]}
+    demais = {dt: campos for dt, campos in CUSTOM_FIELDS.items() if dt != "Customer"}
+
+    create_custom_fields(demais, update=True)
+    create_custom_fields(campos_cliente, update=True, ignore_validate=True)
+
+    for doctype, campo, propriedade, valor, tipo in PROPERTY_SETTERS:
+        _aplicar_property_setter(doctype, campo, propriedade, valor, tipo)
+
+
+def _aplicar_property_setter(doctype, campo, propriedade, valor, tipo):
+    """Cria ou atualiza um Property Setter, sem quebrar em execução repetida.
+
+    A busca é pela identidade real — doctype, campo e propriedade — e não pelo
+    nome do registro. Existem Property Setters no sistema cujo nome não bate
+    com o próprio `doc_type`: o Frappe monta o nome na criação e não renomeia
+    quando alguém troca o doctype depois, pela tela.
+
+    Quando o nome que o Frappe vai gerar está ocupado por um desses registros
+    desalinhados, devolvemos a ele o nome que corresponde ao seu próprio
+    doc_type. Nada é apagado e nenhum valor é alterado — só o nome volta a
+    bater com o conteúdo, que é a regra do próprio Frappe.
+
+    A revalidação do doctype fica desligada pelo mesmo motivo do bloco do
+    Cliente: uma inconsistência preexistente em qualquer campo derrubaria a
+    operação inteira, mesmo sem relação com o que está sendo alterado.
+    """
+    existente = frappe.db.sql(
+        "SELECT name, value FROM `tabProperty Setter` "
+        "WHERE doc_type = %s AND field_name = %s AND property = %s",
+        (doctype, campo, propriedade),
+        as_dict=True,
+    )
+
+    if existente:
+        if existente[0].value != valor:
+            frappe.db.set_value("Property Setter", existente[0].name, "value", valor)
+            frappe.clear_cache(doctype=doctype)
+        return
+
+    nome = "{}-{}-{}".format(doctype, campo, propriedade)
+    ocupante = frappe.db.sql(
+        "SELECT doc_type, field_name, property FROM `tabProperty Setter` WHERE name = %s",
+        nome,
+        as_dict=True,
+    )
+
+    if ocupante:
+        dono = ocupante[0]
+        nome_correto = "{}-{}-{}".format(dono.doc_type, dono.field_name, dono.property)
+        if nome_correto != nome:
+            rename_doc(
+                "Property Setter",
+                nome,
+                nome_correto,
+                force=True,
+                ignore_permissions=True,
+                show_alert=False,
+            )
+
+    make_property_setter(
+        doctype,
+        campo,
+        propriedade,
+        valor,
+        tipo,
+        for_doctype=False,
+        validate_fields_for_doctype=False,
+    )

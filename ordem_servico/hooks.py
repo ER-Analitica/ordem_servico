@@ -218,6 +218,8 @@ doc_events = {
         "validate": [
             "ordem_servico.doc_events.limpar_hash.validate",
             "ordem_servico.doc_events.calcular_total_tempo_execucao_servico.calcular_total_tempo_execucao",
+            #Sugere Condições e Prazo de Pagamento a partir do cadastro do cliente
+            "ordem_servico.doc_events.condicoes_padrao_cliente.herdar_do_cliente",
         ],
         "on_update_after_submit":[
              "ordem_servico.doc_events.alterar_status_os_orcamento_aprovado.on_update_after_submit"
