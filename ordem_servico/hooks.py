@@ -185,6 +185,8 @@ doc_events = {
     "Sales Invoice": {
         "validate": [
             "ordem_servico.doc_events.termo_pagamento_dn.validate",
+            #Deriva Mês e Ano de Emissão a partir da Data de Emissão da NF
+            "ordem_servico.doc_events.mes_ano_emissao_nf.preencher_mes_ano",
         ],
         "on_submit":[
             #"ordem_servico.doc_events.update_customer.on_submit",
