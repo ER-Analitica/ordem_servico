@@ -188,23 +188,46 @@ doc_events = {
             #Deriva Mês e Ano de Emissão a partir da Data de Emissão da NF
             "ordem_servico.doc_events.mes_ano_emissao_nf.preencher_mes_ano",
         ],
+        "on_cancel": [
+            #Avisa na OS que o documento foi cancelado e ainda não tem substituto
+            "ordem_servico.doc_events.vinculos_do_pedido.marcar_cancelamento_na_os",
+        ],
         "on_submit":[
             #"ordem_servico.doc_events.update_customer.on_submit",
             "ordem_servico.doc_events.obter_fatura_os_interna_atraves_da_sinv.obter_fatura_os_interna_atraves_da_sinv",
             "ordem_servico.doc_events.obter_fatura_os_externa_atraves_da_sinv.obter_fatura_os_externa_atraves_da_sinv",
-            "ordem_servico.doc_events.atualizar_vencimento_fatura.atualizar_vencimento_fatura"
+            "ordem_servico.doc_events.atualizar_vencimento_fatura.atualizar_vencimento_fatura",
+            #Retificação: o documento novo assume o lugar do que ele corrigiu
+            "ordem_servico.doc_events.vinculos_do_pedido.assumir_lugar_do_retificado",
         ]
     },
 
     "Payment Entry":{
-        "on_submit": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura",
-        "on_cancel": "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura"
+        "on_submit": [
+            "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura",
+            #Retificação: o documento novo assume o lugar do que ele corrigiu
+            "ordem_servico.doc_events.vinculos_do_pedido.assumir_lugar_do_retificado",
+        ],
+        "on_cancel": [
+            "ordem_servico.doc_events.atualizar_proximo_vencimento_fatura.atualizar_proximo_vencimento_fatura",
+            #Avisa na OS que o documento foi cancelado e ainda não tem substituto
+            "ordem_servico.doc_events.vinculos_do_pedido.marcar_cancelamento_na_os",
+        ]
     },
     
 
     "Delivery Note":{
         "validate":[
             "ordem_servico.doc_events.termo_pagamento_si.validate",
+        ],
+        "on_cancel": [
+            #Avisa na OS que o documento foi cancelado e ainda não tem substituto
+            "ordem_servico.doc_events.vinculos_do_pedido.marcar_cancelamento_na_os",
+        ]
+,
+        "on_submit": [
+            #Retificação: o documento novo assume o lugar do que ele corrigiu
+            "ordem_servico.doc_events.vinculos_do_pedido.assumir_lugar_do_retificado",
         ]
     },
   
@@ -302,6 +325,12 @@ doc_events = {
             #Histórico (pedido, orçamento e datas) + Análise Comercial, a partir
             #do Pedido de Venda Referência — seguindo retificações
             "ordem_servico.doc_events.historico_pedido.aplicar_na_os",
+            #Traz do pedido a fatura, a nota de entrega e o pagamento que já existirem
+            "ordem_servico.doc_events.vinculos_do_pedido.preencher_vinculos",
+            #Pedido de Referência apagado à mão libera o Histórico inteiro
+            "ordem_servico.doc_events.limpar_ciclo_orcamento.limpar_ao_remover_vinculo",
+            #Marca na Observação o documento cancelado que ainda não foi substituído
+            "ordem_servico.doc_events.vinculos_do_pedido.sinalizar_cancelados",
             #verifica se o campo data_cal está preenchido caso a os for uma calibração
             "ordem_servico.doc_events.validacao_data_cal_os_externa.validate",
             #Verifica se o número de série do equipamento é vinculado ao cliente
@@ -346,6 +375,12 @@ doc_events = {
             #Histórico (pedido, orçamento e datas) + Análise Comercial, a partir
             #do Possui Pedido de Venda — seguindo retificações
             "ordem_servico.doc_events.historico_pedido.aplicar_na_os",
+            #Traz do pedido a fatura, a nota de entrega e o pagamento que já existirem
+            "ordem_servico.doc_events.vinculos_do_pedido.preencher_vinculos",
+            #Orçamento ou pedido apagado à mão libera o Histórico inteiro
+            "ordem_servico.doc_events.limpar_ciclo_orcamento.limpar_ao_remover_vinculo",
+            #Marca na Observação o documento cancelado que ainda não foi substituído
+            "ordem_servico.doc_events.vinculos_do_pedido.sinalizar_cancelados",
             #Traz os Pontos de Calibração do pedido (ou do orçamento) quando vazio
             "ordem_servico.doc_events.pontos_calibracao_os.preencher_pontos",
             #Grava o e-mail do técnico ao finalizar o conserto
