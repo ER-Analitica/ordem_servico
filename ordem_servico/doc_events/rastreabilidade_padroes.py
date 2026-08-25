@@ -8,6 +8,7 @@ Funciona para Ordem Servico Interna e Ordem Servico Externa.
 """
 
 import re
+import subprocess
 
 import frappe
 from frappe.utils import getdate
@@ -38,6 +39,114 @@ def _caminho_pdf(file_url):
     if not achado:
         return None
     return frappe.get_doc("File", achado[0].name).get_full_path()
+
+
+# Início e fim da seção de rastreabilidade, para recortar só ela.
+SECAO5_RE = re.compile(r"rastreabilidade\s+dos\s+padr", re.I)
+PROXIMA_SECAO_RE = re.compile(r"^\d+\.\s")
+# Duas ou mais casas separam colunas; dentro da célula o espaço é simples.
+COLUNAS_RE = re.compile(r"\s{2,}")
+
+
+def _texto_com_layout(file_url):
+    """Texto do PDF preservando o espaçamento entre colunas.
+
+    O leitor por coordenada (`_linhas_do_pdf`) recebe a linha da tabela como um
+    fragmento único, com as células já grudadas — daí não sobrar alternativa
+    senão adivinhar por formato onde o código termina, o que só funcionava para
+    as famílias previstas em regex.
+
+    O `pdftotext -layout` mantém o recuo original, e as colunas voltam a ser
+    separáveis. Assim o Código do Padrão é lido pelo lugar que ocupa na tabela,
+    e não pelo que ele parece — qualquer formato passa a ser aceito.
+    """
+    caminho = _caminho_pdf(file_url)
+    if not caminho:
+        return []
+
+    try:
+        saida = subprocess.run(
+            ["pdftotext", "-layout", caminho, "-"],
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+    except Exception:
+        # Binário ausente ou PDF ilegível: quem chama volta para o leitor antigo.
+        return []
+
+    return (saida.stdout or "").split("\n")
+
+
+def _linhas_da_secao5(linhas):
+    """Linhas entre o título da rastreabilidade e o início da seção seguinte.
+
+    O título pode aparecer mais de uma vez no documento: certificados longos
+    trazem um índice, e lá a mesma frase consta com o número da página. Por isso
+    não paramos na primeira ocorrência — cada bloco encontrado é devolvido, e o
+    do índice se descarta sozinho, por não conter linha nenhuma com duas datas.
+
+    O número da seção também varia de um modelo para outro (5. num, 6. noutro),
+    então ele não entra na busca.
+    """
+    dentro = False
+    for linha in linhas:
+        if SECAO5_RE.search(linha):
+            dentro = True  # começa, ou recomeça num bloco mais adiante
+            continue
+        if dentro and PROXIMA_SECAO_RE.match(linha.strip()):
+            dentro = False
+            continue
+        if dentro:
+            yield linha
+
+
+def _parse_secao5_layout(linhas, conhecidos=None):
+    """Lê a seção 5 pelas colunas da tabela.
+
+    A primeira coluna é o Código do Padrão, seja qual for o formato. As demais
+    são localizadas pelas duas datas do fim da linha — é o que distingue uma
+    linha de padrão do cabeçalho e de texto solto.
+    """
+    padroes = []
+    vistos = set()
+    suspeitas = 0
+
+    for linha in _linhas_da_secao5(linhas):
+        celulas = [c.strip() for c in COLUNAS_RE.split(linha.strip()) if c.strip()]
+        if len(celulas) < 3:
+            continue
+
+        posicoes = [i for i, c in enumerate(celulas) if DATA_BRUTA_RE.fullmatch(c)]
+        if len(posicoes) < 2:
+            continue  # cabeçalho, rodapé ou linha partida
+
+        exibicao = celulas[0]
+        achado_data = DATA_RE.match(celulas[posicoes[-1]])
+        validade = _para_data(achado_data.groups()) if achado_data else None
+        cert = celulas[posicoes[0] - 1] if posicoes[0] >= 1 else ""
+
+        # O código do cadastro pode ser mais curto que o impresso: o
+        # termo-higrômetro traz "- T" e "- H" apontando para o mesmo registro.
+        base = (
+            achar_codigo_conhecido(exibicao, conhecidos)
+            or extrair_codigo(exibicao)
+            or exibicao
+        )
+
+        chave = (exibicao, validade)
+        if chave in vistos:
+            continue
+        vistos.add(chave)
+
+        padroes.append({
+            "codigo": exibicao,
+            "codigo_base": base,
+            "cert": cert,
+            "validade": validade,
+        })
+
+    return padroes, suspeitas
 
 
 def _linhas_do_pdf(file_url):
@@ -222,10 +331,21 @@ def extrair_rastreabilidade(doctype, name):
     conhecidos = codigos_cadastrados()
 
     for url in anexos:
-        linhas = _linhas_do_pdf(url)
+        # Leitura por coluna primeiro: é a única que lê o Código do Padrão pelo
+        # lugar que ele ocupa na tabela, aceitando qualquer formato.
+        linhas = _texto_com_layout(url)
+        encontrados, susp = _parse_secao5_layout(linhas, conhecidos)
         if any(l.strip() for l in linhas):
             algum_com_texto = True
-        encontrados, susp = _parse_secao5(linhas, conhecidos)
+
+        if not encontrados:
+            # Certificado escaneado, modelo antigo ou layout que não se deixou
+            # separar: volta ao leitor por coordenada, para não perder o que já
+            # funcionava antes desta mudança.
+            linhas = _linhas_do_pdf(url)
+            if any(l.strip() for l in linhas):
+                algum_com_texto = True
+            encontrados, susp = _parse_secao5(linhas, conhecidos)
         for info in encontrados:
             chave = (info["codigo"], info["validade"])
             if chave in vistos:
@@ -235,6 +355,15 @@ def extrair_rastreabilidade(doctype, name):
         suspeitas += susp
 
     if not algum_com_texto:
+        # Certificado escaneado ou salvo como imagem: não há texto para ler, e
+        # nenhum leitor resolve isso sem OCR. Antes a OS ficava idêntica a uma
+        # sem pendência, e só quem clicasse em "Revincular padrões" descobria o
+        # motivo. Marcando o alerta, ela passa a aparecer na lista com
+        # "Padrão pendente" e alguém vai atrás.
+        frappe.db.set_value(
+            doctype, name, "rastreabilidade_alerta", 1, update_modified=False
+        )
+        frappe.clear_document_cache(doctype, name)
         return {"ok": False, "motivo": "pdf_sem_texto"}
 
     cal_date = doc.get("data_cal")

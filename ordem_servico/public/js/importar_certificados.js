@@ -165,6 +165,16 @@ function _resumo_final(importados, ja_anexados, falhas, dados) {
     return partes.concat(_pendencias_da_pasta(dados)).join('<br><br>');
 }
 
+// Traduz o código devolvido pelo servidor. O mesmo texto aparece no botão
+// "Revincular padrões" do formulário, em ordem_servico.js.
+function _motivo_legivel(motivo) {
+    var textos = {
+        sem_certificado: 'Nenhum certificado anexado.',
+        pdf_sem_texto: 'PDF sem texto (parece escaneado) — reenvie a versão gerada do Excel.'
+    };
+    return textos[motivo] || motivo || 'não foi possível processar o certificado';
+}
+
 // Marca visualmente, na lista, as OS com pendência de rastreabilidade.
 function _indicador_rastreabilidade(doc) {
     if (doc.rastreabilidade_alerta) {
@@ -207,7 +217,9 @@ function _revincular_lote(listview, doctype) {
                     }
                     if ((res.erros || []).length) {
                         msg += '<br><br><b>Não processadas:</b><br>' +
-                            res.erros.map(function (e) { return `• ${e.os} — ${e.motivo}`; }).join('<br>');
+                            res.erros.map(function (e) {
+                                return `• ${e.os} — ${_motivo_legivel(e.motivo)}`;
+                            }).join('<br>');
                     }
                     frappe.msgprint({
                         title: 'Revincular padrões em lote',
