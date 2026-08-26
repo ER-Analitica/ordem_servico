@@ -8,6 +8,7 @@ Funciona para Ordem Servico Interna e Ordem Servico Externa.
 """
 
 import re
+import shutil
 import subprocess
 
 import frappe
@@ -45,6 +46,8 @@ def _caminho_pdf(file_url):
 SECAO5_RE = re.compile(r"rastreabilidade\s+dos\s+padr", re.I)
 PROXIMA_SECAO_RE = re.compile(r"^\d+\.\s")
 # Duas ou mais casas separam colunas; dentro da célula o espaço é simples.
+_AVISOU_SEM_PDFTOTEXT = False
+
 COLUNAS_RE = re.compile(r"\s{2,}")
 
 
@@ -64,6 +67,26 @@ def _texto_com_layout(file_url):
     if not caminho:
         return []
 
+    if not shutil.which("pdftotext"):
+        # Sem o binário a leitura por coluna não acontece e tudo cai no leitor
+        # antigo — silenciosamente, com o sistema parecendo apenas não corrigido.
+        # O aviso vai uma vez por processo para não inundar o log.
+        global _AVISOU_SEM_PDFTOTEXT
+        if not _AVISOU_SEM_PDFTOTEXT:
+            _AVISOU_SEM_PDFTOTEXT = True
+            frappe.log_error(
+                title="pdftotext não encontrado",
+                message=(
+                    "A leitura da rastreabilidade por coluna precisa do "
+                    "`pdftotext`, do pacote poppler-utils, que não está "
+                    "instalado neste servidor. Sem ele o sistema volta ao "
+                    "leitor antigo, que só reconhece os formatos de código "
+                    "previstos em regex.\n\n"
+                    "Instalar com: sudo apt install poppler-utils"
+                ),
+            )
+        return []
+
     try:
         saida = subprocess.run(
             ["pdftotext", "-layout", caminho, "-"],
@@ -72,7 +95,7 @@ def _texto_com_layout(file_url):
             timeout=60,
         )
     except Exception:
-        # Binário ausente ou PDF ilegível: quem chama volta para o leitor antigo.
+        # PDF ilegível: quem chama volta para o leitor antigo.
         return []
 
     return (saida.stdout or "").split("\n")
@@ -306,8 +329,10 @@ def _gravar_tabela(doctype, name, linhas, tem_alerta):
         child.idx = i
         child.db_insert()
 
+    # Atualiza o `modified` junto: a tabela de padrões acabou de mudar, e é por
+    # esse carimbo que a integração externa descobre que há novidade na OS.
     frappe.db.set_value(
-        doctype, name, "rastreabilidade_alerta", 1 if tem_alerta else 0, update_modified=False
+        doctype, name, "rastreabilidade_alerta", 1 if tem_alerta else 0
     )
 
     # As linhas foram gravadas direto no banco (db_insert), fora do ciclo do
@@ -360,9 +385,7 @@ def extrair_rastreabilidade(doctype, name):
         # sem pendência, e só quem clicasse em "Revincular padrões" descobria o
         # motivo. Marcando o alerta, ela passa a aparecer na lista com
         # "Padrão pendente" e alguém vai atrás.
-        frappe.db.set_value(
-            doctype, name, "rastreabilidade_alerta", 1, update_modified=False
-        )
+        frappe.db.set_value(doctype, name, "rastreabilidade_alerta", 1)
         frappe.clear_document_cache(doctype, name)
         return {"ok": False, "motivo": "pdf_sem_texto"}
 

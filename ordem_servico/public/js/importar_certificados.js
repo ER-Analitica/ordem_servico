@@ -175,6 +175,67 @@ function _motivo_legivel(motivo) {
     return textos[motivo] || motivo || 'não foi possível processar o certificado';
 }
 
+// Carimba a data das OS já importadas, para a integração externa enxergá-las.
+//
+// Até a correção do `update_modified`, a importação gravava o certificado e a
+// tabela de padrões sem atualizar o `modified` da OS. Os dados entravam no
+// banco, mas quem sincroniza perguntando "o que mudou depois de tal data" nunca
+// as via. Este botão regulariza o que ficou para trás.
+//
+// Não salva as OS: apenas atualiza a data. Um save de verdade rodaria todas as
+// validações, e as OS antigas não passam nas regras criadas depois delas.
+function _marcar_para_sincronizar(listview) {
+    frappe.call({
+        method: 'ordem_servico.doc_events.importar_certificados.marcar_para_sincronizar',
+        args: { simular: 1 },
+        freeze: true,
+        freeze_message: 'Contando as OS com certificado...',
+        callback: function (r) {
+            var previa = (r && r.message) || {};
+            var total = previa.total || 0;
+
+            if (!total) {
+                frappe.msgprint({
+                    title: 'Nada a fazer',
+                    indicator: 'blue',
+                    message: 'Nenhuma OS com certificado anexado foi encontrada.'
+                });
+                return;
+            }
+
+            var detalhe = Object.keys(previa.por_doctype || {})
+                .map(function (dt) { return `• ${dt}: <b>${previa.por_doctype[dt]}</b>`; })
+                .join('<br>');
+
+            frappe.confirm(
+                `<b>${total}</b> Ordem(ns) de Serviço com certificado passarão a constar ` +
+                `como atualizadas para a integração.<br><br>${detalhe}<br><br>` +
+                'Nenhum outro campo é alterado e nenhuma OS é salva — só a data de ' +
+                'modificação é atualizada.<br><br>Deseja continuar?',
+                function () {
+                    frappe.call({
+                        method: 'ordem_servico.doc_events.importar_certificados.marcar_para_sincronizar',
+                        args: { simular: 0 },
+                        freeze: true,
+                        freeze_message: 'Atualizando...',
+                        callback: function (r2) {
+                            var res = (r2 && r2.message) || {};
+                            frappe.msgprint({
+                                title: 'Concluído',
+                                indicator: 'green',
+                                message: `<b>${res.total || 0}</b> OS atualizada(s). ` +
+                                    'A integração deve enxergá-las na próxima sincronização.'
+                            });
+                            listview.refresh();
+                        }
+                    });
+                },
+                function () {} // cancelado
+            );
+        }
+    });
+}
+
 // Marca visualmente, na lista, as OS com pendência de rastreabilidade.
 function _indicador_rastreabilidade(doc) {
     if (doc.rastreabilidade_alerta) {
@@ -247,6 +308,10 @@ function _config_lista_os(doctype) {
             });
             listview.page.add_inner_button('Revincular padrões', function () {
                 _revincular_lote(listview, doctype);
+            });
+            // Age nas duas OS, como o botão de importar — a regularização é única.
+            listview.page.add_inner_button('Marcar certificados para sincronizar', function () {
+                _marcar_para_sincronizar(listview);
             });
         }
     };

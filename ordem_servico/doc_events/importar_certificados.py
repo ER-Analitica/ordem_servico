@@ -20,6 +20,7 @@ segunda em fatias, o que dá o progresso ao lado sem sobrecarregar o servidor.
 import re
 
 import frappe
+from frappe.utils import now_datetime
 
 DOCTYPES_PERMITIDOS = ("Ordem Servico Interna", "Ordem Servico Externa")
 
@@ -50,13 +51,11 @@ def anexar_certificado_forcado(doctype, name, file_url):
         novo_valor = valor_atual
     else:
         novo_valor = f"{valor_atual}\n{file_url}" if valor_atual else file_url
-        frappe.db.set_value(
-            doctype,
-            name,
-            "anexo_certificado",
-            novo_valor,
-            update_modified=False,
-        )
+        # O `modified` é atualizado de propósito. A OS mudou de conteúdo, e é
+        # esse carimbo que sistemas externos usam para descobrir o que
+        # sincronizar: gravando sem ele, o certificado entra no banco mas a OS
+        # continua parecendo intocada, e a integração nunca a enxerga.
+        frappe.db.set_value(doctype, name, "anexo_certificado", novo_valor)
         # O set_value acima não invalida o cache do documento; sem isso a
         # extração leria o anexo_certificado antigo.
         frappe.clear_document_cache(doctype, name)
@@ -244,3 +243,72 @@ def processar_lote(itens):
             )
 
     return resultados
+
+
+# --------------------------------------------------------------------------
+# Manutenção: tornar visível para a integração o que já foi importado
+# --------------------------------------------------------------------------
+#
+# Até esta correção, a importação gravava com `update_modified=False`: o
+# certificado e a tabela de padrões entravam no banco, mas o `modified` da OS
+# ficava parado. Sistemas externos descobrem novidade perguntando "o que mudou
+# depois de tal data", então essas OS nunca apareciam — só voltavam a ser
+# vistas quando alguém abria e salvava à mão.
+#
+# Esta função carimba a data nas OS já importadas, sem tocar em nenhum outro
+# campo. Nada é reprocessado: os dados já estão certos, o que faltava era o
+# aviso de que mudaram.
+
+
+@frappe.whitelist()
+def marcar_para_sincronizar(doctype=None, limite=0, simular=True):
+    """Atualiza o `modified` das OS que têm certificado anexado.
+
+    doctype  -> "Ordem Servico Interna", "Ordem Servico Externa" ou None (as duas)
+    limite   -> 0 para todas; um número para fazer em ondas
+    simular  -> por padrão só conta, sem alterar nada
+
+    Rodar em ondas é útil quando a integração puxa tudo que mudou: 2000 OS de
+    uma vez podem chegar como uma avalanche do outro lado.
+    """
+    # Só quem pode alterar as OS pode carimbá-las.
+    for dt in DOCTYPES_PERMITIDOS:
+        if not frappe.has_permission(dt, "write"):
+            frappe.throw("Sem permissão para alterar as Ordens de Serviço.")
+
+    # Vindo da tela, tudo chega como texto.
+    simular = frappe.parse_json(simular) if isinstance(simular, str) else simular
+    limite = int(limite or 0)
+
+    alvos = [doctype] if doctype else list(DOCTYPES_PERMITIDOS)
+    resultado = {"simulacao": bool(simular), "por_doctype": {}, "total": 0}
+
+    for dt in alvos:
+        if dt not in DOCTYPES_PERMITIDOS:
+            frappe.throw("DocType inválido: {}".format(dt))
+
+        nomes = frappe.get_all(
+            dt,
+            filters={"anexo_certificado": ("is", "set")},
+            pluck="name",
+            order_by="modified asc",
+            limit_page_length=int(limite) or 0,
+        )
+
+        if nomes and not simular:
+            # Um UPDATE só para o lote inteiro: são milhares de linhas e nada
+            # além da data precisa mudar.
+            frappe.db.sql(
+                """UPDATE `tab{}` SET modified = %s WHERE name IN %s""".format(dt),
+                (now_datetime(), tuple(nomes)),
+            )
+            for nome in nomes:
+                frappe.clear_document_cache(dt, nome)
+
+        resultado["por_doctype"][dt] = len(nomes)
+        resultado["total"] += len(nomes)
+
+    if not simular:
+        frappe.db.commit()
+
+    return resultado
