@@ -344,6 +344,8 @@ doc_events = {
             #Traz os Pontos de Calibração do pedido (ou do orçamento) quando vazio
             "ordem_servico.doc_events.pontos_calibracao_os.preencher_pontos",
             #Grava o e-mail do técnico ao finalizar o conserto
+            #Quantidade de Certificados obrigatória depois de iniciado o conserto
+            "ordem_servico.doc_events.exigir_quantidade_certificados.exigir_quantidade",
             "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],
         "on_update": [
@@ -384,6 +386,8 @@ doc_events = {
             #Traz os Pontos de Calibração do pedido (ou do orçamento) quando vazio
             "ordem_servico.doc_events.pontos_calibracao_os.preencher_pontos",
             #Grava o e-mail do técnico ao finalizar o conserto
+            #Quantidade de Certificados obrigatória depois de iniciado o conserto
+            "ordem_servico.doc_events.exigir_quantidade_certificados.exigir_quantidade",
             "ordem_servico.doc_events.email_tecnico_conserto.capturar_email_tecnico"
         ],
         "before_save":[
