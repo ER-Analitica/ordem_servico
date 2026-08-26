@@ -309,9 +309,18 @@ function _config_lista_os(doctype) {
             listview.page.add_inner_button('Revincular padrões', function () {
                 _revincular_lote(listview, doctype);
             });
-            // Age nas duas OS, como o botão de importar — a regularização é única.
-            listview.page.add_inner_button('Marcar certificados para sincronizar', function () {
-                _marcar_para_sincronizar(listview);
+            // Regularização em massa: fica só para quem cuida da integração.
+            // O servidor recusa quem não estiver na lista — esconder aqui é
+            // apenas para não poluir a tela dos demais.
+            frappe.call({
+                method: 'ordem_servico.doc_events.importar_certificados.pode_sincronizar',
+                callback: function (r) {
+                    if (!r || !r.message) return;
+                    // Age nas duas OS, como o botão de importar — a regularização é única.
+                    listview.page.add_inner_button('Marcar certificados para sincronizar', function () {
+                        _marcar_para_sincronizar(listview);
+                    });
+                }
             });
         }
     };

@@ -260,6 +260,33 @@ def processar_lote(itens):
 # aviso de que mudaram.
 
 
+# Quem pode carimbar as OS para a integração. É uma regularização de dado em
+# massa, então fica restrita — não é operação de rotina.
+#
+# A lista aceita tanto o login quanto o e-mail cadastrado, pelo mesmo motivo do
+# `_pode_ver_aviso` em rastreabilidade_padroes: o Administrator faz login como
+# "Administrator", mas tem "admin@example.com" no cadastro.
+USUARIOS_SINCRONIZACAO = (
+    "lucas.campos@eranalitica.com.br",
+    "admin@example.com",
+)
+
+
+def _pode_sincronizar():
+    usuario = frappe.session.user
+    if usuario in USUARIOS_SINCRONIZACAO:
+        return True
+
+    email = frappe.db.get_value("User", usuario, "email")
+    return bool(email and email in USUARIOS_SINCRONIZACAO)
+
+
+@frappe.whitelist()
+def pode_sincronizar():
+    """Consultado pela lista de OS para decidir se mostra o botão."""
+    return _pode_sincronizar()
+
+
 @frappe.whitelist()
 def marcar_para_sincronizar(doctype=None, limite=0, simular=True):
     """Atualiza o `modified` das OS que têm certificado anexado.
@@ -271,7 +298,11 @@ def marcar_para_sincronizar(doctype=None, limite=0, simular=True):
     Rodar em ondas é útil quando a integração puxa tudo que mudou: 2000 OS de
     uma vez podem chegar como uma avalanche do outro lado.
     """
-    # Só quem pode alterar as OS pode carimbá-las.
+    # Esconder o botão na tela não é controle de acesso — a checagem que vale
+    # é esta, no servidor.
+    if not _pode_sincronizar():
+        frappe.throw("Você não tem permissão para executar esta regularização.")
+
     for dt in DOCTYPES_PERMITIDOS:
         if not frappe.has_permission(dt, "write"):
             frappe.throw("Sem permissão para alterar as Ordens de Serviço.")
