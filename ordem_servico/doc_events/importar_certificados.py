@@ -30,6 +30,59 @@ PASTA_CERTIFICADOS = "Home/Certificados"
 NUMERO_NO_NOME = re.compile(r"^0*(\d{3,6})")
 
 
+CAMPO_ANEXO = "anexo_certificado"
+
+
+def vincular_arquivo(doctype, name, file_url):
+    """Liga o PDF à OS no doctype File, como o Frappe faz ao salvar.
+
+    O `anexo_certificado` é um campo do tipo Attach. Quem cria esse vínculo é o
+    gatilho `attach_files_to_document`, que o Frappe roda no `on_update` de todo
+    documento — e o `db.set_value` usado na importação não dispara `on_update`.
+
+    Sem o vínculo o arquivo fica órfão, e **arquivo privado órfão não é
+    acessível**: a permissão de um `/private/files/...` é verificada contra o
+    documento ao qual ele está anexado. Era por isso que só depois de alguém
+    abrir e salvar a OS o certificado passava a ser visível de fora.
+
+    Devolve True quando criou o vínculo.
+    """
+    file_url = (file_url or "").strip()
+    if not file_url.startswith(("/files", "/private/files")):
+        return False
+
+    registros = frappe.get_all(
+        "File",
+        filters={"file_url": file_url},
+        fields=["name", "attached_to_doctype", "attached_to_name"],
+        limit_page_length=0,
+    )
+    if not registros:
+        return False
+
+    # Já ligado a esta OS: nada a fazer.
+    if any(r.attached_to_doctype == doctype and r.attached_to_name == name for r in registros):
+        return False
+
+    # Só encostamos no que está solto — um arquivo já ligado a outro documento
+    # tem dono, e roubá-lo tiraria o acesso de quem o usa hoje.
+    solto = next((r for r in registros if not r.attached_to_name), None)
+    if not solto:
+        return False
+
+    frappe.db.set_value(
+        "File",
+        solto.name,
+        {
+            "attached_to_doctype": doctype,
+            "attached_to_name": name,
+            "attached_to_field": CAMPO_ANEXO,
+        },
+        update_modified=False,
+    )
+    return True
+
+
 @frappe.whitelist()
 def anexar_certificado_forcado(doctype, name, file_url):
     """Anexa um certificado à OS (Interna ou Externa) sem rodar o validate().
@@ -55,10 +108,15 @@ def anexar_certificado_forcado(doctype, name, file_url):
         # esse carimbo que sistemas externos usam para descobrir o que
         # sincronizar: gravando sem ele, o certificado entra no banco mas a OS
         # continua parecendo intocada, e a integração nunca a enxerga.
-        frappe.db.set_value(doctype, name, "anexo_certificado", novo_valor)
+        frappe.db.set_value(doctype, name, CAMPO_ANEXO, novo_valor)
         # O set_value acima não invalida o cache do documento; sem isso a
         # extração leria o anexo_certificado antigo.
         frappe.clear_document_cache(doctype, name)
+
+    # Fora do `else` de propósito: certificados anexados antes desta correção
+    # ficaram órfãos, e reimportá-los não recriava o vínculo porque o arquivo
+    # já constava no campo.
+    vincular_arquivo(doctype, name, file_url)
 
     # Extrai a rastreabilidade dos padrões. Roda quando o anexo é novo ou
     # quando a OS ainda não tem a tabela preenchida (permite reprocessar
@@ -289,14 +347,22 @@ def pode_sincronizar():
 
 @frappe.whitelist()
 def marcar_para_sincronizar(doctype=None, limite=0, simular=True):
-    """Atualiza o `modified` das OS que têm certificado anexado.
+    """Regulariza as OS cujo certificado foi importado antes das correções.
 
-    doctype  -> "Ordem Servico Interna", "Ordem Servico Externa" ou None (as duas)
+    Faz as duas coisas que faltavam, e nada além disso:
+
+    1. **Liga o PDF à OS** no doctype File. Sem esse vínculo o arquivo privado
+       fica órfão e não pode ser aberto de fora — era o motivo de o certificado
+       só ficar acessível depois que alguém abria e salvava a OS.
+    2. **Atualiza o `modified`**, para quem sincroniza perguntando "o que mudou
+       depois de tal data" enxergar a OS.
+
+    Nenhuma OS é salva: um `save()` rodaria as validações criadas depois desses
+    documentos, e boa parte delas falharia.
+
+    doctype  -> um dos dois, ou None para as duas
     limite   -> 0 para todas; um número para fazer em ondas
     simular  -> por padrão só conta, sem alterar nada
-
-    Rodar em ondas é útil quando a integração puxa tudo que mudou: 2000 OS de
-    uma vez podem chegar como uma avalanche do outro lado.
     """
     # Esconder o botão na tela não é controle de acesso — a checagem que vale
     # é esta, no servidor.
@@ -312,32 +378,44 @@ def marcar_para_sincronizar(doctype=None, limite=0, simular=True):
     limite = int(limite or 0)
 
     alvos = [doctype] if doctype else list(DOCTYPES_PERMITIDOS)
-    resultado = {"simulacao": bool(simular), "por_doctype": {}, "total": 0}
+    resultado = {
+        "simulacao": bool(simular),
+        "por_doctype": {},
+        "total": 0,
+        "arquivos_vinculados": 0,
+    }
 
     for dt in alvos:
         if dt not in DOCTYPES_PERMITIDOS:
             frappe.throw("DocType inválido: {}".format(dt))
 
-        nomes = frappe.get_all(
+        linhas = frappe.get_all(
             dt,
-            filters={"anexo_certificado": ("is", "set")},
-            pluck="name",
+            filters={CAMPO_ANEXO: ("is", "set")},
+            fields=["name", CAMPO_ANEXO],
             order_by="modified asc",
-            limit_page_length=int(limite) or 0,
+            limit_page_length=limite or 0,
         )
 
-        if nomes and not simular:
+        vinculados = 0
+        if not simular:
+            for linha in linhas:
+                for url in (linha.get(CAMPO_ANEXO) or "").split("\n"):
+                    if vincular_arquivo(dt, linha.name, url):
+                        vinculados += 1
+
             # Um UPDATE só para o lote inteiro: são milhares de linhas e nada
-            # além da data precisa mudar.
+            # além da data precisa mudar na OS.
             frappe.db.sql(
                 """UPDATE `tab{}` SET modified = %s WHERE name IN %s""".format(dt),
-                (now_datetime(), tuple(nomes)),
+                (now_datetime(), tuple(l.name for l in linhas)),
             )
-            for nome in nomes:
-                frappe.clear_document_cache(dt, nome)
+            for linha in linhas:
+                frappe.clear_document_cache(dt, linha.name)
 
-        resultado["por_doctype"][dt] = len(nomes)
-        resultado["total"] += len(nomes)
+        resultado["por_doctype"][dt] = len(linhas)
+        resultado["total"] += len(linhas)
+        resultado["arquivos_vinculados"] += vinculados
 
     if not simular:
         frappe.db.commit()

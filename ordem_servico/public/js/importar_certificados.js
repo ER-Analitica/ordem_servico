@@ -223,8 +223,10 @@ function _marcar_para_sincronizar(listview) {
                             frappe.msgprint({
                                 title: 'Concluído',
                                 indicator: 'green',
-                                message: `<b>${res.total || 0}</b> OS atualizada(s). ` +
-                                    'A integração deve enxergá-las na próxima sincronização.'
+                                message: `<b>${res.total || 0}</b> OS atualizada(s).<br>` +
+                                    `<b>${res.arquivos_vinculados || 0}</b> certificado(s) ` +
+                                    'ligado(s) à sua OS — é esse vínculo que libera o acesso ' +
+                                    'ao arquivo pela integração.'
                             });
                             listview.refresh();
                         }
