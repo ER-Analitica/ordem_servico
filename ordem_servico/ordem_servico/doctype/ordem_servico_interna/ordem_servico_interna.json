@@ -1262,7 +1262,7 @@
    "fieldname": "custom_quantidade_certificados",
    "fieldtype": "Select",
    "label": "Quantidade Certificados",
-   "options": "\n_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
+   "options": "\nN\u00e3o possui\n_01\n_02\n_03\n_04\n_05\n_06\n_07\n_08\n_09\n_10"
   },
   {
    "default": "0",
@@ -1341,7 +1341,7 @@
   }
  ],
  "links": [],
- "modified": "2026-08-26 10:00:00.000000",
+ "modified": "2026-09-02 10:00:00.000000",
  "modified_by": "Administrator",
  "module": "Ordem Servico",
  "name": "Ordem Servico Interna",
