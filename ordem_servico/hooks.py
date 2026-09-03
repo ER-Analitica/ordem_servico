@@ -57,6 +57,8 @@ doctype_js = {
 # Nome amigável para o PDF anexado nos e-mails (em vez do ID do documento)
 override_doctype_class = {
     "Communication": "ordem_servico.overrides.communication.OrdemServicoCommunication",
+    #Candidato à Vaga numerado pela série do doctype, e não pelo e-mail
+    "Job Applicant": "ordem_servico.overrides.job_applicant.OrdemServicoJobApplicant",
 }
 
 # Mesmo nome amigável no download do PDF
