@@ -5,6 +5,43 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 from frappe.custom.doctype.property_setter.property_setter import make_property_setter
 from frappe.model.rename_doc import rename_doc
 
+# Segmento de mercado — a mesma lista para Cliente, Lead e Oportunidade.
+#
+# As três divergiam: o Cliente tinha 15 opções (com "Distribuidor" e "Autarquia
+# Federal", acrescentadas em 2026 e nunca replicadas), o Lead e a Oportunidade
+# tinham 13, e a acentuação estava errada em graus diferentes nos três.
+#
+# Unificar importa por causa do `fetch_from` da Oportunidade, que puxa o
+# segmento do cliente: com listas diferentes, um cliente marcado como
+# "Distribuidor" gerava valor inválido na Oportunidade e travava o save.
+SEGMENTOS = (
+    "Saneamento\nAlimentos\nBebidas\nLacticínios"
+    "\nFarmacêuticos\nAcadêmico\nPetroquímico\nQuímico"
+    "\nAçúcar e Álcool\nPapel e Celulose\nPrestadores de Serviços"
+    "\nLaboratórios de Análises\nIndústria de Transformação"
+    "\nDistribuidor\nAutarquia Federal"
+)
+
+# No Cliente o campo é obrigatório e a lista não tem opção vazia; nos outros
+# dois ela existe, e é o que permite deixar o segmento em branco.
+SEGMENTOS_COM_VAZIO = "\n" + SEGMENTOS
+
+
+def _campo_segmento(opcoes):
+    """Só a lista de opções é tocada.
+
+    O `create_custom_fields` atualiza apenas as chaves informadas, então
+    `insert_after` e as demais propriedades dos campos, que existem desde 2018,
+    permanecem como estão.
+    """
+    return {
+        "fieldname": "segmento",
+        "fieldtype": "Select",
+        "label": "Segmento",
+        "options": opcoes,
+    }
+
+
 CUSTOM_FIELDS = {
     "Sales Invoice": [
         {
@@ -127,7 +164,16 @@ CUSTOM_FIELDS = {
             "label": "Prazo de pagamento",
             "insert_after": "tc_name",
         },
+        _campo_segmento(SEGMENTOS),
     ],
+    "Lead": [
+        _campo_segmento(SEGMENTOS_COM_VAZIO),
+    ],
+
+    "Opportunity": [
+        _campo_segmento(SEGMENTOS_COM_VAZIO),
+    ],
+
     "Supplier": [
         {
             "fieldname": "custom_homologacao",
@@ -162,6 +208,11 @@ PROPERTY_SETTERS = (
     # quando está vazio e respeita o que for digitado depois.
     ("Quotation", "tc_name", "fetch_from", "party_name.tc_name", "Small Text"),
     ("Quotation", "tc_name", "fetch_if_empty", "1", "Check"),
+    # O Cliente e a Oportunidade têm Property Setter para as opções do Segmento,
+    # e ele vence o Custom Field na hora de montar o formulário. Sem atualizar
+    # os dois aqui, a correção do Custom Field acima não aparece na tela.
+    ("Customer", "segmento", "options", SEGMENTOS, "Text"),
+    ("Opportunity", "segmento", "options", SEGMENTOS_COM_VAZIO, "Text"),
 )
 
 
